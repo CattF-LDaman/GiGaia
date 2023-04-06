@@ -1,0 +1,2 @@
+
+GAME_STATE_SETUP = 0

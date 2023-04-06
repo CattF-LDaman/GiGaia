@@ -1,0 +1,2 @@
+
+CONNECT_NUM_TRIES = 3

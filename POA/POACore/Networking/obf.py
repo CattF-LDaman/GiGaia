@@ -1,0 +1,38 @@
+
+import os
+
+def generate_key():
+
+    initial_bytes = bytearray(b for b in range(256))
+    key = bytearray()
+
+    for _ in range(256):
+
+        key.append(initial_bytes.pop(os.urandom(1)[0]%len(initial_bytes)))
+
+    return key
+
+class SessionObfuscator:  # Makes it harder but still very trivial to read/change network traffic
+
+    def __init__(self, in_key, out_key):
+
+        self.in_key = in_key
+        self.out_key = out_key
+
+    def _shift_in_key(self):
+
+        self.in_key = self.in_key[1:] + self.in_key[0].to_bytes(1,"little")
+
+    def _shift_out_key(self):
+
+        self.out_key = self.out_key[1:] + self.out_key[0].to_bytes(1,"little")
+
+    def obf(self,data:bytes):
+
+        self._shift_out_key()
+        return data.translate(bytes.maketrans(bytearray(b for b in range(256)),self.out_key))
+
+    def deobf(self,data:bytes):
+
+        self._shift_in_key()
+        return data.translate(bytes.maketrans(self.in_key,bytearray(b for b in range(256))))

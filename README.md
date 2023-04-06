@@ -1,2 +1,3 @@
 # GiGaia
-Gigaia Game
+
+A 2D survival game.
