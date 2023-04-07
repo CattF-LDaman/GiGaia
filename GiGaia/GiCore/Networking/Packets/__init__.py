@@ -49,4 +49,4 @@ def read_packet(packet_data):
     packet_out = struc.read_struc(PACKET_TYPES[packet_type], packet_data).__dict__
     packet_out['_PNAME'] = PACKET_NAMES[packet_type]
 
-    return packet_type, SimpleNamespace(packet_out)
+    return packet_type, SimpleNamespace(**packet_out)
