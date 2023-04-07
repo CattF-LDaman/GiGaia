@@ -1,5 +1,5 @@
 
-from POA.POAClient.client import Client
+from GiGaia.GiClient.client import Client
 
 if __name__ == "__main__":
 
