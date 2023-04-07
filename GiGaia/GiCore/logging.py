@@ -13,9 +13,10 @@ class Logger:
     WARNING = 3
     ERROR = 4
     CRITICAL = 5
+    POSITIVE = 10
 
-    _LEVEL_COLORS = {0:colorama.Fore.LIGHTCYAN_EX,1:colorama.Fore.LIGHTBLUE_EX,2:colorama.Fore.WHITE,3:colorama.Fore.LIGHTYELLOW_EX,4:colorama.Fore.LIGHTRED_EX,5:colorama.Back.LIGHTRED_EX+colorama.Fore.BLACK}
-    LEVELS = {0:"INTERNAL",1:"DEBUG",2:"INFO",3:"WARNING",4:"ERROR",5:"CRITICAL"}
+    _LEVEL_COLORS = {0:colorama.Fore.LIGHTCYAN_EX,1:colorama.Fore.LIGHTBLUE_EX,2:colorama.Fore.WHITE,3:colorama.Fore.LIGHTYELLOW_EX,4:colorama.Fore.LIGHTRED_EX,5:colorama.Back.LIGHTRED_EX+colorama.Fore.BLACK, 10:colorama.Fore.LIGHTGREEN_EX}
+    LEVELS = {0:"INTERNAL",1:"DEBUG",2:"INFO",3:"WARNING",4:"ERROR",5:"CRITICAL",10:"POSITIVE"}
 
     def __init__(self,output_file=None,config={}):
 

@@ -15,16 +15,28 @@ class State:
 
         self.sid = sid
 
+    def destroy_master(self):
+
+        if self.ui:
+            self.ui.destroy()
+        self.destroy()
+
     def setup_master(self):
 
+        self.p.send("A_WAITING")
+        self.setup()
         if self.ui:
             self.ui.create()
 
-    def setup(self):
+    def destroy(self): # Called before switching to another state
 
         pass
 
-    def update(self):
+    def setup(self): # Called before UI creation
+
+        pass
+
+    def update(self): # Called every tick right after UI update
 
         pass
 

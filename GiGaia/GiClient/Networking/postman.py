@@ -112,7 +112,7 @@ class Postman:
 
                 for packet_type, packets in self.outbox.items():
                     for out_packet in packets:
-                        self.conn.sendsized(create_packet(packet_type, out_packet))
+                        self.conn.sendsized(create_packet(packet_type, out_packet or {}))
                         self.sent += 1
                     self.outbox[packet_type] = []
 
@@ -127,7 +127,7 @@ class Postman:
         elif type(pt) == str:
             return PACKET_NAMETYPES[pt]
 
-    def send(self,packet_type, out_packet):
+    def send(self, packet_type, out_packet=None):
         packet_type = self._parse_packet_type(packet_type)
 
         if packet_type not in self.outbox:

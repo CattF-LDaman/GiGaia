@@ -10,8 +10,10 @@ class Game:
     def __init__(self,server):
 
         self.server = server
+        self.log = server.log
         self.config = server.config.game
         self.traffic = server.traffic
+        self.dirs = server.dirs
 
         self.running = True
         self.clock = pygame.time.Clock()
@@ -24,6 +26,12 @@ class Game:
 
         self.users[client.username] = User(self, client)
         self.users[client.username].setup()
+        self.log(f"{client.username} joined the game.",3)
+
+    def leave(self, client):
+
+        self.users.pop(client.username).left = True
+        self.log(f"{client.username} left the game.",3)
 
     @property
     def current_tickrate(self):
@@ -36,9 +44,8 @@ class Game:
 
             self.dt = self.clock.tick(self.config.tickrate)
 
-            for u in self.users.values():
-                us = u.state
-                if us.ready:
-                    us.tick()
+            for u in self.users.copy().values():
+                if u.state.ready:
+                    u.state.tick()
 
             self.traffic.dispatch()  # All outbound traffic should be ready for sending before this call

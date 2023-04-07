@@ -23,7 +23,10 @@ class Config:
         "game": {
             "name":"GiGaia Server",
             "description":"Join me!",
+            "theme_color":[198, 140, 83],
+
             "tickrate": 60,
+            "login_attempts": 5
         },
 
     }

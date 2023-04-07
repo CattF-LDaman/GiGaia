@@ -71,7 +71,7 @@ class InputLabel(Widget):
 
 class Input(RawInput):
 
-    def __init__(self, ui_manager, *args, isize_w=None, isize_h=None, placeholder="", **kwargs):
+    def __init__(self, ui_manager, *args, isize_w=None, isize_h=None, placeholder="", show='', **kwargs):
 
         super().__init__(ui_manager, *args, **kwargs)
 
@@ -83,6 +83,7 @@ class Input(RawInput):
 
         self.color = pygame.Color(self.uim.assets.data.ui.color_B)
         self.placeholder = placeholder
+        self.show = show # eg. * for passwords
 
     def draw(self):
 
@@ -93,7 +94,7 @@ class Input(RawInput):
             self.surface.fill(self.uim.assets.data.ui.color_A)
             pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_C, self.rect, width=5)
 
-        inp_content = self.content
+        inp_content = self.content if not self.show else self.show*len(self.content)
         if self.capturing and (self.age//600) % 2 == 0:
             inp_content += self.typing_char
 

@@ -90,6 +90,9 @@ class Game:
 
         ssp = self.postman.fetch(PID.SC_LOAD_STATE)
         if ssp:
+            if self.state:
+                self.state.destroy()
+
             s = ssp[-1]
             self.state = STATES[s.sid](self)
             self.state.setup_master()

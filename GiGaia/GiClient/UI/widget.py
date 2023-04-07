@@ -4,7 +4,7 @@ import time
 
 class Widget:
 
-    def __init__(self, ui_manager, position=(0,0), layer=0, width=1, height=1, max_width=None, max_height=None, min_width=None, min_height=None, anchor="topleft", relative_to=None, relative_anchor=None, child_of=None, always_redraw=False, head_ui=False, vanish_after=0, **kwargs):
+    def __init__(self, ui_manager, position=(0,0), layer=0, width=1, height=1, max_width=None, max_height=None, min_width=None, min_height=None, anchor="topleft", relative_to=None, relative_anchor=None, child_of=None, always_redraw=False, skip_draw=False, skip_event=False, head_ui=False, vanish_after=0, **kwargs):
 
         self.ui_manager = self.uim = ui_manager
         self.client = ui_manager.client
@@ -39,6 +39,8 @@ class Widget:
 
         self.updated = True
         self.always_redraw = always_redraw
+        self.skip_draw = skip_draw
+        self.skip_event = skip_event
         self.resized = False
 
         self.vanish_after = vanish_after
@@ -169,6 +171,9 @@ class Widget:
             self.deleted = True
 
     def draw_master(self):
+        if self.skip_draw:
+            return
+
         if self.updated or self.always_redraw:
             self.draw()
             self.uim.redraws += 1
@@ -185,49 +190,51 @@ class Widget:
             self.updated = True
             self.resized = False
 
-        was_h = self.hovered
-        self.hovered_once = False
-        self.hovered = False
-        self.unhovered = False
-        self.clicked = False
-        self.r_clicked = False
-        self.scrolled_up = False
-        self.scrolled_down = False
-        self.unclicked = False
+        if not self.skip_event:
 
-        if self.age != 0:
-            if not pygame.mouse.get_pressed()[0]:
-                self.held = False
+            was_h = self.hovered
+            self.hovered_once = False
+            self.hovered = False
+            self.unhovered = False
+            self.clicked = False
+            self.r_clicked = False
+            self.scrolled_up = False
+            self.scrolled_down = False
+            self.unclicked = False
 
-            if self.widget_rect.collidepoint(pygame.mouse.get_pos()):
-                if not was_h:
-                    self.hovered_once = True
-                else:
-                    self.hovered_once = False
-                self.hovered = True
-            elif was_h:
-                self.unhovered = True
+            if self.age != 0:
+                if not pygame.mouse.get_pressed()[0]:
+                    self.held = False
 
-            for r_cl in self.ui_manager.rmb_clicks:
-                if self.widget_rect.collidepoint(r_cl):
-                    self.r_clicked = True
+                if self.widget_rect.collidepoint(pygame.mouse.get_pos()):
+                    if not was_h:
+                        self.hovered_once = True
+                    else:
+                        self.hovered_once = False
+                    self.hovered = True
+                elif was_h:
+                    self.unhovered = True
 
-            for l_cl in self.ui_manager.lmb_clicks:
-                if self.widget_rect.collidepoint(l_cl):
-                    self.clicked = True
-                    if not self.held:
-                        self.hold_start = l_cl
-                    self.held = True
-                else:
-                    self.unclicked = True
+                for r_cl in self.ui_manager.rmb_clicks:
+                    if self.widget_rect.collidepoint(r_cl):
+                        self.r_clicked = True
 
-            for u_sc in self.ui_manager.scrolls_up:
-                if self.widget_rect.collidepoint(u_sc):
-                    self.scrolled_up = True
+                for l_cl in self.ui_manager.lmb_clicks:
+                    if self.widget_rect.collidepoint(l_cl):
+                        self.clicked = True
+                        if not self.held:
+                            self.hold_start = l_cl
+                        self.held = True
+                    else:
+                        self.unclicked = True
 
-            for d_sc in self.ui_manager.scrolls_down:
-                if self.widget_rect.collidepoint(d_sc):
-                    self.scrolled_down = True
+                for u_sc in self.ui_manager.scrolls_up:
+                    if self.widget_rect.collidepoint(u_sc):
+                        self.scrolled_up = True
+
+                for d_sc in self.ui_manager.scrolls_down:
+                    if self.widget_rect.collidepoint(d_sc):
+                        self.scrolled_down = True
 
         self.update()
 

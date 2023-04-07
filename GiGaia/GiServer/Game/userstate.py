@@ -8,6 +8,7 @@ class Userstate:
         self.user = user
         self.handle = self.h = user.handle
         self.game = user.game
+        self.log = user.game.log
 
         self.ready = False
     
@@ -22,5 +23,6 @@ class Userstate:
     @threaded_daemon
     def _setup(self):
 
+        self.h.recv("A_WAITING")
         self.setup()
         self.ready = True

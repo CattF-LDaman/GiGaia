@@ -85,6 +85,14 @@ def raw(data):
 
     return data
 
+def pack_rbg(data):
+
+    return pack_int8(data[0])+pack_int8(data[1])+pack_int8(data[2])
+
+def unpack_rbg(data):
+    
+    return [data[0], data[1], data[2]]
+
 DT_PACK = 0
 DT_UNPACK = 1
 DT_SIZE = 2
@@ -102,6 +110,7 @@ D_STRING = 8
 D_JSON = 9
 D_POS = 10
 D_RAW = 11
+D_RBG = 12
 
 DATATYPES = {
 
@@ -118,7 +127,7 @@ D_STRING: (pack_string, unpack_string, None), # None marks non-fixed length
 D_JSON: (pack_json, unpack_json, None),
 D_POS: (pack_pos, unpack_pos, 16),
 D_RAW: (raw, raw, None),
-
+D_RBG: (pack_rbg, unpack_rbg, 3)
 }
 
 def unpack(datatype, data):

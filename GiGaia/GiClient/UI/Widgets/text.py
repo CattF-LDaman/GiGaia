@@ -15,6 +15,10 @@ class Message(Widget):
 
         self.adapt_size()
 
+    def change(self, text):
+        self.text = text
+        self.adapt_size()
+
     def adapt_size(self):
         new_size = self.uim.assets.fonts[self.font].get_size2(self.text, self.text_scale)
         self.resize(new_size[0], new_size[1])

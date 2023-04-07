@@ -20,3 +20,7 @@ def hash_pwd(pwd, salt, cycles=150000):
         h.update(pwd+salt)
 
     return h.digest()
+
+def hash_str(txt):
+
+    return hashlib.sha256(txt.encode('utf-8')+b'GiGi').hexdigest()

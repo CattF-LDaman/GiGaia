@@ -11,13 +11,15 @@ class Setup(State):
 
         super().__init__(game, SIDS.SETUP, SetupUI)
 
-    def submit(self, user, password):
+        self.game_info = None
 
-        self.p.send("CS_LOGIN", {"user":user, "password":hash_pwd_nosalt(password.encode("utf-8")+b'GiG', cycles=500)})
+    def submit(self, password):
+        
+        self.p.send("CS_LOGIN", {"password":hash_pwd_nosalt(password.encode("utf-8")+b'GiG', cycles=500)})
 
-        OK = self.p.recv("SC_NATION_OK", 2)
+        OK = self.p.recv("SC_LOGIN_CONFIRM", 2)
         return OK
 
     def setup(self):
 
-        pass
+        self.game_info = self.p.recv("SC_GAME_INFO", 2)

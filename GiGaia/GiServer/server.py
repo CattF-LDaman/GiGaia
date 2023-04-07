@@ -67,6 +67,7 @@ class Server:
 
         self.clients.remove(client)
         self.user_clients.pop(client.username)
+        self.game.leave(client)
         client.close()
         self.log(f"Client {client.identifier} removed.")
 
