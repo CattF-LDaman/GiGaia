@@ -141,7 +141,7 @@ class Client:
             self.ticks += self.clock.get_time()
 
             self.handle_events()
-
+    
             if self.state == CLIENT_STATE_MENU:
 
                 self.menu.tick()

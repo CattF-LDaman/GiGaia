@@ -1,0 +1,18 @@
+
+World
+- Tile and chunk system
+- World generation
+- Give necessary world data to client
+- Draw world
+    + Generating tile sprites
+
+Tile data
+- Name
+- Description
+
+Player
+- Entity
+    + Position
+    + Movement
+- Inventory
+    + Storage in-game is not limited by slots but by total item capacity
