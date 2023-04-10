@@ -45,7 +45,7 @@ def bond_connection(server,conn,addr):
             server.log(f"{addr[0]}:{addr[1]} failed authentication: {conn}",1)
             return
 
-        server.log(f"{conn.full_address} succesfully authenticated.")
+        server.log(f"{conn.full_address} succesfully authenticated.",1)
 
         client_version = conn.recv(3)
 

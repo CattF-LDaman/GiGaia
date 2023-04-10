@@ -1,8 +1,8 @@
 from ..menupage import MenuPage
 
-from GiGaia.GiClient.UI.Widgets.Menu.title import Title
-from GiGaia.GiClient.UI.Widgets.Menu.button import PageLink, ActionButton
-from GiGaia.GiClient.UI.Widgets.Menu.message import Message
+from GiGaia.GiClient.UI.Widgets.MainMenu.title import Title
+from GiGaia.GiClient.UI.Widgets.MainMenu.button import PageLink, ActionButton
+from GiGaia.GiClient.UI.Widgets.MainMenu.message import Message
 
 from GiGaia.GiCore import INFO
 

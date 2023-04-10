@@ -31,7 +31,7 @@ class UIManager:
         self.resized = False
 
         self.cur_tick = 0
-        self.update_frequency = 50
+        self.update_frequency = self.assets.data.ui.update_freq
         self._prev_update = -100
         self.redraws = 0
 

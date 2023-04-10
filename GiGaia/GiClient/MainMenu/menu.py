@@ -61,7 +61,7 @@ class Menu:
             self.switch("Start")
         except Exception as e:
             self.client.log("Unable to join: " + ''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__)), 4)
-            self.join_status = "Failed to join server...\n"+str(e)
+            self.join_status = type(e).__name__
             self.join_failed = True
             return
     

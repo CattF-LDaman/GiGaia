@@ -1,8 +1,8 @@
 
 from ..menupage import MenuPage
 
-from GiGaia.GiClient.UI.Widgets.Menu.title import GameTitle
-from GiGaia.GiClient.UI.Widgets.Menu.button import PageLink, ActionButton
+from GiGaia.GiClient.UI.Widgets.MainMenu.title import GameTitle
+from GiGaia.GiClient.UI.Widgets.MainMenu.button import PageLink, ActionButton
 
 class Start(MenuPage):
 

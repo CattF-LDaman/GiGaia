@@ -33,7 +33,7 @@ class Server:
         self.log = self.logger.log
         print(f"Logs for current session can be found at ' {self.log_file_path} ''")
 
-        self.log(f"GiServer with version {VERSION_STRING} on {sys.platform}")
+        self.log(f"GiServer with version {VERSION_STRING} on {sys.platform}", 10)
 
         self.clients = []
         self.user_clients = {}

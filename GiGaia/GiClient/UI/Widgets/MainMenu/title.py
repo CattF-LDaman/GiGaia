@@ -1,7 +1,7 @@
 
 from GiGaia.GiClient.UI.widget import Widget
 
-from GiGaia.GiClient.UI.Widgets.Menu.message import Message
+from GiGaia.GiClient.UI.Widgets.MainMenu.message import Message
 
 class GameTitle(Message):
 

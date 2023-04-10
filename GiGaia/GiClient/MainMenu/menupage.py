@@ -1,6 +1,6 @@
 
-from GiGaia.GiClient.UI.Widgets.Menu.page import PageWidget
-from GiGaia.GiClient.UI.Widgets.Menu.button import BackButton
+from GiGaia.GiClient.UI.Widgets.MainMenu.page import PageWidget
+from GiGaia.GiClient.UI.Widgets.MainMenu.button import BackButton
 
 class MenuPage:
     """
