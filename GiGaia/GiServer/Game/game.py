@@ -19,6 +19,7 @@ class Game:
         self.clock = pygame.time.Clock()
 
         self.users = {}
+        self.players = {}
 
         self.dt = 0
 
@@ -31,6 +32,8 @@ class Game:
     def leave(self, client):
 
         self.users.pop(client.username).left = True
+        if client.username in self.players:
+            self.players.pop(client.username)
         self.log(f"{client.username} left the game.",3)
 
     @property

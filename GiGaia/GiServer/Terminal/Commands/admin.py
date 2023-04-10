@@ -5,12 +5,6 @@ def stop(server, args):
     """Stop server, nicely."""
     server.close()
 
-def test(server, args):
-
-    server.traffic.broadcast("P_TEST", {"timestamp":int(time.time()), "message":" ".join(args)})  # Send test packet
-
-    return f"Sent P_TEST packet to {len(server.clients)} clients."
-
 def reloadconf(server, args):
     """Reloads config from files."""
     server.config.load()
@@ -34,6 +28,7 @@ def tickrate(server, args):
     return f"CURRENT: {server.game.current_tickrate}, TARGET: {server.config.game.tickrate}"
 
 def disconnect(server, args):
+    """Disconnects client from server."""
     cid = " ".join(args)
     c = server.identify(cid)
     if c:

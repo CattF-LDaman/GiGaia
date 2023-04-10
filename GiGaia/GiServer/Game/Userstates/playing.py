@@ -9,7 +9,7 @@ class Playing(Userstate):
 
     def setup(self):
 
-        pass
+        self.game.players[self.user.name] = self.user
 
     def tick(self):
 
