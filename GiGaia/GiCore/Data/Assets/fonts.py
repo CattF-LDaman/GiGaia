@@ -2,6 +2,15 @@
 import pygame
 import os
 
+def load(man):
+    
+    man.instance.log("[ASSETS] Loading fonts...")
+    for fontfile in os.listdir(os.path.join(man.location, "Fonts")):
+        fpath = os.path.join(man.location, "Fonts")
+        fontname, ext = os.path.splitext(fontfile)
+        if ext == ".png":
+            man.assets["fonts"][fontname] = Font(fpath, fontname)
+
 class Font:
 
     def __init__(self, location, name):

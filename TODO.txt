@@ -10,9 +10,17 @@ Tile data
 - Name
 - Description
 
+World data
+- Chunks
+    + 11 by 11 tiles 
+- Tile Properties
+    + 
+
 Player
 - Entity
     + Position
     + Movement
 - Inventory
     + Storage in-game is not limited by slots but by total item capacity
+
+Assets server

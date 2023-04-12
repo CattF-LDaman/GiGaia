@@ -1,15 +1,13 @@
 
-from contextlib import redirect_stdout
-with redirect_stdout(None):
-    import pygame
+import pygame
 
 from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 from GiGaia.GiClient.Game.game import Game
 from GiGaia.GiClient.MainMenu.menu import Menu
 from GiGaia.GiClient.Data.config import DEFAULT_CONFIG
 from GiGaia.GiClient.Data.directories import create_directory_structure
-from GiGaia.GiClient.Data.Assets import AssetsManager
 
+from GiGaia.GiCore.Data.Assets import AssetsManager
 from GiGaia.GiCore.logging import Logger
 from GiGaia.GiCore.config import Config
 from GiGaia.GiCore.version import VERSION_STRING
@@ -113,6 +111,10 @@ class Client:
                 if event.key == pygame.K_DELETE and pygame.key.get_pressed()[pygame.K_F4]:
                     # Hold F4 and press DEL after to trigger crash
                     raise SystemError("Force crash by user")
+                
+                elif event.key == pygame.K_F3 and self.dev:
+
+                    self.log(f"{self.clock.get_fps()} FPS")
 
             if self.state == CLIENT_STATE_INGAME:
                 self.game.handle_event(event)

@@ -8,7 +8,7 @@ def stop(server, args):
 def reloadconf(server, args):
     """Reloads config from files."""
     server.config.load()
-    server.logger.config = server.config.server.logging_config
+    server.logger.config = server.config.logging.__dict__
 
     return "Config reloaded. WARNING: Some changes might still require restart to take effect."
 
@@ -22,10 +22,6 @@ def clients(server, args):
         out += f"{client.username[:16]:>16} | {client.time_active[:16]:>16} | {client.full_address[:32]:>32} | {client.received:>16} | {client.sent:>16}"+"\n"
     out += ("-"*len(tbl_head))
     return out
-
-def tickrate(server, args):
-    """Get current and target tickrate."""
-    return f"CURRENT: {server.game.current_tickrate}, TARGET: {server.config.game.tickrate}"
 
 def disconnect(server, args):
     """Disconnects client from server."""

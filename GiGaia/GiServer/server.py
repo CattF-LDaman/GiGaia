@@ -1,8 +1,8 @@
 
-from GiGaia.GiCore.Networking import DEFAULT_SERVER_PORT
 from GiGaia.GiCore.logging import Logger
 from GiGaia.GiCore.version import VERSION_STRING
 from GiGaia.GiCore.Data import get_data_dir
+from GiGaia.GiCore.Data.Assets import AssetsManager
 
 from GiGaia.GiServer.Terminal.terminal import Terminal
 from GiGaia.GiServer.Networking import connections
@@ -14,10 +14,16 @@ from GiGaia.GiServer.Game.game import Game
 import os
 import sys
 import time
+import shutil
+import pygame
+
+pygame.init()
 
 class Server:
 
-    def __init__(self,server_directory=get_data_dir("GiGaiaServer")):
+    def __init__(self, server_directory=get_data_dir("GiGaiaServer"), dev=False):
+
+        self.dev = dev
 
         self.server_directory = server_directory
 
@@ -34,6 +40,14 @@ class Server:
         print(f"Logs for current session can be found at ' {self.log_file_path} ''")
 
         self.log(f"GiServer with version {VERSION_STRING} on {sys.platform}", 10)
+
+        if self.dev:
+            self.log("Running GiGaia in development mode!", 3)
+            shutil.copytree("GiGaia_Assets",self.dirs["assets"], dirs_exist_ok=True)
+            self.log("Assets duplicated to data directory.")
+
+        self.assets = AssetsManager(self)
+        self.assets.load()
 
         self.clients = []
         self.user_clients = {}
