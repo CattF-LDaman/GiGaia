@@ -6,15 +6,27 @@ World
 - Draw world
     + Generating tile sprites
 
+
 Tile data
 - Name
 - Description
 
+
 World data
+- Region
+    + Datafile per region
+    + 11 by 11 chunks
+    + 14641 tiles
 - Chunks
-    + 11 by 11 tiles 
-- Tile Properties
-    + 
+    + Clients get world data chunk per chunk from server
+    + 11 by 11 tiles
+- Relevant data (chunk)
+    + Tile data (tile id's as INT16)
+    + Tile spangle (spangle id's as INT8) (eg. grass, fungus?, wood rot?)
+    + Objects in chunk area (Object tileposition (topleft), instance id (INT64))
+        + instance id identifies the specific instance of an object, not what object it is. This is stored elsewhere.
+- [INCOMPLETE]
+
 
 Player
 - Entity
@@ -22,5 +34,6 @@ Player
     + Movement
 - Inventory
     + Storage in-game is not limited by slots but by total item capacity
+
 
 Assets server
