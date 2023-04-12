@@ -3,6 +3,8 @@ from GiGaia.GiCore.threading import threaded_daemon
 
 from GiGaia.GiServer.Game.user import User
 
+from GiGaia.GiServer.Game.Entity import EntityManager
+
 import pygame
 
 class Game:
@@ -22,6 +24,8 @@ class Game:
         self.players = {}
 
         self.dt = 0
+
+        self.entity_manager = EntityManager(self)
 
     def join(self, client):
 
@@ -50,5 +54,7 @@ class Game:
             for u in self.users.copy().values():
                 if u.state.ready:
                     u.state.tick()
+
+            self.entity_manager.update()
 
             self.traffic.dispatch()  # All outbound traffic should be ready for sending before this call
