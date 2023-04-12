@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from GiGaia.GiCore.Data.datatypes import pack, D_INT8
 from GiGaia.GiCore.Data import struc
 
-from .general import SC_TEST
+from .general import SC_TEST, SC_KSTR
 from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING
 
 PACKET_TYPES = {
@@ -17,6 +17,8 @@ PACKET_TYPES = {
 20: CS_LOGIN,
 21: SC_LOGIN_CONFIRM,
 
+69: SC_KSTR
+
 }
 
 PACKET_NAMES = {
@@ -27,7 +29,10 @@ PACKET_NAMES = {
 12: "A_WAITING",
 
 20: "CS_LOGIN",
-21: "SC_LOGIN_CONFIRM"
+21: "SC_LOGIN_CONFIRM",
+
+69:"SC_KSTR"
+
 }
 
 PACKET_NAMETYPES = {value:key for key,value in PACKET_NAMES.items()}

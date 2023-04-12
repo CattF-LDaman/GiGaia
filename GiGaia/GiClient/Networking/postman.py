@@ -81,7 +81,7 @@ class Postman:
                 in_packet_type, in_packet = read_packet(in_bin)
                 
                 self.received += 1
-
+                
                 if (in_packet_type not in self.subscribers or len(self.subscribers[in_packet_type]) == 0) and not in_packet_type in self.__w_received:
 
                     self.dropped += 1
@@ -157,8 +157,9 @@ class Postman:
         self.subscribe(packet_type, self.holding[packet_type], unique=True)
 
     def fetch(self, packet_type):
-        
-        if self.holding[packet_type]:
+        packet_type = self._parse_packet_type(packet_type)
+
+        if packet_type in self.holding and self.holding[packet_type]:
             out = self.holding[packet_type]
             self.hold(packet_type)
 

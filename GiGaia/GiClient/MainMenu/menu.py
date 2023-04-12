@@ -90,7 +90,7 @@ class Menu:
                         self.debug = False
 
                 case pygame.K_F1 if self.client.dev:
-                    self.start_join(("localhost", 17746), f"{getuser()}{int(time.time()*1000)}")
+                    self.start_join(("localhost", 17746), f"dev{getuser().encode('utf-8').hex()[:3]}")
 
                 case pygame.K_RETURN:
                     self.page.enter()

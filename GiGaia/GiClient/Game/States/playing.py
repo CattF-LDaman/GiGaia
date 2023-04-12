@@ -3,7 +3,6 @@ from GiGaia.GiClient.Game.state import State
 from GiGaia.GiClient.Game.Interfaces.playing import Playing as PlayingUI
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
-from GiGaia.GiCore.Data.hashing import hash_pwd_nosalt
 
 class Playing(State):
 
@@ -18,5 +17,5 @@ class Playing(State):
         pass
 
     def tick(self):
-
+        
         pass

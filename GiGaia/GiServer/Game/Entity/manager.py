@@ -18,4 +18,4 @@ class EntityManager:
     
     def update(self):
 
-        for 
+        pass #

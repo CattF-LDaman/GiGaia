@@ -8,7 +8,7 @@ _FIELD_DATATYPE = 1
 _FIELD_DATATYPE_LENSIZE = 2 # only for varied-size datatypes eg. D_STRING
 
 def build_struc(struc,struc_data):
-
+    
     struc_packed = b""
     for field in struc:
 
