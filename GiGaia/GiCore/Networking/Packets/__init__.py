@@ -29,8 +29,6 @@ PACKET_NAMES = {
 20: "CS_LOGIN",
 21: "SC_LOGIN_CONFIRM",
 
-69:"SC_KSTR"
-
 }
 
 PACKET_NAMETYPES = {value:key for key,value in PACKET_NAMES.items()}
