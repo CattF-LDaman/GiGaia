@@ -5,15 +5,20 @@ class Entity:
 
     ID = 0
     NAME = "BaseEntity"
-    PROPERTIES = ()
+    PROPERTIES = []
 
     def __init__(self, eid, position=(0,0)):
         
         self.instance_id = self.eid = eid
         self.position = list(position)
 
+        if hasattr(self.__class__,'PROPERTIES'):
+            for cls in self.__class__.__mro__:  # Merges properties between child and parent classes
+                if cls != self.__class__:
+                    self.__class__.PROPERTIES.extend(getattr(self.__class__,'PROPERTIES',[]))
+
     @property
-    def identity(self):
+    def identity_str(self):
 
         return f"{self.NAME} ({self.ID}): {self.eid}"
     
@@ -26,4 +31,3 @@ class Entity:
     def tile_pos(self):
 
         return pix_to_tile(self.position)
-    
