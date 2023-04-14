@@ -7,6 +7,10 @@ class Interface:
         self.game = state.game
         self.ui_manager = self.uim = state.game.ui_manager
 
+    def handle_event(self, event):
+
+        pass
+
     def destroy(self):
 
         pass

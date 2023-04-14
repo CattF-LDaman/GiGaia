@@ -28,6 +28,12 @@ class State:
         if self.ui:
             self.ui.create()
 
+    def handle_event_master(self, event):
+
+        if self.ui:
+            self.ui.handle_event(event)
+        self.handle_event(event)
+
     def destroy(self): # Called before switching to another state
 
         pass
@@ -37,6 +43,10 @@ class State:
         pass
 
     def update(self): # Called every tick right after UI update
+
+        pass
+
+    def handle_event(self, event):
 
         pass
 

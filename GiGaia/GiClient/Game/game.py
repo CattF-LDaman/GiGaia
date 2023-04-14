@@ -9,7 +9,6 @@ from GiGaia.GiClient.UI.ui_manager import UIManager
 from GiGaia.GiClient.UI.Widgets.debugpanel import DebugPanel
 from GiGaia.GiClient.UI.Widgets.devindicator import DevIndicator
 from GiGaia.GiClient.UI.Widgets.quitdialog import QuitDialog
-from GiGaia.GiClient.UI.Widgets.test import Test
 
 from GiGaia.GiCore.Networking.Packets import PID
 
@@ -40,6 +39,9 @@ class Game:
     def handle_event(self, event):
 
         self.ui_manager.handle_event(event)
+
+        if self.state:
+            self.state.handle_event_master(event)
 
         if event.type == pygame.KEYDOWN:
 
@@ -91,7 +93,7 @@ class Game:
         ssp = self.postman.fetch(PID.SC_LOAD_STATE)
         if ssp:
             if self.state:
-                self.state.destroy()
+                self.state.destroy_master()
 
             s = ssp[-1]
             self.state = STATES[s.sid](self)
@@ -107,9 +109,6 @@ class Game:
         self.ui_manager.update(self.client.ticks) # Handles everything UI including drawing
 
         self.handle_state()
-
-        while self.tests:
-            self.ui_manager.add_widget(Test, self.tests.pop())
 
     def draw(self):
         

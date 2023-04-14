@@ -29,14 +29,15 @@ class Setup(Interface):
         self.p.delete()
 
     def create(self):
+        ginf = self.state.game_info
 
         self.p = self.uim.add_widget(Panel)
 
-        self.uim.add_widget(Message, text="Let's get started.\nEnter your password.", text_scale=2, position=[0, 0.05], anchor="midtop", relative_anchor="midtop", relative_to=self.p)
+        self.uim.add_widget(Message, text=f"{'''Let's get started.''' if not ginf.user_exist else f'Welcome back, {self.state.game.username}'}\nEnter your password.", text_scale=2, position=[0, 0.05], anchor="midtop", relative_anchor="midtop", relative_to=self.p)
         self.error_msg = self.uim.add_widget(Message, text="", text_scale=2, color=(255,0,0), position=[0, 0.1], anchor="midtop", relative_anchor="midtop", relative_to=self.p)
         
         self.info_frame = self.uim.add_widget(Frame, position=[0, 0.15], width=0.8, height=120, anchor="midtop", relative_anchor="midtop", relative_to=self.p, skip_event=True)
-        ginf = self.state.game_info
+        
         self.server_name = self.uim.add_widget(Message, text=ginf.name, color=ginf.theme_color, text_scale=4, position=[0, 0], anchor="center", relative_anchor="midtop", relative_to=self.info_frame)
         self.server_description = self.uim.add_widget(Message, text=ginf.description, text_scale=2, position=[0, 0], anchor="center", relative_anchor="center", relative_to=self.info_frame)
         self.server_connected = self.uim.add_widget(Message, text=f"{ginf.connected} online (including you)", text_scale=2, position=[0, 0], anchor="center", relative_anchor="midbottom", relative_to=self.info_frame)
