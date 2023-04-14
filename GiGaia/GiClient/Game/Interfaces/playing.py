@@ -1,7 +1,7 @@
 
 from GiGaia.GiClient.Game.interface import Interface
 
-from GiGaia.GiClient.UI.Widgets.panel import Panel
+from GiGaia.GiClient.UI.Widgets.frame import Frame
 from GiGaia.GiClient.UI.Widgets.text import Message
 from GiGaia.GiClient.UI.Widgets.Playing.gamemenu import GameMenu
 
@@ -29,4 +29,6 @@ class Playing(Interface):
 
     def create(self):
 
-        self.uim.add_widget(Message, text="GiGaia", text_scale=10, position=[0, 0], anchor="center", relative_anchor="center")
+        self.ui = self.uim.add_widget(Frame, width=1.0, height=1.0, skip_event=True)
+
+        self.uim.add_widget(Message, text="GiGaia", text_scale=10, position=[0, 0], anchor="center", relative_anchor="center", relative_to=self.ui, skip_event=True)

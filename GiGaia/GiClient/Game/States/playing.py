@@ -12,10 +12,16 @@ class Playing(State):
 
         self.game_info = None
 
+        self.p.hold("SC_ENTITY")
+        self.p.hold("SC_ENTITY_POS")
+        self.p.hold("SC_ENTITY_UPD_PROP")
+
     def setup(self):
 
         pass
 
     def tick(self):
         
-        pass
+        self.p.fetch("SC_ENTITY")
+        self.p.fetch("SC_ENTITY_POS")
+        self.p.fetch("SC_ENTITY_UPD_PROP")

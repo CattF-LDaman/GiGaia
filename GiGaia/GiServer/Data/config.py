@@ -26,7 +26,8 @@ class Config:
             "theme_color":[198, 140, 83],
 
             "tickrate": 60,
-            "login_attempts": 5
+            "login_attempts": 5,
+            "entity_visibility_range": 6
         },
 
     }

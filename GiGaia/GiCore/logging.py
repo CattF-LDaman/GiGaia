@@ -49,7 +49,7 @@ class Logger:
 
         if self.config["print_logs"] and (level >= self.config["print_logs_from_level"] or self.print_all):
 
-            print(self._LEVEL_COLORS[level]+full_log)
+            print(self._LEVEL_COLORS[level]+full_log+"\n", end="")
 
     def close(self):
 

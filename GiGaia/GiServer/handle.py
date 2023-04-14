@@ -136,7 +136,7 @@ class Handle:
                 if not self.active:
                     break
 
-                for packet_type, packets in self.outbox.items():
+                for packet_type, packets in self.outbox.copy().items():
                     for out_packet in packets:
 
                         self.conn.sendsized(create_packet(packet_type, out_packet or {}))

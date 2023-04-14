@@ -5,7 +5,7 @@ class Entity:
 
     ID = 0
     NAME = "BaseEntity"
-    PROPERTIES = []
+    PROPERTIES = {}
 
     def __init__(self, eid, position=(0,0)):
         
@@ -15,7 +15,13 @@ class Entity:
         if hasattr(self.__class__,'PROPERTIES'):
             for cls in self.__class__.__mro__:  # Merges properties between child and parent classes
                 if cls != self.__class__:
-                    self.__class__.PROPERTIES.extend(getattr(self.__class__,'PROPERTIES',[]))
+                    self.__class__.PROPERTIES.update(getattr(cls,'PROPERTIES',[])) #self.__class__.PROPERTIES.extend(getattr(cls,'PROPERTIES',[]))
+
+        self.props = {}
+
+    def set_properties(self, props):
+
+        self.props = {**{p[0]:default for p, default in self.PROPERTIES.items()}, **props}
 
     @property
     def identity_str(self):

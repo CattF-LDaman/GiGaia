@@ -1,5 +1,7 @@
 
-TILE_SIZE_PIXELS = 16
+TILE_SPRITE_SCALE = 2 # This makes 1 pixel in the sprite 2 pixels large
+
+TILE_SIZE_PIXELS = 16 # Tile sprites should be 8 pixels because 8 * TILE_SPRITE_SCALE = 16
 CHUNK_SIZE_TILES = 11
 REGION_SIZE_CHUNKS = 11
 

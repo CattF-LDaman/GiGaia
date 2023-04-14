@@ -6,6 +6,7 @@ from GiGaia.GiCore.Data import struc
 
 from .general import SC_TEST
 from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING
+from .entity import SC_ENTITY, SC_ENTITY_POS, SC_ENTITY_UPD_PROP
 
 PACKET_TYPES = {
 0: SC_TEST,
@@ -16,6 +17,10 @@ PACKET_TYPES = {
 
 20: CS_LOGIN,
 21: SC_LOGIN_CONFIRM,
+
+40: SC_ENTITY,
+41: SC_ENTITY_POS,
+42: SC_ENTITY_UPD_PROP
 
 }
 
@@ -28,6 +33,10 @@ PACKET_NAMES = {
 
 20: "CS_LOGIN",
 21: "SC_LOGIN_CONFIRM",
+
+40: "SC_ENTITY",
+41: "SC_ENTITY_POS",
+42: "SC_ENTITY_UPD_PROP"
 
 }
 
