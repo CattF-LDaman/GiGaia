@@ -96,7 +96,7 @@ class Server:
 
         sys.exit(exit_code)
 
-    def start(self):
+    def run(self):
 
         self.log("Server starting...")
 
