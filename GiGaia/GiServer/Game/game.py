@@ -24,6 +24,7 @@ class Game:
         self.players = {}
 
         self.dt = 0
+        self.ticks = 0
 
         self.entity_manager = EntityManager(self)
 
@@ -37,7 +38,7 @@ class Game:
 
         self.users.pop(client.username).left = True
         if client.username in self.players:
-            self.players.pop(client.username)
+            self.players.pop(client.username).leave()
         self.log(f"{client.username} left the game.",3)
 
     @property
@@ -50,6 +51,7 @@ class Game:
         while self.running:
 
             self.dt = self.clock.tick(self.config.tickrate)
+            self.ticks += self.clock.get_time()
 
             for u in self.users.copy().values():
                 if u.state.ready:

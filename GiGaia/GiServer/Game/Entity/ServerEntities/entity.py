@@ -20,6 +20,14 @@ class Entity(EntityBase):
 
         pass
 
+    def destroy(self):
+        self.em.remove(self.eid)
+
+    def _destroy(self):
+
+        for player in self.seen_by:
+            player.h.send("SC_ENTITY_DESTROY", {"eid":self.eid})
+
     def change(self, prop, val):
 
         if prop not in self.props:
@@ -38,7 +46,7 @@ class Entity(EntityBase):
         player.visible_entities.append(self)
         if player not in self.seen_by:
             self.seen_by.append(player)
-            self.em.traffic.send(player.name, "SC_ENTITY", {"eid":self.eid, "position":self.position, "props":(self.PROPERTIES.keys(), self.props)})
+            self.em.traffic.send(player.name, "SC_ENTITY", {"eid":self.eid, "id":self.ID, "position":self.position, "props":(self.PROPERTIES.keys(), self.props)})
 
     def _update_position(self):
         self.position[0], self.position[1] = int(self.position[0]), int(self.position[1])

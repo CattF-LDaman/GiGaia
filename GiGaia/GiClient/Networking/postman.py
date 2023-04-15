@@ -164,3 +164,5 @@ class Postman:
             self.hold(packet_type)
 
             return out
+        
+        return []

@@ -3,6 +3,7 @@ from GiGaia.GiClient.UI.widget import Widget
 from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 
 from GiGaia.GiCore import VERSION_STRING
+from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
 
 import time
 
@@ -37,14 +38,24 @@ class DebugPanel(Widget):
         }
 
         if self.client.state == CLIENT_STATE_INGAME:
+            gamestate = self.client.game.state
+
             self.contents |= {
                 "server": self.client.game.addr[0],
                 "sent":self.client.game.postman.sent,
                 "recv":self.client.game.postman.received,
                 "drop":self.client.game.postman.dropped,
                 "user": self.client.game.username,
-                "gamestate": self.client.game.state
+                "gamestate": gamestate
             }
+
+            if gamestate.sid == SIDS.PLAYING:
+
+                self.contents |= {
+                    "entities": len(gamestate.entity_manager.entities),
+                    "player": gamestate.player_eid,
+                    "cam": gamestate.scene.camera_pos
+                }
         
         elif self.client.state == CLIENT_STATE_MENU:
             self.contents |= {"page": self.client.menu.page.__class__.__name__}

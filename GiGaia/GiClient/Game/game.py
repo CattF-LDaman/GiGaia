@@ -106,9 +106,9 @@ class Game:
         
         self.draw()
 
-        self.ui_manager.update(self.client.ticks) # Handles everything UI including drawing
-
         self.handle_state()
+
+        self.ui_manager.update(self.client.ticks) # Handles everything UI including drawing
 
     def draw(self):
         

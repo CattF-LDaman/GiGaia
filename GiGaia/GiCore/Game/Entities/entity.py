@@ -1,11 +1,15 @@
 
 from GiGaia.GiCore.Game.World.coords import pix_to_chunk, pix_to_tile
 
+from GiGaia.GiCore.Data.datatypes import D_STRING
+
 class Entity:
 
     ID = 0
     NAME = "BaseEntity"
-    PROPERTIES = {}
+    PROPERTIES = {
+        ("name", D_STRING, 1): ""
+    }
 
     def __init__(self, eid, position=(0,0)):
         
@@ -26,7 +30,7 @@ class Entity:
     @property
     def identity_str(self):
 
-        return f"{self.NAME} ({self.ID}): {self.eid}"
+        return f"{self.NAME} ({self.ID}): #{self.eid} @({self.position[0]}, {self.position[1]})"
     
     @property
     def chunk_pos(self):

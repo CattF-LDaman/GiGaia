@@ -32,6 +32,10 @@ class EntityManager:
         self.entities[eid] = e = entity(self, eid, position, props, *args, **kwargs)
         return e
     
+    def remove(self, eid):
+
+        self.entities.pop(eid)._destroy()
+
     def look(self, player, A, B):
 
         chunks = coord_range(A, B)

@@ -4,6 +4,8 @@ from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
 
 from GiGaia.GiServer.Game.Entity.ServerEntities.person import Person
 
+import random
+
 class Playing(Userstate):
 
     def __init__(self, user):
@@ -16,8 +18,13 @@ class Playing(Userstate):
 
     def setup(self):
 
-        self.game.players[self.name] = self.user
-        self.entity = self.game.entity_manager.spawn(Person, (0,0), {"name":self.name}, player=self)
+        self.game.players[self.name] = self
+        self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),random.randint(-100,100)), {"name":self.name}, player=self)
+        self.h.send("SC_PLAYER", {'eid':self.entity.eid})
+
+    def leave(self): # Called when player leaves
+
+        self.entity.destroy()
 
     def update_entities(self):
 

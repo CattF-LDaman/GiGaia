@@ -10,7 +10,6 @@ class Person(Entity):
 
     PROPERTIES = {
         ("has_bacon", D_BOOL): False,
-        ("name", D_STRING, 1): "Paul"
     }
 
 

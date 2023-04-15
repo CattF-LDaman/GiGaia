@@ -1,4 +1,4 @@
-from GiGaia.GiCore.Data.datatypes import D_INT8, D_INT16, D_STRING, D_BOOL, D_RAW, D_RBG
+from GiGaia.GiCore.Data.datatypes import D_INT8, D_INT16, D_INT64, D_STRING, D_BOOL, D_RAW, D_RBG
 
 # Makes client switch game state
 SC_LOAD_STATE = (
@@ -26,4 +26,8 @@ CS_LOGIN = (
 SC_LOGIN_CONFIRM = (
     ("is_ok", D_BOOL),
     ("msg", D_STRING, 1)
+)
+
+SC_PLAYER = (
+    ("eid", D_INT64),
 )

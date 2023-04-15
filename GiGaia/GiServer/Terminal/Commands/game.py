@@ -16,3 +16,7 @@ def bobcoin(server, args):
 def bob(server, args):
 
     server.game.entity_manager.spawn("Bob", (10,0))
+
+def entities(server, args):
+    """Show all entities."""
+    return "\n".join(e.identity_str for e in server.game.entity_manager.entities.values())
