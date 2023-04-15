@@ -4,6 +4,7 @@ VERSION_BYTES = b"".join(v.to_bytes(1,"little") for v in VERSION)
 
 VERSION_IDENTIFIER = "Pyrite"
 VERSION_STRING = ".".join(str(v) for v in VERSION)+" "+VERSION_IDENTIFIER
+BUILD = "dev"
 
 def version_from_bytes(vb):
 
