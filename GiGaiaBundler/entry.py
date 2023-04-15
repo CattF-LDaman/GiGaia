@@ -14,7 +14,7 @@ from Installer import installer
 
 bundle_type = '{trg}'
 if bundle_type == "Server":
-    loc = sys.argv[1] if len (sys.args) > 1 else "./GiGaiaServer"
+    loc = sys.argv[1] if len (sys.argv) > 1 else "./GiGaiaServer"
 else:
     loc = get_data_dir("GiGaia")
 
