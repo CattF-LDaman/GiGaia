@@ -24,7 +24,7 @@ class UserData(Datafile):
 
         super().__init__(os.path.join(users_dir, self.user_hash+'.user'))
     
-    def create(self, new_pwd):
+    def on_create(self, new_pwd):
 
         self.change_password(new_pwd)
         self.last_login = 0
