@@ -22,7 +22,10 @@ class Game:
         self.client = RUNNING_CLIENT
 
         self.config = self.client.config
-        self.screen = self.client.window
+
+        self.scale = self.config.client.game_scale
+        self.resize()
+        
         self.keybinds = self.client.keybinds
 
         self.username = username
@@ -35,6 +38,11 @@ class Game:
         self.state = None
 
         self.tests = []
+
+    def resize(self):
+
+        scr = self.client.window.get_size()
+        self.screen = pygame.Surface((int(scr[0]/self.scale), int(scr[1]/self.scale)))
 
     def handle_event(self, event):
 
@@ -103,18 +111,21 @@ class Game:
             self.state.tick()
 
     def tick(self):
-        
-        self.draw()
+
+        self.screen.fill((25,25,25))
 
         self.handle_state()
 
+        self.show()
+
         self.ui_manager.update(self.client.ticks) # Handles everything UI including drawing
 
-    def draw(self):
-        
-        self.screen.fill((25,25,25))
+    def show(self):
 
-        self.client.window.blit(self.screen, (0,0))
+        if self.scale > 1:
+            self.client.window.blit(pygame.transform.scale(self.screen, self.client.window.get_size()), (0,0))
+        else:
+            self.client.window.blit(self.screen, (0,0))
 
     def close(self):
         if not self.closed:

@@ -14,4 +14,4 @@ class Bob(Entity, BobBase):
     def draw(self, surf):
 
         self.rect.center = self.draw_pos
-        pygame.draw.rect(surf, (255,0,0), self.rect, border_radius=self.rect.width//2)
+        pygame.draw.rect(surf, (255,0,0), self.rect, border_radius=self.rect.width//4)

@@ -15,4 +15,4 @@ class EntityName(Message):
         if not self.entity.exists:
             self.delete()
 
-        self.position = (int(self.entity.draw_pos[0]), int(self.entity.draw_pos[1])-60)
+        self.position = (int(self.entity.window_pos[0]), int(self.entity.window_pos[1])-60)

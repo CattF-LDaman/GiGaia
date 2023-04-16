@@ -109,6 +109,10 @@ class Client:
 
                 self.close()
 
+            if event.type == pygame.WINDOWRESIZED:
+                if self.state == CLIENT_STATE_INGAME:
+                    self.game.resize()
+
             if event.type == pygame.KEYDOWN:
 
                 if self.dev and event.key == pygame.K_DELETE and pygame.key.get_pressed()[pygame.K_F4]:

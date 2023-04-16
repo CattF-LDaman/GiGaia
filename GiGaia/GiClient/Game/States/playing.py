@@ -15,7 +15,7 @@ class Playing(State):
 
         super().__init__(game, SIDS.PLAYING, PlayingUI)
 
-        self.scene = Scene(game.screen)
+        self.scene = Scene(game)
         self.entity_manager = EntityManager(self)
 
         self.cam_speed = 500

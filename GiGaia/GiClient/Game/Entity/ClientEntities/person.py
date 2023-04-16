@@ -11,6 +11,6 @@ class Person(Entity, PersonBase):
         self.rect = pygame.Rect(0,0,40,40)
 
     def draw(self, surf):
-
+        
         self.rect.center = self.draw_pos
-        pygame.draw.rect(surf, (0,0,255), self.rect, border_radius=self.rect.width//2)
+        pygame.draw.rect(surf, (0,0,255), self.rect, border_radius=self.rect.width//4)

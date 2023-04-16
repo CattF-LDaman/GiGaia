@@ -7,7 +7,8 @@ DEFAULT_CONFIG = {
         "max_fps": 0,
         "window_width": 800,
         "window_height": 800,
-        "window_fullscreen": False
+        "window_fullscreen": False,
+        "game_scale": 2,
     },
 
     "logging": Logger.DEFAULT_CONFIG,

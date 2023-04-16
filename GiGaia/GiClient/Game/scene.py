@@ -3,9 +3,10 @@ import pygame
 
 class Scene:
 
-    def __init__(self, screen):
+    def __init__(self, game):
 
-        self.screen = screen
+        self.game = game
+
         self.camera_pos = [0, 0]
 
     def set_camera(self, pos):
@@ -15,10 +16,11 @@ class Scene:
     @property
     def origin(self):
 
-        return self.screen.get_rect().center+pygame.Vector2(-self.camera_pos[0],-self.camera_pos[1])
+        return self.game.screen.get_rect().center+pygame.Vector2(-self.camera_pos[0],-self.camera_pos[1])
 
     def convert_screen_to_world_coord(self,coord):
-
+        
+        coord = pygame.Vector2(coord)/self.game.scale
         dx, dy = self.origin
         S1 = (dx, dy)
         T1 = [0, 0]
@@ -36,3 +38,7 @@ class Scene:
     def convert_world_to_screen_coord(self,coord):
 
         return self.origin + coord
+
+    def convert_world_to_window_coord(self,coord):
+
+        return pygame.Vector2(self.origin + coord)*self.game.scale
