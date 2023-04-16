@@ -18,7 +18,8 @@ class Setup(Userstate):
                                         'theme_color':self.game.config.theme_color,
                                         'description':self.game.config.description, 
                                         'connected':len(self.game.users), 
-                                        'user_exist':self.user.data.exists
+                                        'user_exist':self.user.data.exists,
+                                        'tickrate':self.game.config.tickrate,
                                     })
         
         login_success = False

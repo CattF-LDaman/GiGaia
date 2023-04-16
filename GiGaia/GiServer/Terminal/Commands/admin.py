@@ -1,3 +1,4 @@
+from GiGaia.GiCore import INFO
 
 import time
 
@@ -32,3 +33,8 @@ def disconnect(server, args):
         return f"Client '{c.identifier}' disconnected."
     
     return f"Client '{cid}' not found."
+
+def version(server, args):
+    """Shows version and build of running server."""
+
+    return INFO

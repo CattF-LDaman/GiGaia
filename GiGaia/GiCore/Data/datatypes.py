@@ -1,4 +1,6 @@
 
+from GiGaia.GiCore.Game.World.coords import round_coord
+
 import json
 import io
 
@@ -92,7 +94,7 @@ def unpack_json(data):
     return json.loads(data.decode('utf-8'))
 
 def pack_pos(data):
-
+    data = round_coord(data)
     return pack_int64_s(data[0])+pack_int64_s(data[1])
 
 def unpack_pos(data):

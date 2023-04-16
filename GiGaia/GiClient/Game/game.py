@@ -22,8 +22,8 @@ class Game:
         self.client = RUNNING_CLIENT
 
         self.config = self.client.config
-
         self.screen = self.client.window
+        self.keybinds = self.client.keybinds
 
         self.username = username
         self.addr = addr

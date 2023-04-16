@@ -120,7 +120,10 @@ class Handle:
                 if in_packet_type in self.subscribers:
 
                     for inbox in self.subscribers[in_packet_type]:
-                        inbox.append(in_packet)
+                        if type(inbox) == list:
+                            inbox.append(in_packet)
+                        else:
+                            inbox(in_packet)
 
         except ConnectionError as ce:
             self.close(True if "Connection closed" not in str(ce) and "[WinError 10054]" not in str(ce) else False)
@@ -176,4 +179,3 @@ class Handle:
         self.subscribers[packet_type].remove(subscriber_inbox)
         if len(self.subscribers[packet_type]) == 0:
             self.subscribers.pop(packet_type)
-

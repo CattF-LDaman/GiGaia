@@ -5,6 +5,7 @@ from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 from GiGaia.GiClient.Game.game import Game
 from GiGaia.GiClient.MainMenu.menu import Menu
 from GiGaia.GiClient.Data.config import DEFAULT_CONFIG
+from GiGaia.GiClient.Data.keybinds import Keybinds
 from GiGaia.GiClient.Data.directories import create_directory_structure
 
 from GiGaia.GiCore.Data.Assets import AssetsManager
@@ -70,6 +71,8 @@ class Client:
         self.assets.load()
         pygame.display.set_icon(self.assets.assets.icon)
 
+        self.keybinds = Keybinds(self.location)
+
         self.log("Client initialized.")
 
     def run(self):
@@ -108,7 +111,7 @@ class Client:
 
             if event.type == pygame.KEYDOWN:
 
-                if event.key == pygame.K_DELETE and pygame.key.get_pressed()[pygame.K_F4]:
+                if self.dev and event.key == pygame.K_DELETE and pygame.key.get_pressed()[pygame.K_F4]:
                     # Hold F4 and press DEL after to trigger crash
                     raise SystemError("Force crash by user")
                 

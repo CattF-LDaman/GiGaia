@@ -1,10 +1,13 @@
 
 class State:
 
+    TICKRATE = 60  # Gets overwritten with server value by SETUP
+
     def __init__(self, game, sid, interface):
         
         self.game = game
         self.client = game.client
+        self.keybinds = game.keybinds
         self.postman= self.p = game.postman
 
         self.inbox = {}

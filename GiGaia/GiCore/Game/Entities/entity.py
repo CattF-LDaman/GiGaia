@@ -34,7 +34,7 @@ class Entity:
     
     @property
     def chunk_pos(self):
-
+        
         return pix_to_chunk(self.position)
     
     @property

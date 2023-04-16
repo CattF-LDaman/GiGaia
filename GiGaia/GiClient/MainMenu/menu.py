@@ -98,6 +98,9 @@ class Menu:
                 case pygame.K_ESCAPE:
                     self.page.back()
 
+                case pygame.K_TAB:
+                    self.page.tab()
+
     def tick(self):
         
         self.draw()

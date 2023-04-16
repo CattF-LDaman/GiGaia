@@ -16,5 +16,5 @@ class Bob(Entity, BobBase):
 
     def tick(self):
 
-        self.position[0] += random.uniform(-1,1)*self.game.dt
-        self.position[1] += random.uniform(-1,1)*self.game.dt
+        self.position[0] += random.uniform(-50,50)*self.game.dt
+        self.position[1] += random.uniform(-50,50)*self.game.dt

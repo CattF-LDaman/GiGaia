@@ -23,3 +23,4 @@ class Setup(State):
     def setup(self):
 
         self.game_info = self.p.recv("SC_GAME_INFO", 2)
+        State.TICKRATE = self.game_info.tickrate

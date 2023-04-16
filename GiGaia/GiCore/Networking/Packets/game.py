@@ -14,7 +14,8 @@ SC_GAME_INFO = (
     ("theme_color", D_RBG),
     ("description", D_STRING, 2),
     ("connected", D_INT16),
-    ("user_exist",D_BOOL)
+    ("user_exist",D_BOOL),
+    ("tickrate",D_INT16)
 )
 
 # Login packet, 'password' is actually a hash

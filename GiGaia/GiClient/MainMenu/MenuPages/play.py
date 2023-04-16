@@ -25,6 +25,8 @@ class ConnectTo(MenuPage):
     def __init__(self, menu):
         super().__init__(menu, "Play")
 
+        self.inputs_order = []
+
     def enter(self):
 
         user = self.user_in.content.strip()
@@ -42,6 +44,13 @@ class ConnectTo(MenuPage):
 
         self.menu.start_join(addr, user)
 
+    def tab(self):
+
+        for inpn, inp in enumerate(self.inputs_order):
+            if inp.capturing:
+                inp.unclicked = True
+                self.inputs_order[inpn+1 if inpn != len(self.inputs_order)-1 else 0].clicked = True
+
     def create(self):
 
         self.uim.add_widget(Title, self.w, "Join server")
@@ -52,6 +61,8 @@ class ConnectTo(MenuPage):
 
         self.ip_in = self.uim.add_widget(Input, size=30, allowed_chars=None, text_scale=2, position=[0, 0.4], name="IP", anchor="center", relative_anchor="midtop", relative_to=self.w)
         self.port_in = self.uim.add_widget(Input, size=5, isize_w=self.user_in.size[0] , allowed_chars="0123456789", text_scale=2, position=[0, 0.5], name="Port", default=str(self.menu.config.networking.default_port), anchor="center", relative_anchor="midtop", relative_to=self.w)
+
+        self.inputs_order = [self.user_in, self.ip_in, self.port_in]
 
         self.uim.add_widget(ActionButton, self.w, "Join", action=self.enter, position=[0.5, 0.85])
 

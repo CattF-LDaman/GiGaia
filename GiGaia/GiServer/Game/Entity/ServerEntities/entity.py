@@ -49,7 +49,7 @@ class Entity(EntityBase):
             self.em.traffic.send(player.name, "SC_ENTITY", {"eid":self.eid, "id":self.ID, "position":self.position, "props":(self.PROPERTIES.keys(), self.props)})
 
     def _update_position(self):
-        self.position[0], self.position[1] = int(self.position[0]), int(self.position[1])
+        #self.position[0], self.position[1] = int(self.position[0]), int(self.position[1])
         if self.position != self.prev_pos:
             for player in self.seen_by:
                 player.h.send("SC_ENTITY_POS", {"eid":self.eid, "position":self.position})
