@@ -13,3 +13,8 @@ alias = {"exit":"stop", "?":"help", "dc":"disconnect", "kick":"disconnect", "bui
 
 commands["listcmds"] = lambda s,a : f"All commands:\n{os.linesep.join(sorted(list(commands)))}"
 commands["help"] = lambda s,a : f"All commands:\n\n{os.linesep.join([f'{cmdn}: {inspect.getdoc(command)}' if inspect.getdoc(command) else f'{cmdn}: No description.' for cmdn,command in sorted(commands.items())])}"
+
+def test_tiles(server, a):
+    return [t for t in server.assets.data.Tiles]
+
+commands["tile"] = test_tiles

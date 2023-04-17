@@ -1,5 +1,5 @@
 
-from . import datafiles, fonts, sounds
+from . import datafiles, fonts, sounds, tiles
 
 import traceback
 import os
@@ -25,8 +25,12 @@ class AssetsManager:
         datafiles.load(self)
         fonts.load(self)
         sounds.load(self)
+        tiles.load(self)
 
         self.load_icon()
+
+        for category, data in self.assets.items():
+            setattr(self, category, data)
 
         self.assets = types.SimpleNamespace(**self.assets)
         self.instance.log("[ASSETS] Done loading assets.")

@@ -15,8 +15,8 @@ Tile data
 World data
 - Region
     + Datafile per region
-    + 11 by 11 chunks
-    + 14641 tiles
+    + 32 by 32 chunks
+    + 123904 tiles
 - Chunks
     + Clients get world data chunk per chunk from server
     + 11 by 11 tiles
