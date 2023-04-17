@@ -1,5 +1,9 @@
 
-from . import TILE_SIZE_PIXELS, CHUNK_SIZE_PIXELS, CHUNK_SIZE_TILES
+from . import TILE_SIZE_PIXELS, CHUNK_SIZE_PIXELS, CHUNK_SIZE_TILES, REGION_SIZE_CHUNKS
+
+def chunk_region(coord):
+
+    return round_coord((coord[0]//REGION_SIZE_CHUNKS, coord[1]//REGION_SIZE_CHUNKS))
 
 def pix_to_tile(coord):
 
@@ -24,6 +28,10 @@ def pix_to_tileref(coord):
 def coord_range(A, B):
 
     return [(x,y) for x in range(A[0],B[0]) for y in range(A[1], B[1])]
+
+def coord_square(C , r):
+
+    return coord_range((C[0]-r,C[1]-r), (C[0]+r, C[1]+r))
 
 def round_coord(coord):
 

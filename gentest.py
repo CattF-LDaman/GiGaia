@@ -9,7 +9,7 @@ pygame.init()
 screen = pygame.display.set_mode((1000,1000))
 pixa = pygame.PixelArray(screen)
 
-seed = 10020403
+seed = 3456789
 
 tiles = SimpleNamespace(**{"DIRT": 1, "STONE": 2})
 
@@ -22,6 +22,7 @@ tdc = {0:(0, 0, 0), 1:(153//2, 102//2, 51//2), 2:(115//2, 115//2, 115//2)}
 for x in range(1000):
     for y in range(1000):
         sy = y
+        sx = x
         y = y - 500
 
         if y == 0:

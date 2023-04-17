@@ -2,7 +2,7 @@
 from GiGaia.GiCore.threading import threaded_daemon
 
 from GiGaia.GiServer.Game.user import User
-
+from GiGaia.GiServer.Game.World import World
 from GiGaia.GiServer.Game.Entity import EntityManager
 
 import pygame
@@ -26,6 +26,7 @@ class Game:
         self.dt = 0
         self.ticks = 0
 
+        self.world = World(self)
         self.entity_manager = EntityManager(self)
 
     def join(self, client):

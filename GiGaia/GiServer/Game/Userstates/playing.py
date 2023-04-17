@@ -16,6 +16,8 @@ class Playing(Userstate):
         self.entity = None
         self.visible_entities = []
 
+        self.served_chunks = []
+
         self.movement = [0, 0]
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
@@ -47,7 +49,13 @@ class Playing(Userstate):
         self.movement[0] = max(self.movement[0], mp.x, key=abs)
         self.movement[1] = max(self.movement[1], mp.y, key=abs)
 
+    def update_world(self):
+
+        self.served_chunks = self.game.world.serve(self)
+
     def tick(self):
 
         self.update_entities()
         self.handle_movement()
+        
+        self.update_world()

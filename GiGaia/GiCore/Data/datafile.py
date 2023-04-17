@@ -17,7 +17,7 @@ class Datafile:
         for dataname, *_, in self.STRUC:
             setattr(self, dataname, None)
 
-        if self.AUTO_CREATE:
+        if not self.exists and self.AUTO_CREATE:
             self.create()
 
         if self.exists:

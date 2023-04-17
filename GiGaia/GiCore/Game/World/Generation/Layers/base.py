@@ -13,7 +13,7 @@ class Base(Layer):
         "crown_variance": 4,
         "crown_smooth": 10,
         
-        "base_smooth": 14000,  # Gets used in special sauce, lower = more noisey, higher = smoother
+        "base_smooth": 11000,  # Gets used in special sauce, lower = more noisey, higher = smoother
         "base_noise_layers": [0.3, 0.2, 0.0, 0.15, 0.3, 0.15],  # weights
         "magic": 3
     }

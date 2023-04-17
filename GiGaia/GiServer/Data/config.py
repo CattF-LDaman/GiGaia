@@ -4,6 +4,7 @@ import json
 from types import SimpleNamespace
 
 from GiGaia.GiCore.Networking import DEFAULT_SERVER_PORT
+from GiGaia.GiCore.Game.World.Generation.Layers import SETTINGS
 
 
 class Config:
@@ -30,6 +31,12 @@ class Config:
             "entity_visibility_range": 6
         },
 
+        "world": {
+            "name":f"World_{os.urandom(3).hex()}",
+            "serve_range":8,
+            "generator": SETTINGS,
+            "chunk_tile_mod_max": 5,
+        }  
     }
 
     def __init__(self, config_dir):

@@ -23,6 +23,8 @@ class Playing(State):
         self.last_game_tick = 0
         self.ms_per_tick = int(1000/State.TICKRATE)
 
+        self.p.hold("SC_CHUNK")
+
     @property
     def player(self):
         if self.player_eid and self.player_eid in self.entity_manager.entities:

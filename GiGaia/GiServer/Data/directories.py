@@ -3,7 +3,7 @@ import os
 
 def create_directory_structure(server_dir):
 
-    dirnames = ["logs","configs","users", "assets"]
+    dirnames = ["logs","configs","users", "assets","worlds"]
     dirs = {dn:os.path.join(server_dir, dn) for dn in dirnames}
 
     for d in dirs.values():
