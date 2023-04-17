@@ -29,11 +29,5 @@ World data
 
 
 Player
-- Entity
-    + Position
-    + Movement
 - Inventory
     + Storage in-game is not limited by slots but by total item capacity
-
-
-Assets server
