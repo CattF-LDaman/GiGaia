@@ -19,7 +19,15 @@ def tile_to_chunk(coord):
 
 def chunk_to_tile(coord):
 
-    return (coord[0]*CHUNK_SIZE_TILES, coord[1]*CHUNK_SIZE_TILES)
+    return mult_coord(coord, CHUNK_SIZE_TILES)
+
+def chunk_to_pix(coord):
+
+    return tile_to_pix(chunk_to_tile(coord))
+
+def tile_to_pix(coord):
+
+    return mult_coord(coord, TILE_SIZE_PIXELS)
 
 def chunk_tile_positions(coord):
     
@@ -53,3 +61,11 @@ def round_coord(coord):
 def sum_coords(*coords):
 
     return (sum(c[0] for c in coords), sum(c[1] for c in coords))
+
+def mult_coord(coord, mult):
+    
+    return (coord[0]*mult, coord[1]*mult)
+
+def add_coord(coord, add):
+
+    return (coord[0]+add, coord[1]+add)

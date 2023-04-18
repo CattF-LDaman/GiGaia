@@ -1,6 +1,7 @@
 
 from GiGaia.GiCore.random_util import seeded_randchoice
 from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE
+from GiGaia.GiCore.color_util import darken
 
 from types import SimpleNamespace
 import pygame
@@ -42,9 +43,9 @@ class Tile:
         self.display_name = tile_data["display"]
         self.color = tile_data["sprite"] # TEMPORARY
     
-    def get_sprite(self, trand=0):
-
+    def get_sprite(self, depth=0, trand=0):
+        
         tsp = pygame.Surface((TILE_SPRITE_SIZE, TILE_SPRITE_SIZE))
-        tsp.fill(self.color)
+        tsp.fill(darken(self.color, depth*30))
 
         return tsp

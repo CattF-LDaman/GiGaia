@@ -3,6 +3,7 @@ from GiGaia.GiClient.Game.state import State
 from GiGaia.GiClient.Game.Interfaces.playing import Playing as PlayingUI
 
 from GiGaia.GiClient.Game.Entity.manager import EntityManager
+from GiGaia.GiClient.Game.World.world import World
 from GiGaia.GiClient.Game.scene import Scene
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
@@ -16,14 +17,14 @@ class Playing(State):
         super().__init__(game, SIDS.PLAYING, PlayingUI)
 
         self.scene = Scene(game)
+
+        self.world = World(self)
         self.entity_manager = EntityManager(self)
 
         self.cam_speed = 500
 
         self.last_game_tick = 0
         self.ms_per_tick = int(1000/State.TICKRATE)
-
-        self.p.hold("SC_CHUNK")
 
     @property
     def player(self):
@@ -49,6 +50,7 @@ class Playing(State):
 
     def tick(self):
         
+        self.world.update()
         self.entity_manager.update()
 
         if self.game.client.ticks-self.last_game_tick > self.ms_per_tick:

@@ -6,8 +6,8 @@ import opensimplex
 class Caves(Layer):
 
     SETTINGS = {
-        "cave_threshold": 0.09,
-        "cave_smooth": 30,
+        "cave_threshold": 0.14,
+        "cave_smooth": 60,
         "cave_height_fallof": 20000
     }
 

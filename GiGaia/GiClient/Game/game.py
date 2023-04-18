@@ -27,6 +27,7 @@ class Game:
         self.resize()
         
         self.keybinds = self.client.keybinds
+        self.assets = self.client.assets
 
         self.username = username
         self.addr = addr
@@ -36,8 +37,6 @@ class Game:
         self.quit_dialog = None
 
         self.state = None
-
-        self.tests = []
 
     def resize(self):
 
@@ -86,7 +85,6 @@ class Game:
         self.establish_connection()
         
         self.postman = Postman(self)
-        self.postman.subscribe(PID.SC_TEST, self.tests)
         self.postman.hold(PID.SC_LOAD_STATE)
         self.postman.start()
 

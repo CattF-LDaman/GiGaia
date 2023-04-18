@@ -2,6 +2,7 @@
 from GiGaia.GiCore.Game.World.coords import round_coord
 from GiGaia.GiCore.Game.World import CHUNK_SIZE_TILES
 
+from types import SimpleNamespace
 import json
 import io
 
@@ -25,6 +26,7 @@ D_CHUNKL = 15
 D_CHUNK = 16
 D_RGI = 17
 D_TILEREF = 18
+D_FPOS = 19
 
 def pack_bool(data):
 
@@ -105,6 +107,10 @@ def pack_pos(data):
 def unpack_pos(data):
 
     return [unpack_int_s(data[:8]),unpack_int_s(data[8:])]
+
+def unpack_fpos(data):
+
+    return (unpack_int_s(data[:8]),unpack_int_s(data[8:]))
 
 def raw(data):
 
@@ -220,7 +226,7 @@ def pack_tileref(data):
 
 def unpack_tileref(data):
     
-    return [data[0], data[1], data[2]]
+    return SimpleNamespace(x=data[0], y=data[1], z=data[2])#[data[0], data[1], data[2]]
 
 DT_PACK = 0
 DT_UNPACK = 1
@@ -240,6 +246,7 @@ D_INT64S: (pack_int64_s, unpack_int_s, 8),
 D_STRING: (pack_string, unpack_string, None), # None marks non-fixed length
 D_JSON: (pack_json, unpack_json, None),
 D_POS: (pack_pos, unpack_pos, 16),
+D_FPOS: (pack_pos, unpack_fpos, 16),
 D_RAW: (raw, raw, None),
 D_RBG: (pack_rbg, unpack_rbg, 3),
 D_DATA: (pack_datastruc, unpack_datastruc, None),

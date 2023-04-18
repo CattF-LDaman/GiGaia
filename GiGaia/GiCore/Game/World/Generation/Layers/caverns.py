@@ -12,7 +12,7 @@ class Caverns(Layer):
     def __init__(self, generator):
         super().__init__(generator)
 
-        self.noise = opensimplex.OpenSimplex(seed=self.gen.seed//23+1337)
+        self.noise = opensimplex.OpenSimplex(seed=self.gen.seed//20+1347)
 
         self.threshold = self.s.cavern_threshold
         self.smooth_mult = 1/self.s.cavern_smooth

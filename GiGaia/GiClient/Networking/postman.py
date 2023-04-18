@@ -94,7 +94,10 @@ class Postman:
                 if in_packet_type in self.subscribers:
 
                     for inbox in self.subscribers[in_packet_type]:
-                        inbox.append(in_packet)
+                        if type(inbox) == list:
+                            inbox.append(in_packet)
+                        else:
+                            inbox(in_packet)
 
         except ConnectionError:
             self.close(True)
@@ -166,3 +169,8 @@ class Postman:
             return out
         
         return []
+    
+    def hold_all(self, *packet_types):
+
+        for packet_type in packet_types:
+            self.hold(packet_type)
