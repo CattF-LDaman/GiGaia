@@ -19,13 +19,15 @@ class World:
         self.data = WorldData(self.game.server.dirs["worlds"], self.name, self)
         self.seed = self.data.seed
         self.generator = Generator(self.data.seed, self.game.server.assets.TIDS, self.config.generator)
+        self.generator.start()
 
     def serve(self, player):
 
         chunk_pos = player.entity.chunk_pos
-        served_chunks = coord_square(chunk_pos, self.config.serve_range)
+        player_chunks = coord_square(chunk_pos, self.config.serve_range)
+        served_chunks = []
 
-        for c in served_chunks:
+        for c in player_chunks:
             cr = chunk_region(c)
 
             if cr not in self.regions:
@@ -34,6 +36,7 @@ class World:
             if c not in self.regions[cr].chunks:
                 self.regions[cr].create_chunk(c)
 
-            self.regions[cr].chunks[c].serve(player)
+            if self.regions[cr].chunks[c].serve(player):
+                served_chunks.append(c)
 
         return served_chunks

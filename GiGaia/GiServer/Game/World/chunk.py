@@ -12,23 +12,15 @@ class Chunk:
         self.position = pos
 
         #if don't have data banchood
-        self.tiles = self.generate()
+        self.tiles = None
+        self.generate()
 
         self.modifications = []
         self.tick = 0
 
     def generate(self):
         
-        gen = self.world.generator
-        tiledata = []
-        for z in range(2):
-            tiledata.append([])
-            for y in range(CHUNK_SIZE_TILES):
-                tiledata[z].append([])
-                for x in range(CHUNK_SIZE_TILES):
-                        tiledata[z][y].append(gen.get_at(x, y ,z))
-
-        return tiledata
+        self.world.generator.generate_chunk(self.position)
     
     def set_at(self, x, y, z, tile_id):
 
@@ -36,6 +28,11 @@ class Chunk:
         self.modifications.append({"chunk":self.position, "tileref":(x,y,z), "tile":tile_id})
 
     def serve(self, player):
+
+        if not self.tiles:
+            self.tiles = self.world.generator.get_chunk(self.position)
+        if not self.tiles:
+            return False
 
         if self.tick != self.world.game.ticks:
             self.modifications = []
@@ -48,3 +45,5 @@ class Chunk:
         else:
             for mod in self.modifications:
                 player.h.send("SC_UPDATE_TILE", mod)
+
+        return True
