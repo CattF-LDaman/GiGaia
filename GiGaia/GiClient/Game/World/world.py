@@ -15,6 +15,9 @@ class World:
         self.assets = state.game.assets
 
         self.chunks = {}
+        
+        self.surface_updates = 0
+        self.viewport_size = 0
 
         self.p.hold_all("SC_CHUNK","SC_UPDATE_TILE","SC_UPDATE_CHUNK")
 
@@ -43,11 +46,19 @@ class World:
         topleft = self.scene.convert_screen_to_world_coord((0,0))
         botright = self.scene.convert_screen_to_world_coord(self.game.screen.get_size())
 
-        return coord_range(add_coord(pix_to_chunk(topleft),-1), add_coord(pix_to_chunk(botright),1)) #coord_square(pix_to_chunk(self.scene.camera_pos), 4)
+        #topleft = (self.state.scene.camera_pos[0]-self.game.screen.get_width()/2,self.state.scene.camera_pos[1]-self.game.screen.get_height()/2)
+        #botright = (self.state.scene.camera_pos[0]+self.game.screen.get_width()/2,self.state.scene.camera_pos[1]+self.game.screen.get_height()/2)
+
+        return coord_range(pix_to_chunk(topleft), pix_to_chunk(botright, ceil=True)) #coord_square(pix_to_chunk(self.scene.camera_pos), 4)
 
     def draw(self):
 
-        for cp in self.get_viewport_chunks():
+        viewport_chunks = self.get_viewport_chunks()
+
+        self.surface_updates = 0
+        self.viewport_size = len(viewport_chunks)
+
+        for cp in viewport_chunks:
 
             if cp in self.chunks:
 

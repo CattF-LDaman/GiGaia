@@ -4,14 +4,16 @@ from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 
 from GiGaia.GiCore import VERSION_STRING
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
+from GiGaia.GiCore.Game.World.coords import diff_coords
 
 import time
+import pygame
 
 class DebugPanel(Widget):
 
     def __init__(self, ui_manager):
 
-        super().__init__(ui_manager, position=[0, 16], layer=31, width=ui_manager.ui_layer.get_width(), height=150, anchor="topleft", always_redraw=True)
+        super().__init__(ui_manager, position=[0, 16], layer=31, width=ui_manager.ui_layer.get_width(), height=250, anchor="topleft", always_redraw=True)
 
         self.contents = {}
 
@@ -54,7 +56,12 @@ class DebugPanel(Widget):
                 self.contents |= {
                     "entities": len(gamestate.entity_manager.entities),
                     "player": gamestate.player_eid,
-                    "cam": gamestate.scene.camera_pos
+                    "cam": gamestate.scene.camera_pos,
+                    "cursor_wpos": gamestate.scene.convert_window_to_world_coord(pygame.mouse.get_pos()),
+                    "player_wpos": gamestate.player.position,
+                    "delta_pos": diff_coords(gamestate.scene.camera_pos, gamestate.player.position),
+                    "chunks_upd": gamestate.world.surface_updates,
+                    "chunks_drawn": gamestate.world.viewport_size,
                 }
         
         elif self.client.state == CLIENT_STATE_MENU:

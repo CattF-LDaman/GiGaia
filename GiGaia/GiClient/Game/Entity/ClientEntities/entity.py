@@ -14,6 +14,8 @@ class Entity(EntityBase):
 
         self.set_properties(props)
 
+        self.ghost_position = self.position.copy()
+
         if self.props["name"]:
             self.state.ui.entity_name(self)
 
@@ -23,6 +25,7 @@ class Entity(EntityBase):
 
     def update_position(self, new_pos):
 
+        self.ghost_position = new_pos.copy()
         self.position = new_pos
 
     def destroy(self):
@@ -32,12 +35,12 @@ class Entity(EntityBase):
     @property
     def draw_pos(self):  # Position on the game screen
 
-        return self.em.scene.convert_world_to_screen_coord(self.position)
+        return self.em.scene.convert_world_to_screen_coord(self.ghost_position)
 
     @property
     def window_pos(self):  # Position on the actual game window
 
-        return self.em.scene.convert_world_to_window_coord(self.position)
+        return self.em.scene.convert_world_to_window_coord(self.ghost_position)
 
     def draw(self, surf):
         

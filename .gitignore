@@ -1,6 +1,7 @@
 bundler_temp/
 bundled/
 bundler_wp/
+GiGaia.code-workspace
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

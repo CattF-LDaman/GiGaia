@@ -5,6 +5,20 @@ from GiGaia.GiCore.color_util import darken
 
 from types import SimpleNamespace
 import pygame
+import os
+
+def load_shapes(man):
+
+    loc = os.path.join(man.location,"Tiles","Shapes")
+    shape_assets = [(s, os.path.join(loc, s)) for s in os.listdir(loc)]
+
+    shapes = {}
+
+    for shape_name, shape in shape_assets:
+        if os.path.isdir(shape):
+            shapes[shape_name] = TileShape(shape)
+
+
 
 def load(man):
     """
@@ -49,3 +63,38 @@ class Tile:
         tsp.fill(darken(self.color, depth*30))
 
         return tsp
+    
+class TileShape:
+
+    def __init__(self, loc):
+        
+        self.name = os.path.basename(loc)
+        self.location = loc
+
+        self.sides = {"empty":None, "hug":None, "touch":None}
+
+    def _load(self):
+
+        for side in self.sides:
+            side_img = pygame.image.load(os.path.join(self.location, side+".png"))
+            self.sides[side] = self._load_side_img(side_img)
+
+    def _load_side_img(self, side_img):
+
+        sr = pygame.Rect(0, 0, TILE_SPRITE_SIZE, TILE_SPRITE_SIZE)
+        sprites = []
+
+        for sn in range(side_img.get_width()//TILE_SPRITE_SIZE):
+            sr.topleft = (TILE_SPRITE_SIZE*sn, 0)
+            sprites.append(side_img.subsurface(sr))
+
+        return sprites
+
+    def get_shape(self, top=0, right=0, bottom=0, left=0, rnd=12345):
+
+        pass
+
+    def fill(self, filling, top=0, right=0, bottom=0, left=0, rnd=12345):
+
+        pass
+

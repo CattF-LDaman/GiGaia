@@ -147,7 +147,7 @@ class Client:
 
         while self.running:
 
-            self.dt = self.clock.tick(self.config.client.max_fps)
+            self.dt = self.clock.tick(self.config.client.max_fps)/1000
             self.ticks += self.clock.get_time()
 
             self.handle_events()

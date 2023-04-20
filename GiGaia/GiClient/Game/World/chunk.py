@@ -39,7 +39,8 @@ class Chunk:
     def get_surface(self):
         
         if self.updated:
-
+            
+            self.world.surface_updates += 1
             self._surface.fill((0,0,0))
             for rl, layer in enumerate(self.tiles[::-1]):
                 self.draw_layer(1-rl, layer)

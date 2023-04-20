@@ -16,11 +16,6 @@ class Playing(State):
 
         super().__init__(game, SIDS.PLAYING, PlayingUI)
 
-        self.scene = Scene(game)
-
-        self.world = World(self)
-        self.entity_manager = EntityManager(self)
-
         self.cam_speed = 500
 
         self.last_game_tick = 0
@@ -33,6 +28,10 @@ class Playing(State):
 
     def setup(self):
 
+        self.scene = Scene(self.game)
+        self.world = World(self)
+        self.entity_manager = EntityManager(self)
+
         self.player_eid = self.p.recv("SC_PLAYER").eid
 
     def handle_movement(self):
@@ -40,16 +39,16 @@ class Playing(State):
         p = pygame.key.get_pressed()
 
         if p[self.keybinds.MOVE_UP]:
-            self.p.send("CS_MOVE", {"x":0, "y":-self.cam_speed})
+            self.player.move(0, -self.cam_speed)
         if p[self.keybinds.MOVE_DOWN]:
-            self.p.send("CS_MOVE", {"x":0, "y":self.cam_speed})
+            self.player.move(0, self.cam_speed)
         if p[self.keybinds.MOVE_LEFT]:
-            self.p.send("CS_MOVE", {"x":-self.cam_speed, "y":0})
+            self.player.move(-self.cam_speed, 0)
         if p[self.keybinds.MOVE_RIGHT]:
-            self.p.send("CS_MOVE", {"x":self.cam_speed, "y":0})
+            self.player.move(self.cam_speed, 0)
 
     def tick(self):
-        
+
         self.world.update()
         self.entity_manager.update()
 
@@ -58,3 +57,6 @@ class Playing(State):
             self.handle_movement()
 
             self.last_game_tick = self.game.client.ticks
+
+        if self.player:
+            self.scene.set_camera(self.player.position)

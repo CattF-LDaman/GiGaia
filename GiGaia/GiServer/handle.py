@@ -27,7 +27,8 @@ class Handle:
         self.dropped = 0
         self.run_start = 0
 
-        self.can_send = threading.Event()
+        #self.can_send = threading.Event()
+        self.can_send = threading.Semaphore()
 
         self.waiting = {}
         self.__w_received = {}
@@ -73,7 +74,7 @@ class Handle:
             self.closed = True
             if not lost:
                 self.conn.close()
-            self.can_send.set()
+            self.can_send.release(10)
             for w in self.waiting.values():
                 w.set()
             self.server.remove_client(self)
@@ -134,19 +135,17 @@ class Handle:
         try:
             while self.active:
 
-                self.can_send.wait()
+                self.can_send.acquire()
 
                 if not self.active:
                     break
 
                 for packet_type, packets in self.outbox.copy().items():
                     for out_packet in packets:
-
                         self.conn.sendsized(create_packet(packet_type, out_packet or {}))
                         self.sent += 1
                     self.outbox[packet_type] = []
 
-                self.can_send.clear()
         except ConnectionError as ce:
             self.close(True if "Connection closed" not in str(ce) and "[WinError 10054]" not in str(ce) else False)
 
@@ -159,11 +158,10 @@ class Handle:
 
     def send(self,packet_type, out_packet=None):
         packet_type = self._parse_packet_type(packet_type)
-
         if packet_type not in self.outbox:
             self.outbox[packet_type]= []
         self.outbox[packet_type].append(out_packet)
-        self.can_send.set()
+        self.can_send.release()
 
     def subscribe(self, packet_type, subscriber_inbox):
         packet_type = self._parse_packet_type(packet_type)

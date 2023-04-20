@@ -24,9 +24,9 @@ class Playing(Userstate):
 
     def setup(self):
 
-        self.game.players[self.name] = self
         self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),random.randint(-100,100)), {"name":self.name}, player=self)
         self.h.send("SC_PLAYER", {'eid':self.entity.eid})
+        self.game.players[self.name] = self
 
     def leave(self): # Called when player leaves
 

@@ -13,10 +13,7 @@ class EntityManager:
         self.entities = {}
         self.entity_types = {}
 
-        self.p.hold("SC_ENTITY")
-        self.p.hold("SC_ENTITY_POS")
-        self.p.hold("SC_ENTITY_UPD_PROP")
-        self.p.hold("SC_ENTITY_DESTROY")
+        self.p.hold_all("SC_ENTITY","SC_ENTITY_POS","SC_ENTITY_UPD_PROP","SC_ENTITY_DESTROY")
 
     def spawn(self, entity, eid, position, props={}):
 
@@ -59,9 +56,6 @@ class EntityManager:
     def update(self):
 
         self.handle_packets()
-
-        if self.state.player_eid in self.entities:
-            self.scene.set_camera(self.entities[self.state.player_eid].position)
 
         for e in self.entities.values():
 

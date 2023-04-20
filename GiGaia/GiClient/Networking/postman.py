@@ -79,11 +79,11 @@ class Postman:
                 if not in_bin:
                     self.close()
                 in_packet_type, in_packet = read_packet(in_bin)
-                
+
                 self.received += 1
                 
                 if (in_packet_type not in self.subscribers or len(self.subscribers[in_packet_type]) == 0) and not in_packet_type in self.__w_received:
-                    print(in_packet)
+
                     self.dropped += 1
                     continue
 

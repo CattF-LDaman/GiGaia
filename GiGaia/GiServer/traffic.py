@@ -29,7 +29,6 @@ class TrafficManager:
         return i
 
     def send(self, user, packet_type, out_packet):
-
         self.outbox.append((user, packet_type, out_packet))
 
     def dispatch(self):

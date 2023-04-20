@@ -9,6 +9,7 @@ from GiGaia.GiClient.UI.ui_manager import UIManager
 from GiGaia.GiClient.UI.Widgets.debugpanel import DebugPanel
 from GiGaia.GiClient.UI.Widgets.devindicator import DevIndicator
 from GiGaia.GiClient.UI.Widgets.quitdialog import QuitDialog
+from GiGaia.GiClient.UI.Widgets.text import Message
 
 from GiGaia.GiCore.Networking.Packets import PID
 
@@ -33,6 +34,7 @@ class Game:
         self.addr = addr
 
         self.debug = False
+        self.fps_counter = False
         self.closed = False
         self.quit_dialog = None
 
@@ -63,6 +65,12 @@ class Game:
                         self.debug.delete()
                         self.debug = False
 
+                case pygame.K_F3:
+                    if not self.fps_counter:
+                        self.fps_counter = self.uim.add_widget(Message, text="", anchor="topleft", position=(4,4), text_scale=2, color=(255,255,255))
+                    else:
+                        self.fps_counter.delete()
+                        self.fps_counter = None
                 case pygame.K_F2:
                     if self.quit_dialog and not self.quit_dialog.deleted:
                         self.quit_dialog.delete()
@@ -110,11 +118,15 @@ class Game:
 
     def tick(self):
 
+        self.dt = self.client.dt
+
         self.screen.fill((25,25,25))
+        if self.fps_counter:
+            self.fps_counter.change(str(int(self.client.clock.get_fps())))
 
         self.handle_state()
 
-        self.show()
+        self.show() # Displays everything in the game world
 
         self.ui_manager.update(self.client.ticks) # Handles everything UI including drawing
 

@@ -19,3 +19,8 @@ Combat
     + Players should always have a way to find a worthy monster/opponent to fight, no matter how late game he is.
 
 What one has/can should scale up satisfyingly, from being weak and poor to OP and decked out.
+
+TileShit
+Empty: No tile
+Hug: Same tile
+Touch: Diff tile
