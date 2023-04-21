@@ -87,6 +87,10 @@ def mult_coord(coord, mult):
     
     return (coord[0]*mult, coord[1]*mult)
 
+def div_coord(coord, div):
+    
+    return (coord[0]*div, coord[1]*div)
+
 def add_coord(coord, add):
 
     return (coord[0]+add, coord[1]+add)

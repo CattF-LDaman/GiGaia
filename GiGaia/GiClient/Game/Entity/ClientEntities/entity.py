@@ -35,12 +35,12 @@ class Entity(EntityBase):
     @property
     def draw_pos(self):  # Position on the game screen
 
-        return self.em.scene.convert_world_to_screen_coord(self.ghost_position)
+        return self.em.scene.convert_world_to_screen_coord(self.position)
 
     @property
     def window_pos(self):  # Position on the actual game window
 
-        return self.em.scene.convert_world_to_window_coord(self.ghost_position)
+        return self.em.scene.convert_world_to_window_coord(self.position)
 
     def draw(self, surf):
         

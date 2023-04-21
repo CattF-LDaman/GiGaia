@@ -59,4 +59,4 @@ class Playing(State):
             self.last_game_tick = self.game.client.ticks
 
         if self.player:
-            self.scene.set_camera(self.player.position)
+            self.scene.towards_camera(self.player.position)
