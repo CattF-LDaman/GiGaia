@@ -163,16 +163,17 @@ def unpack_datastruc(data):
 def pack_rgistruc(data):
     from GiGaia.GiCore.Data.struc import build_struc
 
-    struc, strucdata = data
+    struc = [(cp, D_CHUNK) for cp in data]
+
     out = io.BytesIO()
     for chunk_pos, datatype, *datalen in struc:  # datalen is actually a list of 'other arguments'
         
-        out.write(chunk_pos[0].to_bytes(12,"little")+chunk_pos[1].to_bytes(12,"little"))
+        out.write(chunk_pos[0].to_bytes(12,"little", signed=True)+chunk_pos[1].to_bytes(12,"little", signed=True))
         out.write(datatype.to_bytes(1,'little'))
         if datatype in DATATYPES and not DATATYPES[datatype][2]:
             out.write(datalen[0].to_bytes(1,"little"))
     struclen = len(out.getvalue())
-    out.write(build_struc(struc, strucdata))
+    out.write(build_struc(struc, data))
 
     return struclen.to_bytes(2,"little")+out.getvalue()
 
@@ -187,16 +188,15 @@ def unpack_rgistruc(data):
     while d.tell() < struc_len:
         
         _data = []
-        cx = int.from_bytes(d.read(12),"little")
-        cy = int.from_bytes(d.read(12), "little")
+        cx = int.from_bytes(d.read(12),"little", signed=True)
+        cy = int.from_bytes(d.read(12), "little", signed=True)
         _data.append(dataname := (cx,cy))
         _data.append(datatype := d.read(1)[0])
         if datatype in DATATYPES and not DATATYPES[datatype][2]:
             _data.append(datalen := d.read(1)[0])
         struc.append(_data)
 
-    return read_struc(struc, d.read())
-
+    return read_struc(struc, d.read(), namespace=False)
 
 def pack_keystrings(data):
     dstruc = [(k, D_STRING, 4) for k in data]

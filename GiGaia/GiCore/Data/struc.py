@@ -29,7 +29,7 @@ def build_struc(struc,struc_data):
 
     return struc_packed
 
-def read_struc(struc, struc_data):
+def read_struc(struc, struc_data, namespace=True):
 
     packet_out = {}
 
@@ -52,4 +52,4 @@ def read_struc(struc, struc_data):
 
         cur_index += field_len
 
-    return SimpleNamespace(**packet_out)
+    return SimpleNamespace(**packet_out) if namespace else packet_out

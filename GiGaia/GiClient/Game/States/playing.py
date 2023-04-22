@@ -7,6 +7,7 @@ from GiGaia.GiClient.Game.World.world import World
 from GiGaia.GiClient.Game.scene import Scene
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
+from GiGaia.GiCore.Game.World.coords import pix_to_tileref
 
 import pygame
 
@@ -47,6 +48,12 @@ class Playing(State):
         if p[self.keybinds.MOVE_RIGHT]:
             self.player.move(self.cam_speed, 0)
 
+    def handle_wset(self):  # Temporary
+
+        if pygame.mouse.get_pressed()[0]:
+            chunk, tileref = pix_to_tileref(self.scene.mouse)
+            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(0,), "tile":1})
+
     def tick(self):
 
         self.world.update()
@@ -57,6 +64,8 @@ class Playing(State):
             self.handle_movement()
 
             self.last_game_tick = self.game.client.ticks
+
+        self.handle_wset()
 
         if self.player:
             self.scene.towards_camera(self.player.position)

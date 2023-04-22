@@ -58,6 +58,9 @@ class Game:
                 if u.state.ready:
                     u.state.tick()
 
+            if self.world.should_save:
+                self.world.save()
+
             self.entity_manager.update()
 
             self.traffic.dispatch()  # All outbound traffic should be ready for sending before this call

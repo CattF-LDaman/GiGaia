@@ -21,6 +21,7 @@ class Playing(Userstate):
         self.movement = [0, 0]
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
+        self.h.subscribe("CS_WSET", self.handle_wset)
 
     def setup(self):
 
@@ -52,10 +53,16 @@ class Playing(Userstate):
     def update_world(self):
 
         self.served_chunks = self.game.world.serve(self)
+        for c in self.served_chunks:
+            self.game.world.grab_chunk(c).observers.append(self)
+
+    def handle_wset(self, ws):
+
+        self.game.world.get_chunk(ws.chunk).set_at(ws.tileref.x, ws.tileref.y, ws.tileref.z, ws.tile)
 
     def tick(self):
 
         self.update_entities()
         self.handle_movement()
-        
+
         self.update_world()

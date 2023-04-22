@@ -7,7 +7,7 @@ from GiGaia.GiCore.Data import struc
 from .general import SC_TEST
 from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING, SC_PLAYER
 from .entity import SC_ENTITY, SC_ENTITY_POS, SC_ENTITY_UPD_PROP, SC_ENTITY_DESTROY
-from .player import CS_MOVE
+from .player import CS_MOVE, CS_WSET
 from .world import SC_CHUNK, SC_UPDATE_CHUNK, SC_UPDATE_TILE
 
 PACKET_TYPES = {
@@ -28,6 +28,7 @@ PACKET_TYPES = {
 43: SC_ENTITY_DESTROY,
 
 50: CS_MOVE,
+51: CS_WSET,
 
 60: SC_CHUNK,
 61: SC_UPDATE_CHUNK,
@@ -53,6 +54,7 @@ PACKET_NAMES = {
 43: "SC_ENTITY_DESTROY",
 
 50: "CS_MOVE",
+51: "CS_WSET",
 
 60: "SC_CHUNK",
 61: "SC_UPDATE_CHUNK",

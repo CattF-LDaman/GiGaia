@@ -43,6 +43,9 @@ class Datafile:
     def on_create(self):
         pass
 
+    def on_read(self):
+        pass
+
     def save(self):
 
         self.on_save()
@@ -60,6 +63,8 @@ class Datafile:
         if not self.exists:
             return False
         
+        self.on_read()
+
         with open(self.location, 'rb') as df:
 
             df_version = df.read(1)[0]
