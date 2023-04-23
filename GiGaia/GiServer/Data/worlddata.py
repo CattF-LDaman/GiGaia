@@ -84,11 +84,14 @@ class WorldData(Datafile):
 
     def create_region_file(self, region):
 
-        self.region_files[region.position] = RegionData(self, region)
+        try:
+            self.region_files[region.position] = RegionData(self, region)
+        except Exception:
+            pass
 
     def on_save(self):
         
-        for region_pos,region in self.world.regions.items():
+        for region_pos,region in self.world.regions.copy().items():
             if region_pos not in self.region_files:
                 self.create_region_file(region)
             self.region_files[region_pos].save()
@@ -108,7 +111,11 @@ class RegionData(Datafile):
 
         self.region = region
 
-        super().__init__(os.path.join(worlddata.world_location, "regions", self.name))
+        try:
+            super().__init__(os.path.join(worlddata.world_location, "regions", self.name))
+        except Exception:
+            os.remove(os.path.join(worlddata.world_location, "regions", self.name))
+            super().__init__(os.path.join(worlddata.world_location, "regions", self.name))
 
     @property
     def name(self):
@@ -129,10 +136,11 @@ class RegionData(Datafile):
     def update_rgi(self):
 
         rgi_data = {}
-        for chunk_pos, chunk in self.region.chunks.items():
+        for chunk_pos, chunk in self.region.chunks.copy().items():
             if chunk.modified:
                 rgi_data[chunk_pos] = chunk.tiles
                 chunk.modified = False
+
         self.rgi.update(rgi_data)
     
     def on_save(self):

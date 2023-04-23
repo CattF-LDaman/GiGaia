@@ -60,6 +60,7 @@ class Game:
 
             if self.world.should_save:
                 self.world.save()
+                # self.world.unload() # KANKER KANKER KUT KANKER ZOOI VUILE KANKER FLIKKER
 
             self.entity_manager.update()
 

@@ -62,7 +62,7 @@ class Datafile:
 
         if not self.exists:
             return False
-        
+
         self.on_read()
 
         with open(self.location, 'rb') as df:

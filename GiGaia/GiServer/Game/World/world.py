@@ -35,6 +35,15 @@ class World:
         self.last_save = self.game.ticks
         self.data.save()
 
+    def unload(self):
+        
+        for r in self.regions.copy().values():
+            for chunk in r.chunks.copy().values():
+                if not chunk.observers and not chunk.modified:
+                    r.chunks.pop(chunk.position)
+            if not r.chunks:
+                self.regions.pop(r.position)
+
     def get_chunk(self, cp):
 
         cr = chunk_region(cp)

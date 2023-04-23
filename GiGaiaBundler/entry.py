@@ -3,6 +3,7 @@ import os
 
 ENTRY_CONTENT = """
 import sys
+import multiprocessing
 from os import environ
 environ["PYGAME_HIDE_SUPPORT_PROMPT"] = "1"
 
@@ -19,6 +20,7 @@ else:
     loc = get_data_dir("GiGaia")
 
 if __name__ == "__main__":
+    multiprocessing.freeze_support()
     installer.run(loc, BUILD)
     {trg}(loc).run()
 """
