@@ -62,6 +62,9 @@ class Game:
                 self.world.save()
                 # self.world.unload() # KANKER KANKER KUT KANKER ZOOI VUILE KANKER FLIKKER
 
+            if self.world.should_update_time:
+                self.world.update_time()
+
             self.entity_manager.update()
 
             self.traffic.dispatch()  # All outbound traffic should be ready for sending before this call

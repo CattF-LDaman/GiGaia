@@ -1,7 +1,10 @@
 
 from .chunk import Chunk
 from GiGaia.GiCore.Game.World.coords import pix_to_chunk, coord_range, coord_square, add_coord
+from GiGaia.GiCore.Game.World.timestamp import Timestamp
 
+import time
+import pygame
 from functools import lru_cache
 
 class World:
@@ -19,11 +22,31 @@ class World:
         self.surface_updates = 0
         self.viewport_size = 0
 
+        self._time_reference = [0, 0] # IN-GAME, MONOTONIC
+
+        self.daycycle = self.assets.data.daycycle
+
         self.p.hold_all("SC_CHUNK","SC_UPDATE_TILE","SC_UPDATE_CHUNK")
+        self.p.subscribe("SC_TIME", self.update_time)
 
     def create_chunk(self, chunk_pos, tiles):
 
         self.chunks[chunk_pos] = Chunk(self, chunk_pos, tiles)
+
+    def update_time(self, tp):
+
+        self._time_reference[1] = time.monotonic()
+        self._time_reference[0] = tp.time
+
+    @property
+    def time_value(self):
+
+        return self._time_reference[0] + (time.monotonic() - self._time_reference[1])
+
+    @property
+    def time(self):
+
+        return Timestamp(self.time_value)
 
     def handle_packets(self):
 
@@ -52,6 +75,8 @@ class World:
         return coord_range(pix_to_chunk(topleft), pix_to_chunk(botright, ceil=True)) #coord_square(pix_to_chunk(self.scene.camera_pos), 4)
 
     def draw(self):
+
+        self.game.screen.fill(self.time.sky_color(self.daycycle))
 
         viewport_chunks = self.get_viewport_chunks()
 

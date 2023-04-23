@@ -27,6 +27,9 @@ D_CHUNK = 16
 D_RGI = 17
 D_TILEREF = 18
 D_FPOS = 19
+D_INT128 = 20
+D_INT128S = 21
+D_DEC = 22
 
 def pack_bool(data):
 
@@ -60,6 +63,10 @@ def pack_int64(data):
 
     return pack_int(data, 8)
 
+def pack_int128(data):
+
+    return pack_int(data, 16)
+
 def pack_int_s(data, intsize):
 
     return data.to_bytes(intsize,"little", signed=True)
@@ -83,6 +90,10 @@ def pack_int32_s(data):
 def pack_int64_s(data):
 
     return pack_int_s(data, 8)
+
+def pack_int128_s(data):
+
+    return pack_int_s(data, 16)
 
 def pack_string(data):
 
@@ -228,6 +239,14 @@ def unpack_tileref(data):
     
     return SimpleNamespace(x=data[0], y=data[1], z=data[2])#[data[0], data[1], data[2]]
 
+def pack_dec(data):
+
+    return pack_int128(int(data*1000))
+
+def unpack_dec(data):
+
+    return unpack_int(data)/1000
+
 DT_PACK = 0
 DT_UNPACK = 1
 DT_SIZE = 2
@@ -239,10 +258,12 @@ D_INT8: (pack_int8, unpack_int, 1),
 D_INT16: (pack_int16, unpack_int, 2),
 D_INT32: (pack_int32, unpack_int, 4),
 D_INT64: (pack_int64, unpack_int, 8),
+D_INT128: (pack_int128, unpack_int, 16),
 D_INT8S: (pack_int8_s, unpack_int_s, 1),
 D_INT16S: (pack_int16_s, unpack_int_s, 2),
 D_INT32S: (pack_int32_s, unpack_int_s, 4),
 D_INT64S: (pack_int64_s, unpack_int_s, 8),
+D_INT128S: (pack_int128_s, unpack_int_s, 16),
 D_STRING: (pack_string, unpack_string, None), # None marks non-fixed length
 D_JSON: (pack_json, unpack_json, None),
 D_POS: (pack_pos, unpack_pos, 16),
@@ -254,7 +275,8 @@ D_KSTR: (pack_keystrings, unpack_datastruc, None),
 D_CHUNKL: (pack_chunk_layer, unpack_chunk_layer, CHUNK_SIZE_TILES*CHUNK_SIZE_TILES*2),
 D_CHUNK: (pack_chunk, unpack_chunk, CHUNK_SIZE_TILES*CHUNK_SIZE_TILES*2*2),
 D_RGI: (pack_rgistruc, unpack_rgistruc, None),
-D_TILEREF: (pack_tileref, unpack_tileref, 3)
+D_TILEREF: (pack_tileref, unpack_tileref, 3),
+D_DEC: (pack_dec, unpack_dec, 16),
 }
 
 def unpack(datatype, data):

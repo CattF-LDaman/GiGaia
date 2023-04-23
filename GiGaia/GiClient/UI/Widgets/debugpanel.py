@@ -62,6 +62,10 @@ class DebugPanel(Widget):
                     "delta_pos": diff_coords(gamestate.scene.camera_pos, gamestate.player.position),
                     "chunks_upd": gamestate.world.surface_updates,
                     "chunks_drawn": gamestate.world.viewport_size,
+                    "time": gamestate.world.time.value,
+                    "day": gamestate.world.time.day,
+                    "day_progress": gamestate.world.time.day_progress,
+                    "night": gamestate.world.time.is_night
                 }
         
         elif self.client.state == CLIENT_STATE_MENU:

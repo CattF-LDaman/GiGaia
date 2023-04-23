@@ -1,5 +1,5 @@
 
-from GiGaia.GiCore.Data.datatypes import D_CHUNK, D_FPOS, D_TILEREF, D_INT16
+from GiGaia.GiCore.Data.datatypes import D_CHUNK, D_FPOS, D_TILEREF, D_INT16, D_DEC
 
 # Make chunk known to client
 SC_CHUNK = (
@@ -18,4 +18,8 @@ SC_UPDATE_TILE = (
 SC_UPDATE_CHUNK = (
     ("chunk", D_FPOS),
     ("tiles", D_CHUNK)
+)
+
+SC_TIME = (
+    ("time", D_DEC),
 )

@@ -1,10 +1,13 @@
 
 from GiGaia.GiCore.Game.World.Generation import Generator
 from GiGaia.GiCore.Game.World.coords import coord_square, chunk_region, tile_to_chunk
+from GiGaia.GiCore.Game.World.timestamp import Timestamp
 from GiGaia.GiCore.threading import threaded_nondaemon
 
 from GiGaia.GiServer.Data.worlddata import WorldData
 from GiGaia.GiServer.Game.World.region import Region
+
+import time
 
 class World:
 
@@ -23,11 +26,25 @@ class World:
         self.generator.start()
 
         self.last_save = 0
+        self.last_time_upd = 0
+
+        self.time_start = self.data.game_time
+        self.time_ref = time.monotonic()
 
     @property
     def should_save(self):
 
         return self.game.ticks - self.last_save > 1000
+
+    @property
+    def should_update_time(self):
+        
+        return self.game.ticks - self.last_time_upd > 10000
+
+    @property
+    def time(self):
+
+        return Timestamp(self.time_start + (time.monotonic()-self.time_ref))
 
     @threaded_nondaemon
     def save(self):
@@ -35,8 +52,17 @@ class World:
         self.last_save = self.game.ticks
         self.data.save()
 
+    def update_time(self):
+
+        self.game.traffic.broadcast("SC_TIME", {"time":self.time.value})
+        self.last_time_upd = self.game.ticks
+
+    def update_time_player(self, player):
+
+        player.h.send("SC_TIME", {"time":self.time.value})
+
     def unload(self):
-        
+
         for r in self.regions.copy().values():
             for chunk in r.chunks.copy().values():
                 if not chunk.observers and not chunk.modified:

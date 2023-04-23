@@ -1,6 +1,6 @@
 
 from GiGaia.GiCore.Data.datafile import Datafile
-from GiGaia.GiCore.Data.datatypes import D_INT64, D_RGI, D_CHUNK
+from GiGaia.GiCore.Data.datatypes import D_DEC, D_RGI, D_INT128, D_INT64
 from GiGaia.GiCore.Data.hashing import hash_pwd, hash_str
 
 from GiGaia.GiCore.Game.World.coords import chunk_region
@@ -11,11 +11,12 @@ import time
 class WorldData(Datafile):
     AUTO_CREATE = True
 
-    DATA_VERSION = 1
+    DATA_VERSION = 2
     STRUC = (
             ("seed", D_INT64),
-            ("time_created", D_INT64),
-            ("last_saved",D_INT64)
+            ("time_created", D_INT128),
+            ("last_saved",D_INT128),
+            ("game_time", D_DEC)
             )
 
 
@@ -81,6 +82,7 @@ class WorldData(Datafile):
 
         self.seed = seed
         self.time_created = int(time.time())
+        self.game_time = 0
 
     def create_region_file(self, region):
 
@@ -97,6 +99,7 @@ class WorldData(Datafile):
             self.region_files[region_pos].save()
 
         self.last_saved = int(time.time())
+        self.game_time = self.world.time.value if hasattr(self.world, "time_start") else 0
 
 class RegionData(Datafile):
 

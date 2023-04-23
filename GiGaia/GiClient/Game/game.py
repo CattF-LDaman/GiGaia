@@ -120,7 +120,7 @@ class Game:
 
         self.dt = self.client.dt
 
-        self.screen.fill((25,25,25))
+        self.screen.fill((255,255,255))
         if self.fps_counter:
             self.fps_counter.change(str(int(self.client.clock.get_fps())))
 

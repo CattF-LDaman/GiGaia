@@ -29,6 +29,8 @@ def load(man):
     tile_names["DIRT"] = Tile()
     tile_ids["DIRT"] = 1
     """
+    man.instance.log("[ASSETS] Loading tiles...")
+
     data = man.assets["data"]
 
     tile_names_id = {}

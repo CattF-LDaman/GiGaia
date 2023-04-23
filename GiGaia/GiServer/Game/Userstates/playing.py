@@ -29,6 +29,8 @@ class Playing(Userstate):
         self.h.send("SC_PLAYER", {'eid':self.entity.eid})
         self.game.players[self.name] = self
 
+        self.game.world.update_time_player(self)
+
     def leave(self): # Called when player leaves
 
         self.entity.destroy()

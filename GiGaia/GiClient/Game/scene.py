@@ -1,5 +1,5 @@
 
-from GiGaia.GiCore.Game.World.coords import sub_coords, mult_coord, sum_coords
+from GiGaia.GiCore.Game.World.coords import sub_coords, mult_coord, sum_coords, round_coord
 
 import pygame
 
@@ -9,16 +9,21 @@ class Scene:
 
         self.game = game
 
-        self.camera_pos = [0, 0]
+        self._camera_pos = [0, 0]
         self.camera_speed = 4
 
     def towards_camera(self, pos):
 
-        self.camera_pos = sum_coords(mult_coord(sub_coords(pos, self.camera_pos),self.camera_speed*self.game.dt),self.camera_pos)
+        self._camera_pos = sum_coords(mult_coord(sub_coords(pos, self._camera_pos),self.camera_speed*self.game.dt),self._camera_pos)
 
     def set_camera(self, pos):
 
-        self.camera_pos = pos
+        self._camera_pos = pos
+
+    @property
+    def camera_pos(self):
+
+        return round_coord(self._camera_pos)
 
     @property
     def origin(self):

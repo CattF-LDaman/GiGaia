@@ -16,6 +16,7 @@ class Chunk:
         self.tiles = tiles
 
         self._surface = pygame.Surface((CHUNKSURF_SIZE_PIXELS, CHUNKSURF_SIZE_PIXELS))
+        self._surface.set_colorkey((0,0,0))
         self.surface = None
         self.updated = True
 

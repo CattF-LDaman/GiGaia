@@ -50,9 +50,14 @@ class Playing(State):
 
     def handle_wset(self):  # Temporary
 
+        l = 1 if pygame.key.get_pressed()[pygame.K_LSHIFT] else 0
+
         if pygame.mouse.get_pressed()[0]:
             chunk, tileref = pix_to_tileref(self.scene.mouse)
-            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(0,), "tile":1})
+            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":1})
+        elif pygame.mouse.get_pressed()[2]:
+            chunk, tileref = pix_to_tileref(self.scene.mouse)
+            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})
 
     def tick(self):
 
