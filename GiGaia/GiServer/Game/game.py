@@ -58,12 +58,7 @@ class Game:
                 if u.state.ready:
                     u.state.tick()
 
-            if self.world.should_save:
-                self.world.save()
-                # self.world.unload() # KANKER KANKER KUT KANKER ZOOI VUILE KANKER FLIKKER
-
-            if self.world.should_update_time:
-                self.world.update_time()
+            self.world.tick()
 
             self.entity_manager.update()
 

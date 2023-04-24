@@ -17,6 +17,7 @@ class Playing(Userstate):
         self.visible_entities = []
 
         self.served_chunks = []
+        self.world_updates = {}
 
         self.movement = [0, 0]
 
@@ -53,6 +54,14 @@ class Playing(Userstate):
         self.movement[1] = max(self.movement[1], mp.y, key=abs)
 
     def update_world(self):
+
+        for chunk_pos, modifications in self.world_updates.items():
+            if len(modifications) > self.game.world.config.chunk_tile_mod_max:
+                self.h.send("SC_UPDATE_CHUNK", {"chunk":chunk_pos, "tiles":self.game.world.grab_chunk(chunk_pos).tiles})
+            else:
+                for mod in modifications:
+                    self.h.send("SC_UPDATE_TILE", mod)
+        self.world_updates.clear()
 
         self.served_chunks = self.game.world.serve(self)
         for c in self.served_chunks:

@@ -19,6 +19,7 @@ class World:
         self.name = self.config.name
 
         self.regions = {}
+        self.modified_chunks = []
 
         self.data = WorldData(self.game.server.dirs["worlds"], self.name, self)
         self.seed = self.data.seed
@@ -89,6 +90,25 @@ class World:
     def grab_chunk(self, cp):
 
         return self.regions[chunk_region(cp)].chunks[cp]
+
+    def tick(self):
+    
+        if self.should_save:
+            self.save()
+            # self.world.unload() # KANKER KANKER KUT KANKER ZOOI VUILE KANKER FLIKKER
+
+        if self.should_update_time:
+            self.update_time()
+
+        self.handle_modifications()
+
+    def handle_modifications(self):
+
+        for chunk in self.modified_chunks:
+            for player in chunk.observers:
+                player.world_updates[chunk.position] = chunk.modifications
+            chunk.observers.clear()
+        self.modified_chunks.clear()
 
     def serve(self, player):
 

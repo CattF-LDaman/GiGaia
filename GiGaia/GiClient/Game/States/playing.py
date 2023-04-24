@@ -35,6 +35,15 @@ class Playing(State):
 
         self.player_eid = self.p.recv("SC_PLAYER").eid
 
+    def handle_event(self, event):
+
+        match event.type:
+            case pygame.KEYDOWN:
+                match event.key:
+                    case pygame.K_F10:
+                        for c in self.world.chunks.values():
+                            c.updated = True
+
     def handle_movement(self):
 
         p = pygame.key.get_pressed()

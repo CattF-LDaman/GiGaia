@@ -20,3 +20,9 @@ def bob(server, args):
 def entities(server, args):
     """Show all entities."""
     return "\n".join(e.identity_str for e in server.game.entity_manager.entities.values())
+
+def world(server, args):
+
+    w = server.game.world
+    inf = f"World: {w.name}\nLocation: {w.data.location}\nSeed: {w.data.seed}\nLoaded regions: {len(w.data.region_files)}\nTimestamp: {w.time.value}\nDay: {w.time.day}\nDay progress:{w.time.day_progress}"
+    return inf
