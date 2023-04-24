@@ -6,20 +6,20 @@ import math
 
 def chunk_region(coord):
 
-    return round_coord((coord[0]//REGION_SIZE_CHUNKS, coord[1]//REGION_SIZE_CHUNKS))
+    return floor_coord((coord[0]//REGION_SIZE_CHUNKS, coord[1]//REGION_SIZE_CHUNKS))
 
 def pix_to_tile(coord):
 
-    return round_coord((coord[0]//TILE_SIZE_PIXELS, coord[1]//TILE_SIZE_PIXELS))
+    return floor_coord((coord[0]//TILE_SIZE_PIXELS, coord[1]//TILE_SIZE_PIXELS))
 
 def pix_to_chunk(coord, ceil=False):
 
     cp = (coord[0]/CHUNK_SIZE_PIXELS, coord[1]/CHUNK_SIZE_PIXELS)
-    return round_coord(cp) if not ceil else ceil_coord(cp)
+    return floor_coord(cp) if not ceil else ceil_coord(cp)
 
 def tile_to_chunk(coord):
 
-    return round_coord((coord[0]//CHUNK_SIZE_TILES, coord[1]//CHUNK_SIZE_TILES))
+    return floor_coord((coord[0]//CHUNK_SIZE_TILES, coord[1]//CHUNK_SIZE_TILES))
 
 def chunk_to_tile(coord):
 
@@ -59,9 +59,13 @@ def coord_square(C , r):
 
     return coord_range((C[0]-r,C[1]-r), (C[0]+r, C[1]+r))
 
-def round_coord(coord):
+def floor_coord(coord):
 
     return (math.floor(coord[0]), math.floor(coord[1]))
+
+def round_coord(coord, ndigits):
+
+    return (round(coord[0], ndigits), round(coord[1], ndigits))
 
 def ceil_coord(coord):
 

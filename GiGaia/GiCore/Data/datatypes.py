@@ -1,5 +1,5 @@
 
-from GiGaia.GiCore.Game.World.coords import round_coord
+from GiGaia.GiCore.Game.World.coords import floor_coord
 from GiGaia.GiCore.Game.World import CHUNK_SIZE_TILES
 
 from types import SimpleNamespace
@@ -112,7 +112,7 @@ def unpack_json(data):
     return json.loads(data.decode('utf-8'))
 
 def pack_pos(data):
-    data = round_coord(data)
+    data = floor_coord(data)
     return pack_int64_s(data[0])+pack_int64_s(data[1])
 
 def unpack_pos(data):

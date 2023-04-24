@@ -1,5 +1,5 @@
 
-from GiGaia.GiCore.Game.World.coords import sub_coords, mult_coord, sum_coords, round_coord
+from GiGaia.GiCore.Game.World.coords import sub_coords, mult_coord, sum_coords, floor_coord
 
 import pygame
 
@@ -23,7 +23,7 @@ class Scene:
     @property
     def camera_pos(self):
 
-        return round_coord(self._camera_pos)
+        return floor_coord(self._camera_pos)
 
     @property
     def origin(self):
