@@ -22,18 +22,24 @@ class Playing(State):
         self.last_game_tick = 0
         self.ms_per_tick = int(1000/State.TICKRATE)
 
+        self.player_eid = None
+
+        self.p.subscribe("SC_PLAYER", self.set_player)
+
     @property
     def player(self):
         if self.player_eid and self.player_eid in self.entity_manager.entities:
             return self.entity_manager.entities[self.player_eid]
+
+    def set_player(self, pp):
+
+        self.player_eid = pp.eid
 
     def setup(self):
 
         self.scene = Scene(self.game)
         self.world = World(self)
         self.entity_manager = EntityManager(self)
-
-        self.player_eid = self.p.recv("SC_PLAYER").eid
 
     def handle_event(self, event):
 
@@ -62,7 +68,7 @@ class Playing(State):
 
         if pygame.mouse.get_pressed()[0]:
             chunk, tileref = pix_to_tileref(self.scene.mouse)
-            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":1})
+            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":3})
         elif pygame.mouse.get_pressed()[2]:
             chunk, tileref = pix_to_tileref(self.scene.mouse)
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})

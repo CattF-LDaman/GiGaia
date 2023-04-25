@@ -55,6 +55,13 @@ class World:
 
         return self.chunks[chunk].tiles[z][tileref[1]][tileref[0]]
 
+    def update_tile(self, x, y):
+        chunk, tileref = tile_to_tileref((x,y))
+        if chunk not in self.chunks:
+            return
+        
+        self.chunks[chunk].update_tile(*tileref)
+
     def update_chunk(self, chunk_pos):
         if chunk_pos in self.chunks:
             self.chunks[chunk_pos].updated = True

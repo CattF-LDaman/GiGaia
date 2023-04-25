@@ -63,7 +63,7 @@ class Physical(Entity, PhysicalBase):
                 self.grounded = True
             self.position[1] = prev_y
             vel_y = 0
-            vel_x *= 1 / (1 + (dt * self.props["friction"])) #*= self.props["friction"]**(dt*60)
+            vel_x *= 1 / (1 + (dt * self.props["friction"]))
         else:
             vel_x *= 1 / (1 + (dt * self.props["air_friction"]))
 

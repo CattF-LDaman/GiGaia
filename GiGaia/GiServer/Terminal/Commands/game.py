@@ -44,6 +44,23 @@ def superplayer(server, args):
 
     return "God is dead."
 
-def aids(server, args):
+def addtime(server, args):
 
-    return str(server.game.players[args[0]].entity.aids())
+    server.game.world.time_start += int(args[0])
+
+def tp(server, args):
+    """Teleport player"""
+
+    if len(args) != 3:
+        return "usage: tp <PLAYER NAME> <X> <Y>"
+    
+    player_name = args[0]
+    if player_name not in server.game.players:
+        return f"No such player: {player_name}"
+    
+    player = server.game.players[player_name]
+    if player.entity:
+        player.entity.position[0] = int(args[1])
+        player.entity.position[1] = int(args[2])
+
+    return f"Teleported {player_name} to ({args[1]} {args[2]})"

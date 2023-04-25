@@ -12,7 +12,7 @@ class Person(Physical):
     PROPERTIES = {
         ("has_bacon", D_BOOL): False,
         ("speed", D_INT16): 3000,
-        ("jump_strength", D_INT16): 560,
+        ("jump_strength", D_INT16): 650,
     }
 
 

@@ -1,0 +1,13 @@
+{
+    "display": "Cum",
+
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [255, 230, 230],
+            "grain": [255, 240, 240],
+            "border": [235, 210, 210]
+        }
+    }
+
+}

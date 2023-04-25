@@ -35,7 +35,7 @@ class Config:
             "name":f"World_{os.urandom(3).hex()}",
             "serve_range":8,
             "generator": SETTINGS,
-            "chunk_tile_mod_max": 5,
+            "chunk_tile_mod_max": 14,
         }  
     }
 

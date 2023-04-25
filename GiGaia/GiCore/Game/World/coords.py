@@ -105,3 +105,7 @@ def pix_chunk_range(A,B):
     Bc = pix_to_chunk(B, True)
 
     return coord_range(Ac,Bc)
+
+def neighbours(coord):
+
+    return ((coord[0], coord[1]-1),(coord[0], coord[1]+1),(coord[0]-1, coord[1]),(coord[0]+1, coord[1]))
