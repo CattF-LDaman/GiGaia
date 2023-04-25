@@ -30,6 +30,8 @@ D_FPOS = 19
 D_INT128 = 20
 D_INT128S = 21
 D_DEC = 22
+D_DECS = 23
+D_VEC2 = 24
 
 def pack_bool(data):
 
@@ -247,6 +249,22 @@ def unpack_dec(data):
 
     return unpack_int(data)/1000
 
+def pack_decs(data):
+
+    return pack_int128_s(int(data*1000))
+
+def unpack_decs(data):
+
+    return unpack_int_s(data)/1000
+
+def pack_vec2(data):
+    
+    return pack_decs(data[0])+pack_decs(data[1])
+
+def unpack_vec2(data):
+
+    return [unpack_decs(data[:16]),unpack_decs(data[16:])]
+
 DT_PACK = 0
 DT_UNPACK = 1
 DT_SIZE = 2
@@ -277,6 +295,8 @@ D_CHUNK: (pack_chunk, unpack_chunk, CHUNK_SIZE_TILES*CHUNK_SIZE_TILES*2*2),
 D_RGI: (pack_rgistruc, unpack_rgistruc, None),
 D_TILEREF: (pack_tileref, unpack_tileref, 3),
 D_DEC: (pack_dec, unpack_dec, 16),
+D_DECS: (pack_decs, unpack_decs, 16),
+D_VEC2: (pack_vec2, unpack_vec2, 32)
 }
 
 def unpack(datatype, data):

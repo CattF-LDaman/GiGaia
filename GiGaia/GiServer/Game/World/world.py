@@ -82,6 +82,20 @@ class World:
             self.regions[cr].create_chunk(cp)
 
         return self.regions[cr].chunks[cp]
+    
+    def has_chunk(self, cp):
+
+        if chunk_region(cp) not in self.regions:
+            return False
+        
+        if cp not in self.regions[chunk_region(cp)].chunks:
+            return False
+        
+        return True
+
+    def grab_any(self,chunks):
+
+        return [self.grab_chunk(cp) for cp in chunks if self.has_chunk(cp)]
 
     def create_region(self, rp):
 

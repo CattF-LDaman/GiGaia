@@ -5,6 +5,7 @@ from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
 from GiGaia.GiServer.Game.Entity.ServerEntities.person import Person
 
 import random
+import math
 
 class Playing(Userstate):
 
@@ -22,11 +23,12 @@ class Playing(Userstate):
         self.movement = [0, 0]
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
+        self.h.subscribe("CS_JUMP", self.handle_jump_packet)
         self.h.subscribe("CS_WSET", self.handle_wset)
 
     def setup(self):
 
-        self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),random.randint(-100,100)), {"name":self.name}, player=self)
+        self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),-5000), {"name":self.name}, player=self)
         self.h.send("SC_PLAYER", {'eid':self.entity.eid})
         self.game.players[self.name] = self
 
@@ -45,13 +47,17 @@ class Playing(Userstate):
 
     def handle_movement(self):
 
-        self.entity.position[0] += self.movement[0] * self.game.dt
-        self.entity.position[1] += self.movement[1] * self.game.dt
+        #self.entity.position[0] += self.movement[0] * self.game.dt
+        #self.entity.position[1] += self.movement[1] * self.game.dt
+        self.entity.move(self.movement)
         self.movement = [0, 0]
 
     def handle_move_packet(self, mp):
-        self.movement[0] = max(self.movement[0], mp.x, key=abs)
-        self.movement[1] = max(self.movement[1], mp.y, key=abs)
+        self.movement[0] = math.copysign(1, mp.x)#max(self.movement[0], mp.x, key=abs)
+
+    def handle_jump_packet(self, jp):
+
+        self.entity.jump()
 
     def update_world(self):
 

@@ -1,10 +1,11 @@
 
-from GiGaia.GiCore.Data.datatypes import D_INT16S, D_FPOS, D_TILEREF, D_INT16
+from GiGaia.GiCore.Data.datatypes import D_INT8S, D_FPOS, D_TILEREF, D_INT16
 
 CS_MOVE = (
-    ("x", D_INT16S),
-    ("y", D_INT16S)
+    ("x", D_INT8S),
 )
+
+CS_JUMP = ()
 
 CS_WSET = (
     ("chunk", D_FPOS),

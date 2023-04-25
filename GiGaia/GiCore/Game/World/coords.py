@@ -98,3 +98,10 @@ def div_coord(coord, div):
 def add_coord(coord, add):
 
     return (coord[0]+add, coord[1]+add)
+
+def pix_chunk_range(A,B):
+
+    Ac = pix_to_chunk(A)
+    Bc = pix_to_chunk(B, True)
+
+    return coord_range(Ac,Bc)

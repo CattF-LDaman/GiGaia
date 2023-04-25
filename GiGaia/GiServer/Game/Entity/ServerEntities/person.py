@@ -1,17 +1,40 @@
 
 from .entity import Entity
+from .physical import Physical
 from GiGaia.GiCore.Game.Entities import Person as PersonBase
 
-class Person(Entity, PersonBase):
+class Person(Physical, PersonBase):
+
+    PERSON_PHYSICS = {
+        "mass": 95,
+        "width": 30,
+        "height": 60,
+        "friction": 10,
+        "air_friction": 10,
+    }
 
     def __init__(self, entity_manager, eid, position, props, player):
-        
+
+        props.update(self.PERSON_PHYSICS)
+
         super().__init__(entity_manager, eid, position, props)
 
         self.player = player # Userstates.playing class
 
         self.em.game.log(f"{self.player.user.name} spawned at {self.position}")
 
+    def move(self, movement):
+
+        mx, my = movement
+        speed = self.props["speed"]
+
+        self.add_velocity(mx*speed if self.grounded else mx*speed)
+
+    def jump(self):
+
+        jump = self.props["jump_strength"]
+        self.set_velocity(y=-jump if self.grounded else None)
+
     def tick(self):
 
-        pass
+        self.update_physics()

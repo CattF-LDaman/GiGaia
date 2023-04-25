@@ -48,14 +48,13 @@ class Playing(State):
 
         p = pygame.key.get_pressed()
 
-        if p[self.keybinds.MOVE_UP]:
-            self.player.move(0, -self.cam_speed)
-        if p[self.keybinds.MOVE_DOWN]:
-            self.player.move(0, self.cam_speed)
+        if p[self.keybinds.JUMP]:
+            self.player.jump()
+
         if p[self.keybinds.MOVE_LEFT]:
-            self.player.move(-self.cam_speed, 0)
+            self.player.move(-1)
         if p[self.keybinds.MOVE_RIGHT]:
-            self.player.move(self.cam_speed, 0)
+            self.player.move(1)
 
     def handle_wset(self):  # Temporary
 

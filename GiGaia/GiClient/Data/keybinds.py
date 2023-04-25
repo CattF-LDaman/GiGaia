@@ -8,10 +8,10 @@ import pygame
 class Keybinds(Datafile):
 
     DEFAULT_KEYBINDS = {
-        "MOVE_UP": pygame.K_z,
         "MOVE_DOWN": pygame.K_s,
         "MOVE_LEFT": pygame.K_q,
-        "MOVE_RIGHT": pygame.K_d
+        "MOVE_RIGHT": pygame.K_d,
+        "JUMP": pygame.K_SPACE
     }
 
     AUTO_CREATE = True

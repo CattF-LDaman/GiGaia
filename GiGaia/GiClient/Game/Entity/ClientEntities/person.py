@@ -9,13 +9,16 @@ class Person(Entity, PersonBase):
         super().__init__(entity_manager, eid, position, props)
 
         self.is_player = eid == self.game.state.player_eid
-        self.rect = pygame.Rect(0,0,40,40)
+        self.rect = pygame.Rect(0,0,30,60)
 
-    def move(self, x, y):
+    def move(self, x):
         
-        self.em.p.send("CS_MOVE", {"x":x, "y":y})
+        self.em.p.send("CS_MOVE", {"x":x})
         self.ghost_position[0] += x*self.game.dt
-        self.ghost_position[1] += y*self.game.dt
+
+    def jump(self):
+
+        self.em.p.send("CS_JUMP")
     
     def draw(self, surf):
         
