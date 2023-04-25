@@ -1,5 +1,6 @@
 
 from GiGaia.GiCore.Game.World import TILE_SIZE_PIXELS, CHUNK_SIZE_PIXELS, CHUNK_SIZE_TILES
+from GiGaia.GiCore.Game.World.coords import tileref_to_tile, tile_to_pix, chunk_to_pix
 
 import pygame
 
@@ -12,6 +13,8 @@ class Chunk:
 
         self.world = region.world
         self.position = pos
+
+        self.world_position = chunk_to_pix(self.position)
 
         self.tiles = self.world.data.get_chunk(self.position)
         if not self.tiles:
@@ -28,7 +31,8 @@ class Chunk:
         
         self.world.generator.generate_chunk(self.position)
     
-    def get_collision(self):
+    # Broken?
+    def get_collision_old(self):
 
         if not self._collision and self.tiles:
 
@@ -48,18 +52,32 @@ class Chunk:
                     else:
 
                         if tr.width >= TILE_SIZE_PIXELS:
-                            tr.topleft = (self.position[0]*CHUNK_SIZE_PIXELS+tr.topleft[0],self.position[1]*CHUNK_SIZE_PIXELS+tr.topleft[1])
-                            row_rects.append(tr.copy())
+                            ntr = tr.copy()
+                            ntr.topleft = (self.position[0]*CHUNK_SIZE_PIXELS+tr.topleft[0],self.position[1]*CHUNK_SIZE_PIXELS+tr.topleft[1])
+                            row_rects.append(ntr)
 
                         tr.topleft = (tr.topleft[0] + TILE_SIZE_PIXELS,tr.topleft[1])
                         tr.width = 0
 
                     if x == CHUNK_SIZE_TILES-1 and tr.width>0:
-                        tr.topleft = (self.position[0]*CHUNK_SIZE_PIXELS+tr.topleft[0],self.position[1]*CHUNK_SIZE_PIXELS+tr.topleft[1])
-                        row_rects.append(tr.copy())
+                        ntr = tr.copy()
+                        ntr.topleft = (self.position[0]*CHUNK_SIZE_PIXELS+tr.topleft[0],self.position[1]*CHUNK_SIZE_PIXELS+tr.topleft[1])
+                        row_rects.append(ntr)
 
                 self._collision.extend(row_rects)
 
+        return self._collision
+
+    def get_collision(self):
+
+        if not self._collision and self.tiles:
+
+            for y, row in enumerate(self.tiles[0]):
+                for x, tile in enumerate(row):
+                    if tile:
+                        tr = pygame.Rect(self.world_position[0]+x*TILE_SIZE_PIXELS, self.world_position[1]+y*TILE_SIZE_PIXELS, TILE_SIZE_PIXELS, TILE_SIZE_PIXELS)
+                        self._collision.append(tr)
+            
         return self._collision
 
     def set_at(self, x, y, z, tile_id):

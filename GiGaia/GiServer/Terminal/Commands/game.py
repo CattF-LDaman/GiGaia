@@ -43,4 +43,7 @@ def superplayer(server, args):
         player.entity.change("jump_strength",player.entity.props["jump_strength"]*2)
 
     return "God is dead."
-    
+
+def aids(server, args):
+
+    return str(server.game.players[args[0]].entity.aids())

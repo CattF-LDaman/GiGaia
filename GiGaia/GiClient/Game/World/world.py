@@ -1,6 +1,6 @@
 
 from .chunk import Chunk
-from GiGaia.GiCore.Game.World.coords import pix_to_chunk, coord_range, coord_square, add_coord
+from GiGaia.GiCore.Game.World.coords import pix_to_chunk, coord_range, coord_square, add_coord, tile_to_tileref
 from GiGaia.GiCore.Game.World.timestamp import Timestamp
 
 import time
@@ -47,6 +47,17 @@ class World:
     def time(self):
 
         return Timestamp(self.time_value)
+
+    def get_at(self, x,y,z):
+        chunk, tileref = tile_to_tileref((x,y))
+        if chunk not in self.chunks:
+            return 0
+
+        return self.chunks[chunk].tiles[z][tileref[1]][tileref[0]]
+
+    def update_chunk(self, chunk_pos):
+        if chunk_pos in self.chunks:
+            self.chunks[chunk_pos].updated = True
 
     def handle_packets(self):
 

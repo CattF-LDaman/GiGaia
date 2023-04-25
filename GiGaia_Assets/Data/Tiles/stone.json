@@ -1,6 +1,13 @@
 {
     "display": "Stone",
 
-    "sprite": [117, 108, 108]
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [120, 120, 120],
+            "grain": [130, 130, 130],
+            "border": [100, 100, 100]
+        }
+    }
 
 }

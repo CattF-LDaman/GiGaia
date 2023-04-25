@@ -1,6 +1,13 @@
 {
     "display": "Dirt",
 
-    "sprite": [153, 102, 51]
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [137, 76, 47],
+            "grain": [149, 82, 50],
+            "border": [125, 69, 42]
+        }
+    }
 
 }

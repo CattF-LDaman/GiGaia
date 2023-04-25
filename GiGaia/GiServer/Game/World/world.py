@@ -93,9 +93,9 @@ class World:
         
         return True
 
-    def grab_any(self,chunks):
+    def grab_all(self,chunks):
 
-        return [self.grab_chunk(cp) for cp in chunks if self.has_chunk(cp)]
+        return [self.grab_chunk(cp) if self.has_chunk(cp) else None for cp in chunks]
 
     def create_region(self, rp):
 
