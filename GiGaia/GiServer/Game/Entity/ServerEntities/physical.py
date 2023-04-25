@@ -16,6 +16,7 @@ class Physical(Entity, PhysicalBase):
 
         self.rect = pygame.Rect(0,0,self.props["width"],self.props["height"])
         self.grounded = False
+        self.hugging = False
 
     def _check_collision(self):
 
@@ -27,7 +28,7 @@ class Physical(Entity, PhysicalBase):
 
     def update_physics(self):
 
-        self.grounded = False
+        self.grounded = self.hugging = False
 
         dt = self.game.dt
         vel_x, vel_y = self.props["vel"]
@@ -41,15 +42,17 @@ class Physical(Entity, PhysicalBase):
         if (col := self._check_collision()):
             self.position[0] = prev_x
             vel_x = 0
+            self.hugging = True
         
         self.position[1] += mov_y
         self.rect.center = self.position
 
         if (col := self._check_collision()):
+            if vel_y > 0:
+                self.grounded = True
             self.position[1] = prev_y
             vel_y = 0
             vel_x *= 1 / (1 + (dt * self.props["friction"])) #*= self.props["friction"]**(dt*60)
-            self.grounded = True
         else:
             vel_x *= 1 / (1 + (dt * self.props["air_friction"]))
 

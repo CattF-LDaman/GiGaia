@@ -20,7 +20,7 @@ class Playing(Userstate):
         self.served_chunks = []
         self.world_updates = {}
 
-        self.movement = [0, 0]
+        self.movement = 0
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
         self.h.subscribe("CS_JUMP", self.handle_jump_packet)
@@ -50,10 +50,10 @@ class Playing(Userstate):
         #self.entity.position[0] += self.movement[0] * self.game.dt
         #self.entity.position[1] += self.movement[1] * self.game.dt
         self.entity.move(self.movement)
-        self.movement = [0, 0]
+        self.movement = 0
 
     def handle_move_packet(self, mp):
-        self.movement[0] = math.copysign(1, mp.x)#max(self.movement[0], mp.x, key=abs)
+        self.movement = math.copysign(1, mp.x)#max(self.movement[0], mp.x, key=abs)
 
     def handle_jump_packet(self, jp):
 

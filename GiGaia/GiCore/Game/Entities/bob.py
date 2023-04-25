@@ -1,9 +1,10 @@
 
 from .entity import Entity
+from .physical import Physical
 
 from GiGaia.GiCore.Data.datatypes import D_INT64
 
-class Bob(Entity):
+class Bob(Physical):
 
     ID = 2
     NAME = "Bob"

@@ -15,4 +15,7 @@ class EntityName(Message):
         if not self.entity.exists:
             self.delete()
 
+        if self.entity.props["name"] != self.text:
+            self.change(self.entity.props["name"])
+
         self.position = (int(self.entity.window_pos[0]), int(self.entity.window_pos[1])-60)

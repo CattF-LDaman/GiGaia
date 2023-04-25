@@ -25,7 +25,7 @@ class Person(Physical, PersonBase):
 
     def move(self, movement):
 
-        mx, my = movement
+        mx = movement
         speed = self.props["speed"]
 
         self.add_velocity(mx*speed if self.grounded else mx*speed)

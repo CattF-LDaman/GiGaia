@@ -15,7 +15,7 @@ def bobcoin(server, args):
 
 def bob(server, args):
 
-    server.game.entity_manager.spawn("Bob", (10,0))
+    server.game.entity_manager.spawn("Bob", (0,-5000))
 
 def entities(server, args):
     """Show all entities."""
