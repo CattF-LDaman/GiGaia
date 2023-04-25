@@ -24,6 +24,7 @@ class Playing(Userstate):
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
         self.h.subscribe("CS_JUMP", self.handle_jump_packet)
+        self.h.subscribe("CS_CROUCH", self.handle_crouch_packet)
         self.h.subscribe("CS_WSET", self.handle_wset)
 
     def setup(self):
@@ -58,6 +59,10 @@ class Playing(Userstate):
     def handle_jump_packet(self, jp):
 
         self.entity.jump()
+
+    def handle_crouch_packet(self, cp):
+
+        self.entity.crouch()
 
     def update_world(self):
 

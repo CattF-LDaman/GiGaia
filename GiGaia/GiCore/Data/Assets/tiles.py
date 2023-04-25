@@ -56,8 +56,23 @@ def load(man):
 
 class Tile:
 
+    DEFAULTS = {
+    "display": "NaN",
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [0, 0, 0],
+            "grain": [0, 0, 0],
+            "border": [0, 0, 0]
+                    }
+            },
+
+    "platform": False
+    }
+
     def __init__(self, man, tid, tname, tile_data):
 
+        tile_data = {**self.DEFAULTS, **tile_data}
 
         self.id = tid
         self.name = tname
@@ -67,6 +82,8 @@ class Tile:
 
         self.sprite_shape = tile_data["sprite"]["shape"]
         self.sprite_components = tile_data["sprite"]["components"]
+
+        self.is_platform = tile_data["platform"]
 
         self.shape = man.tile_shapes[self.sprite_shape]
     

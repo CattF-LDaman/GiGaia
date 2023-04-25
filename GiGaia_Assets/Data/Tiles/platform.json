@@ -1,0 +1,15 @@
+{
+    "display": "Platform",
+
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [255, 0, 0],
+            "grain": [255, 50, 50],
+            "border": [255, 100, 100]
+        }
+    },
+
+    "platform": true
+
+}

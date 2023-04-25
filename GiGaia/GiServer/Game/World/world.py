@@ -14,6 +14,7 @@ class World:
     def __init__(self, game):
         
         self.game = game
+        self.assets = game.assets
         self.config = self.game.server.config.world
 
         self.name = self.config.name

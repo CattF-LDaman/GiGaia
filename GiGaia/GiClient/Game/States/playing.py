@@ -62,16 +62,21 @@ class Playing(State):
         if p[self.keybinds.MOVE_RIGHT]:
             self.player.move(1)
 
+        if p[self.keybinds.MOVE_DOWN] and p[self.keybinds.CROUCH]:
+            self.player.crouch()
+
     def handle_wset(self):  # Temporary
 
         l = 1 if pygame.key.get_pressed()[pygame.K_LSHIFT] else 0
+        chunk, tileref = pix_to_tileref(self.scene.mouse)
 
-        if pygame.mouse.get_pressed()[0]:
-            chunk, tileref = pix_to_tileref(self.scene.mouse)
+        mp = pygame.mouse.get_pressed()
+        if mp[0]:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":3})
-        elif pygame.mouse.get_pressed()[2]:
-            chunk, tileref = pix_to_tileref(self.scene.mouse)
+        elif mp[2]:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})
+        elif mp[1]:
+            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(0,), "tile":4})
 
     def tick(self):
 

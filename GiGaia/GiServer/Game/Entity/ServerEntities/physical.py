@@ -22,15 +22,19 @@ class Physical(Entity, PhysicalBase):
         self.grounded = False
         self.hugging = False
 
+        self.ghost_platforms = False
+
     def aids(self):
         return pix_chunk_range(self.check_rect.topleft, self.check_rect.bottomright)
 
-    def _check_collision(self):
+    def _check_collision(self, ignore_platforms=False):
 
         for chunk in self.game.world.grab_all(pix_chunk_range(self.check_rect.topleft, self.check_rect.bottomright)):
             if not chunk:
                 return True
-            for col_rect in chunk.get_collision():
+            for col_rect, is_platform in chunk.get_collision():
+                if is_platform and ignore_platforms:
+                    continue
                 if col_rect.colliderect(self.rect):
                     return col_rect
         return False
@@ -49,7 +53,7 @@ class Physical(Entity, PhysicalBase):
         self.rect.center = self.position
         self.check_rect.center = self.position
 
-        if (col := self._check_collision()):
+        if (col := self._check_collision(True)):
             self.position[0] = prev_x
             vel_x = 0
             self.hugging = True
@@ -58,7 +62,7 @@ class Physical(Entity, PhysicalBase):
         self.rect.center = self.position
         self.check_rect.center = self.position
 
-        if (col := self._check_collision()):
+        if (col := self._check_collision(vel_y < 0 if not self.ghost_platforms else True)):
             if vel_y > 0:
                 self.grounded = True
             self.position[1] = prev_y

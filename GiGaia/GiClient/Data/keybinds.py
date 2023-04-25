@@ -1,6 +1,6 @@
 
 from GiGaia.GiCore.Data.datafile import Datafile
-from GiGaia.GiCore.Data.datatypes import D_INT16
+from GiGaia.GiCore.Data.datatypes import D_INT32
 
 import os
 import pygame
@@ -11,14 +11,15 @@ class Keybinds(Datafile):
         "MOVE_DOWN": pygame.K_s,
         "MOVE_LEFT": pygame.K_q,
         "MOVE_RIGHT": pygame.K_d,
-        "JUMP": pygame.K_SPACE
+        "JUMP": pygame.K_SPACE,
+        "CROUCH": pygame.K_LSHIFT
     }
 
     AUTO_CREATE = True
 
     DATA_VERSION = 1
     STRUC = [
-        (keyb, D_INT16) for keyb in DEFAULT_KEYBINDS.keys() 
+        (keyb, D_INT32) for keyb in DEFAULT_KEYBINDS.keys() 
     ]
 
     def __init__(self, client_location):

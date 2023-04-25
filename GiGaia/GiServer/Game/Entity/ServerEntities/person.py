@@ -35,6 +35,12 @@ class Person(Physical, PersonBase):
         jump = self.props["jump_strength"]
         self.set_velocity(y=-jump if self.grounded else None)
 
+    def crouch(self):
+
+        self.ghost_platforms = True
+
     def tick(self):
 
         self.update_physics()
+
+        self.ghost_platforms = False

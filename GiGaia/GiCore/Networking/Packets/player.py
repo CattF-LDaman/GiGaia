@@ -12,3 +12,5 @@ CS_WSET = (
     ("tileref", D_TILEREF),
     ("tile", D_INT16)
 )
+
+CS_CROUCH = ()

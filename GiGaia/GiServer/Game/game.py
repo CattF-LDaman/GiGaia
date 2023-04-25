@@ -12,6 +12,7 @@ class Game:
     def __init__(self,server):
 
         self.server = server
+        self.assets = server.assets
         self.log = server.log
         self.config = server.config.game
         self.traffic = server.traffic

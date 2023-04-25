@@ -50,7 +50,6 @@ def pix_to_tileref(coord):
 
     return tile_to_tileref(pix_to_tile(coord))
 
-@lru_cache()
 def coord_range(A, B):
 
     return [(x,y) for x in range(A[0],B[0]) for y in range(A[1], B[1])]

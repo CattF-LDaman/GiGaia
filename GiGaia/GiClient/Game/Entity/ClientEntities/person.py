@@ -20,6 +20,10 @@ class Person(Entity, PersonBase):
 
         self.em.p.send("CS_JUMP")
     
+    def crouch(self):
+
+        self.em.p.send("CS_CROUCH")
+
     def draw(self, surf):
         
         self.rect.center = self.draw_pos
