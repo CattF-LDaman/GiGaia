@@ -1,7 +1,6 @@
 
 from GiGaia.GiCore.random_util import seeded_randchoice
 from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE
-from GiGaia.GiCore.color_util import darken
 from GiGaia.GiCore.sprite_util import rotate, replace_color
 
 from types import SimpleNamespace
