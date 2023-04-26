@@ -21,6 +21,8 @@ class Person(Physical, PersonBase):
 
         self.player = player # Userstates.playing class
 
+        self.step_up = True
+
         self.em.game.log(f"{self.player.user.name} spawned at {self.position}")
 
     def move(self, movement):

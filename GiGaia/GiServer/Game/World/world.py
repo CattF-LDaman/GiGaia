@@ -1,6 +1,6 @@
 
 from GiGaia.GiCore.Game.World.Generation import Generator
-from GiGaia.GiCore.Game.World.coords import coord_square, chunk_region, tile_to_chunk
+from GiGaia.GiCore.Game.World.coords import coord_square, chunk_region, coord_range, tile_to_chunk, tile_to_tileref
 from GiGaia.GiCore.Game.World.timestamp import Timestamp
 from GiGaia.GiCore.threading import threaded_nondaemon
 
@@ -62,6 +62,17 @@ class World:
     def update_time_player(self, player):
 
         player.h.send("SC_TIME", {"time":self.time.value})
+
+    def get_at(self, x, y, z=0):
+        cp, tref = tile_to_tileref((x,y))
+        return self.get_chunk(cp).tiles[z][tref[1]][tref[0]]
+
+    def is_empty(self, A, B, z=0):
+        """Check if tiles from point A to point B are empty"""
+        for tp in coord_range(A, B):
+            if self.get_at(tp[0], tp[1], z):
+                return False
+        return True
 
     def unload(self):
 

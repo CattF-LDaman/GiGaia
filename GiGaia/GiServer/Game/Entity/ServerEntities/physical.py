@@ -5,7 +5,7 @@ from GiGaia.GiCore.Game.Entities import Physical as PhysicalBase
 from GiGaia.GiCore.Game.World.coords import pix_chunk_range, round_coord
 from GiGaia.GiCore.Game.World import TILE_SIZE_PIXELS
 
-import random
+import math
 import pygame
 
 class Physical(Entity, PhysicalBase):
@@ -23,20 +23,23 @@ class Physical(Entity, PhysicalBase):
         self.hugging = False
 
         self.ghost_platforms = False
-
-    def aids(self):
-        return pix_chunk_range(self.check_rect.topleft, self.check_rect.bottomright)
+        self.step_up = False
 
     def _check_collision(self, ignore_platforms=False):
 
         for chunk in self.game.world.grab_all(pix_chunk_range(self.check_rect.topleft, self.check_rect.bottomright)):
             if not chunk:
-                return True
-            for col_rect, is_platform in chunk.get_collision():
+                return (True, False)
+            if not chunk.tiles:
+                return (True, False)
+            for col_rect, is_platform, tpos in chunk.get_collision():
                 if is_platform and ignore_platforms:
                     continue
                 if col_rect.colliderect(self.rect):
-                    return col_rect
+                    step_up = False
+                    if self.step_up and col_rect.bottom == self.rect.bottom:
+                        step_up = self.game.world.is_empty((tpos[0], tpos[1]-1), (tpos[0], tpos[1]-1-math.ceil(self.rect.height/TILE_SIZE_PIXELS)))
+                    return (col_rect, step_up)
         return False
 
     def update_physics(self):
@@ -55,8 +58,13 @@ class Physical(Entity, PhysicalBase):
 
         if (col := self._check_collision(True)):
             self.position[0] = prev_x
-            vel_x = 0
             self.hugging = True
+
+            if self.step_up and col[1]:
+                self.position[1] -= TILE_SIZE_PIXELS+2
+                self.position[0] += math.copysign(TILE_SIZE_PIXELS//4, vel_x)
+
+            vel_x = 0
         
         self.position[1] += mov_y
         self.rect.center = self.position

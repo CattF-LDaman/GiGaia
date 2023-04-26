@@ -52,7 +52,10 @@ def pix_to_tileref(coord):
 
 def coord_range(A, B):
 
-    return [(x,y) for x in range(A[0],B[0]) for y in range(A[1], B[1])]
+    def _cust_range(a, b):
+        return range(a,b,-1 if a>b else 1) if a != b else (a,)
+
+    return [(x,y) for x in _cust_range(A[0], B[0]) for y in _cust_range(A[1], B[1])]
 
 def coord_square(C , r):
 

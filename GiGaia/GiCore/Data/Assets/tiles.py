@@ -8,7 +8,7 @@ from types import SimpleNamespace
 import pygame
 import os
 
-DARKNESS = (50,50,30)
+DARKNESS = (30,30,15)
 
 def load_shapes(man):
 

@@ -76,8 +76,9 @@ class Chunk:
                 for x, tile in enumerate(row):
                     if tile:
                         tile = self.world.assets.tiles[tile]
+                        tpos = tileref_to_tile((self.position, (x,y)))
                         tr = pygame.Rect(self.world_position[0]+x*TILE_SIZE_PIXELS, self.world_position[1]+y*TILE_SIZE_PIXELS, TILE_SIZE_PIXELS, TILE_SIZE_PIXELS)
-                        self._collision.append((tr, tile.is_platform))
+                        self._collision.append((tr, tile.is_platform, tpos))
             
         return self._collision
 

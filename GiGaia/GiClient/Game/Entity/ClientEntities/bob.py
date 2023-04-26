@@ -9,7 +9,7 @@ class Bob(Entity, BobBase):
     def __init__(self, entity_manager, eid, position, props):
         super().__init__(entity_manager, eid, position, props)
 
-        self.rect = pygame.Rect(0,0,8,8)
+        self.rect = pygame.Rect(0,0,16,16)
 
     def draw(self, surf):
 

@@ -9,8 +9,8 @@ class Bob(Physical, BobBase):
 
     BOB_PHYSICS = {
         "mass": 95,
-        "width": 8,
-        "height": 8,
+        "width": 16,
+        "height": 16,
         "friction": 10,
         "air_friction": 10,
     }
@@ -30,6 +30,7 @@ class Bob(Physical, BobBase):
         super().__init__(entity_manager, eid, position, props)
 
         self.last_quote = 0
+        self.step_up = True
 
     def add_coins(self, amount):
 
@@ -58,11 +59,11 @@ class Bob(Physical, BobBase):
             direction = 1 if closest[0].position[0] > self.position[0] else -1
             self.move(direction)
 
-            if closest[0].position[1] < self.position[1]:
-                self.jump()
+        #     if closest[0].position[1] < self.position[1]:
+        #         self.jump()
 
-        if self.hugging:
-            self.jump()
+        # if self.hugging:
+        #     self.jump()
 
     def tick(self):
 
