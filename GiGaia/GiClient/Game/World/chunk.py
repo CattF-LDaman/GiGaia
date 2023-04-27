@@ -4,7 +4,7 @@ from GiGaia.GiCore.Game.World import CHUNKSURF_SIZE_PIXELS, CHUNK_SIZE_PIXELS, T
 
 import pygame
 
-class Chunk:
+class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL EMPTY THEN RESET
 
     def __init__(self, world, position, tiles):
         
