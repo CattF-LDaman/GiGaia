@@ -1,0 +1,8 @@
+{
+    "name":"Jonko",
+    "description":"Dikke toeter.",
+    "type":"generic",
+    "rarity":5,
+
+    "stack_size":1000
+}
