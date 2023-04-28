@@ -46,7 +46,7 @@ class Inventory:
         found = []
         for container in self.contents.values():
             for item in container:
-                if item.match(item.ID, data):
+                if item.match(item_id, data):
                     found.append(item)
         return found
 
