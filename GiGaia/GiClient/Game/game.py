@@ -33,6 +33,8 @@ class Game:
         self.username = username
         self.addr = addr
 
+        self.background = (255,255,255)
+
         self.debug = False
         self.fps_counter = False
         self.closed = False
@@ -120,7 +122,7 @@ class Game:
 
         self.dt = self.client.dt
 
-        self.screen.fill((255,255,255))
+        self.screen.fill(self.background)
         if self.fps_counter:
             self.fps_counter.change(str(int(self.client.clock.get_fps())))
 

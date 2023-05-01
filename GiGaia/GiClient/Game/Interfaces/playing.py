@@ -1,7 +1,8 @@
 
 from GiGaia.GiClient.Game.interface import Interface
 
-from GiGaia.GiClient.UI.Widgets.frame import Frame
+from GiGaia.GiClient.Game.Interfaces.PlayingUI.windows import WindowManager
+
 from GiGaia.GiClient.UI.Widgets.text import Message
 from GiGaia.GiClient.UI.Widgets.Playing.entityname import EntityName
 from GiGaia.GiClient.UI.Widgets.Playing.gamemenu import GameMenu
@@ -15,6 +16,8 @@ class Playing(Interface):
 
         self.game_menu = None
 
+        self.wman = WindowManager(self)
+
         self.player_names = {}
 
     def handle_event(self, event):
@@ -24,16 +27,21 @@ class Playing(Interface):
             match event.key:
 
                 case pygame.K_ESCAPE:
-                    if self.game_menu:
+                    if self.wman.windows:
+                        self.wman.windows[-1].delete()
+                        self.wman.windows.pop(-1)
+                    elif self.game_menu:
                         self.game_menu.delete()
                         self.game_menu = None
                     else:
                         self.game_menu = self.uim.add_widget(GameMenu, self.game)
 
+    def open_window(self, window, *args, **kwargs):
+        self.wman.open_window(window, *args, **kwargs)
+
     def create(self):
 
-        self.ui = self.uim.add_widget(Frame, width=1.0, height=1.0, skip_event=True)
-
+        pass
         #self.uim.add_widget(Message, text="GiGaia", text_scale=10, position=[0, 0], anchor="center", relative_anchor="center", relative_to=self.ui, skip_event=True)
 
     def entity_name(self, ent):

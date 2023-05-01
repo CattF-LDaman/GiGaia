@@ -1,11 +1,11 @@
 
 from GiGaia.GiClient.Game.interface import Interface
 
+from GiGaia.GiClient.UI.Widgets.frame import Frame
 from GiGaia.GiClient.UI.Widgets.panel import Panel
 from GiGaia.GiClient.UI.Widgets.textinput import Input
 from GiGaia.GiClient.UI.Widgets.button import ActionButton
 from GiGaia.GiClient.UI.Widgets.text import Message
-from GiGaia.GiClient.UI.Widgets.frame import Frame
 
 class Setup(Interface):
 
@@ -30,6 +30,8 @@ class Setup(Interface):
 
     def create(self):
         ginf = self.state.game_info
+
+        self.game.background = ginf.theme_color
 
         self.p = self.uim.add_widget(Panel)
 

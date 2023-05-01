@@ -12,7 +12,8 @@ class Keybinds(Datafile):
         "MOVE_LEFT": pygame.K_q,
         "MOVE_RIGHT": pygame.K_d,
         "JUMP": pygame.K_SPACE,
-        "CROUCH": pygame.K_LSHIFT
+        "CROUCH": pygame.K_LSHIFT,
+        "INVENTORY": pygame.K_i
     }
 
     AUTO_CREATE = True

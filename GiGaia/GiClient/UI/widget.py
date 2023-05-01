@@ -41,6 +41,7 @@ class Widget:
         self.always_redraw = always_redraw
         self.skip_draw = skip_draw
         self.skip_event = skip_event
+        self.disable_updates = False
         self.resized = False
 
         self.vanish_after = vanish_after
@@ -236,7 +237,8 @@ class Widget:
                     if self.widget_rect.collidepoint(d_sc):
                         self.scrolled_down = True
 
-        self.update()
+        if not self.disable_updates:
+            self.update()
 
         if self.vanish_after and self.age > self.vanish_after:
             self.delete()
