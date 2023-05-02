@@ -8,7 +8,7 @@ class Inventory(Window):
     TITLE = "Inventory"
 
     def __init__(self, ui_manager, wman, layer):
-        super().__init__(ui_manager, wman, size=(0.95, 0.8), closable=True, movable=True, layer=layer)
+        super().__init__(ui_manager, wman, size=(0.95, 0.8), closable=True, movable=False, layer=layer)
 
         self.interface = wman.interface
         self.game = self.interface.game

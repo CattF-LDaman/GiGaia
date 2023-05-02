@@ -1,7 +1,7 @@
 
 from GiGaia.GiClient.UI.widget import Widget
 from GiGaia.GiClient.UI.Widgets.text import Message
-from GiGaia.GiCore.Game.World.coords import sub_coords
+from GiGaia.GiCore.Game.World.coords import sub_coords,sum_coords
 
 import pygame
 
@@ -66,10 +66,10 @@ class Window(Widget):
     def update(self):
 
         if self.clicked:
-            self.click_start = pygame.mouse.get_pos()
+            self.click_start = (self.position.copy(), pygame.mouse.get_pos())
 
         if self.movable and self.held:
-            self.position += sub_coords(self.click_start, pygame.mouse.get_pos())
+            self.position = sum_coords(self.click_start[0], sub_coords(self.click_start[1], pygame.mouse.get_pos()))
 
         if not self == self.wman.windows[-1]:
             for child in self.children:
