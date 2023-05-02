@@ -3,6 +3,7 @@ from GiGaia.GiServer.Game.userstate import Userstate
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
 
 from GiGaia.GiServer.Game.Entity.ServerEntities.person import Person
+from GiGaia.GiServer.Game.Userstates.Playing.inventory import PlayerInventory
 
 import random
 import math
@@ -21,6 +22,10 @@ class Playing(Userstate):
         self.world_updates = {}
 
         self.movement = 0
+
+        self.inv = PlayerInventory(self)
+        self.inv.add_container("person")
+        self.inv.add_item("person","jonko", 6, {"sleuren_left":69})
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
         self.h.subscribe("CS_JUMP", self.handle_jump_packet)
@@ -86,5 +91,7 @@ class Playing(Userstate):
 
         self.update_entities()
         self.handle_movement()
+
+        self.inv.update()
 
         self.update_world()

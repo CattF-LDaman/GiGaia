@@ -7,6 +7,7 @@ from GiGaia.GiClient.Game.Interfaces.PlayingUI.inventory import Inventory
 from GiGaia.GiClient.Game.Entity.manager import EntityManager
 from GiGaia.GiClient.Game.World.world import World
 from GiGaia.GiClient.Game.scene import Scene
+from GiGaia.GiClient.Game.States.Playing.inventory import PlayerInventory
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
 from GiGaia.GiCore.Game.World.coords import pix_to_tileref, sum_coords, mult_coord
@@ -30,7 +31,6 @@ class Playing(State):
         self.ms_per_tick = int(1000/State.TICKRATE)
 
         self.player_eid = None
-        self.inventory = self.inv = "Test"
 
         self.p.subscribe("SC_PLAYER", self.set_player)
 
@@ -48,6 +48,7 @@ class Playing(State):
         self.scene = Scene(self.game)
         self.world = World(self)
         self.entity_manager = EntityManager(self)
+        self.inventory = self.inv = PlayerInventory(self)
 
     def handle_event(self, event):
 

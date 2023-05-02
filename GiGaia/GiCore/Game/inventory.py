@@ -1,11 +1,12 @@
+from GiGaia.GiCore.Data.datatypes import DATATYPE_NAMETYPES
 
 class Inventory:
 
     def __init__(self, assets):
         
         self.assets = assets
-        self.items_data = self.assets.Items.__dict__
-        self.containers_data = self.assets.Containers.__dict__
+        self.items_data = self.assets.data.Items.__dict__
+        self.containers_data = self.assets.data.Containers.__dict__
 
         self.containers = {}
         self.contents = {}
@@ -23,7 +24,7 @@ class Inventory:
     def has_space(self, container, add_amount=0):
         if container not in self.containers:
             return False
-        return self.container_size(container)+add_amount < self.containers[container].capacity
+        return self.container_size(container)+add_amount < self.containers[container]["capacity"]
         
     def item_exists(self, container, item_id, data=None, not_full=False, ignores=()):
         for i in self.contents[container]:
@@ -83,23 +84,49 @@ class Inventory:
 class Item:
 
     RARITIES = ["Trash", "Common", "Rare", "Epic", "Legendary", "Godlike"]
+    DEFAULT = {
+        "name": "Air",
+        "description": "?",
+        "type": "generic", # Determines behaviour,
+        "rarity": 1,
+        "data": None,
+        "datatypes": None,
+    }
 
-    def __init__(self, inventory, itemid, amount=1, data=None):
+    def __init__(self, inventory, item_id, amount=1, data=None):
 
         if not data:
             data = {}
 
-        self.item_data = inventory.items_data[itemid]
+        self.item_data = {**Item.DEFAULT, **inventory.items_data[item_id]}
+        if not self.item_data["data"]:
+            self.item_data["data"] = {}
+        if not self.item_data["datatypes"]:
+            self.item_data["datatypes"] = None
 
         self.inventory = self.inv = inventory
         self.amount = amount
 
-        self.data = {**self.item_data["data"], **data}
+        # self.data = {**self.item_data["data"], **data}
+        # self.DATATYPES = {k:DATATYPE_NAMETYPES[v] for k,v in self.item_data["datatypes"].items()}
 
-        self.ID = itemid
+        self.data, self.DATATYPES = Item.get_datastruc(inventory, item_id, data)
+
+        self.ID = item_id
+        self.NAME = self.item_data["name"]
         self.STACK_SIZE = self.item_data["stack_size"]
         self.DESCRIPTION = self.item_data["description"]
         self.RARITY = self.RARITIES[self.item_data["rarity"]]
+
+    @staticmethod
+    def get_datastruc(inventory, item_id, data):
+        item_data = {**Item.DEFAULT, **inventory.items_data[item_id]}
+
+        data = {**item_data["data"], **data}
+        datatypes = {k:DATATYPE_NAMETYPES[v] for k,v in item_data["datatypes"].items()}
+        datastruc = tuple((dataname, datatype, 8) for dataname, datatype in datatypes.items())
+
+        return datastruc, data
 
     def add_amount(self, amount):
         left = 0
@@ -109,7 +136,7 @@ class Item:
         return left
 
     def match(self, item_id, data=None):
-        idata = {**self.items_data[item_id]["data"], **(data if data else {})}
+        idata = {**self.item_data["data"], **(data if data else {})}
         if self.ID == item_id and self.data == idata:
                 return True
         return False

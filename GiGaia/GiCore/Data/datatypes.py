@@ -32,6 +32,7 @@ D_INT128S = 21
 D_DEC = 22
 D_DECS = 23
 D_VEC2 = 24
+D_DDICT = 25
 
 def pack_bool(data):
 
@@ -173,6 +174,10 @@ def unpack_datastruc(data):
 
     return read_struc(struc, d.read())
 
+def unpack_datastruc_dict(data):
+
+    return unpack_datastruc(data).__dict__
+
 def pack_rgistruc(data):
     from GiGaia.GiCore.Data.struc import build_struc
 
@@ -265,6 +270,48 @@ def unpack_vec2(data):
 
     return [unpack_decs(data[:16]),unpack_decs(data[16:])]
 
+# def pack_inv(data):
+#     from GiGaia.GiCore.Data.struc import build_struc
+
+#     contents = data
+
+#     out = io.BytesIO()
+
+#     out.write(len(data).to_bytes(1, "little"))
+#     for container in data:
+#         out.write(len(container).to_bytes(1,"little"))
+#         out.write(container.encode('ascii'))
+
+#     for container, items in data.items():
+#         for item in items:
+#             out.write()
+            
+#     struclen = len(out.getvalue())
+#     out.write(build_struc(struc, data))
+
+#     return out.getvalue()
+
+# def unpack_inv(data):
+#     from GiGaia.GiCore.Data.struc import read_struc
+
+#     d = io.BytesIO(data)
+    
+#     struc_len = int.from_bytes(d.read(2),'little')
+#     struc = []
+
+#     while d.tell() < struc_len:
+        
+#         _data = []
+#         cx = int.from_bytes(d.read(12),"little", signed=True)
+#         cy = int.from_bytes(d.read(12), "little", signed=True)
+#         _data.append(dataname := (cx,cy))
+#         _data.append(datatype := d.read(1)[0])
+#         if datatype in DATATYPES and not DATATYPES[datatype][2]:
+#             _data.append(datalen := d.read(1)[0])
+#         struc.append(_data)
+
+#     return read_struc(struc, d.read(), namespace=False)
+
 DT_PACK = 0
 DT_UNPACK = 1
 DT_SIZE = 2
@@ -296,8 +343,48 @@ D_RGI: (pack_rgistruc, unpack_rgistruc, None),
 D_TILEREF: (pack_tileref, unpack_tileref, 3),
 D_DEC: (pack_dec, unpack_dec, 16),
 D_DECS: (pack_decs, unpack_decs, 16),
-D_VEC2: (pack_vec2, unpack_vec2, 32)
+D_VEC2: (pack_vec2, unpack_vec2, 32),
+D_DDICT: (pack_datastruc, unpack_datastruc_dict, None),
 }
+
+DATATYPE_NAMES = {
+    D_BOOL: 'D_BOOL',
+    D_INT8: 'D_INT8',
+    D_INT16: 'D_INT16',
+    D_INT32: 'D_INT32',
+    D_INT64: 'D_INT64',
+    D_INT128: 'D_INT128',
+    D_INT8S: 'D_INT8S',
+    D_INT16S: 'D_INT16S',
+    D_INT32S: 'D_INT32S',
+    D_INT64S: 'D_INT64S',
+    D_INT128S: 'D_INT128S',
+    D_STRING: 'D_STRING',
+    D_JSON: 'D_JSON',
+    D_POS: 'D_POS',
+    D_FPOS: 'D_FPOS',
+    D_RAW: 'D_RAW',
+    D_RBG: 'D_RBG',
+    D_DATA: 'D_DATA',
+    D_KSTR: 'D_KSTR',
+    D_CHUNKL: 'D_CHUNKL',
+    D_CHUNK: 'D_CHUNK',
+    D_RGI: 'D_RGI',
+    D_TILEREF: 'D_TILEREF',
+    D_DEC: 'D_DEC',
+    D_DECS: 'D_DECS',
+    D_VEC2: 'D_VEC2'
+}
+
+DATATYPE_NAMETYPES = {value:key for key,value in DATATYPE_NAMES.items()}
+
+DATATYPE_EQ = {
+    bool: D_BOOL,
+    int: D_INT64S,
+    str: D_STRING,
+    bytes: D_RAW,
+}
+
 
 def unpack(datatype, data):
 

@@ -16,6 +16,8 @@ class Message(Widget):
         self.adapt_size()
 
     def change(self, text):
+        if self.text == text:
+            return
         self.text = text
         self.adapt_size()
 

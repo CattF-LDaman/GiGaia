@@ -4,5 +4,13 @@
     "type":"generic",
     "rarity":5,
 
-    "stack_size":1000
+    "stack_size":1000,
+
+    "data": {
+        "sleuren_left": 5
+    },
+
+    "datatypes": {
+        "sleuren_left": "D_INT64"
+    }
 }
