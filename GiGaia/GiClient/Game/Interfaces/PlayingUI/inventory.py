@@ -28,4 +28,4 @@ class Inventory(Window):
             self.selected_container = list(self.state.inv.contents)[0]
         
         self.container_title.change(self.selected_container)
-        self.msg.change(f"{self.selected_container}: {', '.join(i.NAME for i in self.state.inv.contents[self.selected_container])}")
+        self.msg.change(f"{self.selected_container}: {', '.join(str((i.NAME, i.ID, i.RARITY, i.amount)) for i in self.state.inv.contents[self.selected_container])}")
