@@ -1,6 +1,6 @@
 
 from GiGaia.GiCore.Data.datafile import Datafile
-from GiGaia.GiCore.Data.datatypes import D_RAW,D_INT64
+from GiGaia.GiCore.Data.datatypes import D_RAW,D_INT64,D_INT8
 from GiGaia.GiCore.Data.hashing import hash_pwd, hash_str
 
 import os
@@ -8,12 +8,13 @@ import time
 
 class UserData(Datafile):
 
-    DATA_VERSION = 1
+    DATA_VERSION = 2
     STRUC = (
             ("pwd_hash", D_RAW, 1),
             ("salt", D_RAW, 1),
             ("last_login", D_INT64),
             ("last_write", D_INT64),
+            ("privileges",D_INT8)
             )
 
 
@@ -28,6 +29,7 @@ class UserData(Datafile):
 
         self.change_password(new_pwd)
         self.last_login = 0
+        self.privileges = 0
 
     def on_save(self):
 
@@ -51,3 +53,8 @@ class UserData(Datafile):
 
         if self.exists:
             self.save()
+
+    def set_privileges(self, level=0):
+
+        self.privileges = level
+        self.save()

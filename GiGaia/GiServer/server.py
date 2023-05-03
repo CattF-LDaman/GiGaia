@@ -52,6 +52,7 @@ class Server:
         self.clients = []
         self.user_clients = {}
 
+        self.terminal = Terminal(self)
         self.traffic = TrafficManager(self)
         self.game = Game(self)
 
@@ -103,4 +104,4 @@ class Server:
         connections.accept_connections(self)
         self.game.loop()
 
-        Terminal(self).run()
+        self.terminal.run()

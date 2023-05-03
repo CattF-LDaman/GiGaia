@@ -6,7 +6,7 @@ import re
 
 class RawInput(Widget):
 
-    def __init__(self, ui_manager, size, font="basic", name="Input", default="", allowed_chars=None, text_scale=1, typing_char="|", *args, **kwargs):
+    def __init__(self, ui_manager, size, font="basic", name="", default="", allowed_chars=None, text_scale=1, typing_char="|", *args, **kwargs):
 
         self.name = name
 
@@ -24,6 +24,11 @@ class RawInput(Widget):
 
         self.text_input = default
         self.prev_input = self.text_input
+
+    def clear(self):
+
+        self.text_input = ""
+        self.updated = True
 
     def update(self):
         
@@ -50,7 +55,7 @@ class RawInput(Widget):
         if self.capturing and (self.age//600) % 2 == 0:
             inp_content += self.typing_char
 
-        self.uim.assets.fonts["basic"].render(self.surface, (2,2) , inp_content, multiline=False, scale=self.text_scale)
+        self.uim.assets.fonts["basic"].render(self.surface, (4,2) , inp_content, multiline=False, scale=self.text_scale)
 
 class InputLabel(Widget):
 
@@ -99,6 +104,6 @@ class Input(RawInput):
             inp_content += self.typing_char
 
         if not self.capturing and not inp_content and self.placeholder:
-            self.font.render(self.surface, (2,4*self.text_scale) , self.placeholder, scale=self.text_scale, multiline=False, color=pygame.Color(self.uim.assets.data.ui.color_tg))
+            self.font.render(self.surface, (4,4*self.text_scale) , self.placeholder, scale=self.text_scale, multiline=False, color=pygame.Color(self.uim.assets.data.ui.color_tg))
         else:
-            self.font.render(self.surface, (2,4*self.text_scale) , inp_content, scale=self.text_scale, multiline=False, color=pygame.Color(self.uim.assets.data.ui.color_txt))
+            self.font.render(self.surface, (4,4*self.text_scale) , inp_content, scale=self.text_scale, multiline=False, color=pygame.Color(self.uim.assets.data.ui.color_txt))

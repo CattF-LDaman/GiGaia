@@ -56,9 +56,10 @@ class Playing(State):
             case pygame.KEYDOWN:
                 match event.key:
                     case pygame.K_F10:
+                        self.game.log("Reloading chunk surfaces...")
                         for c in self.world.chunks.values():
                             c.updated = True
-                    case self.keybinds.INVENTORY:
+                    case self.keybinds.INVENTORY if self.ui.chat.hidden:
                         self.ui.open_window(Inventory)
 
     def handle_movement(self):
@@ -97,14 +98,16 @@ class Playing(State):
         self.world.update()
         self.entity_manager.update()
 
-        if self.game.client.ticks-self.last_game_tick > self.ms_per_tick:
+        if not self.ui.chat.typing: # Actions disabled while typing chats go here
 
-            self.handle_movement()
+            if self.game.client.ticks-self.last_game_tick > self.ms_per_tick:
 
-            self.last_game_tick = self.game.client.ticks
+                self.handle_movement()
 
-        if not self.ui.wman.windows:
-            self.handle_wset()
+                self.last_game_tick = self.game.client.ticks
+
+            if not self.ui.wman.windows:
+                self.handle_wset()
 
         if self.player:
             cam_point = self.player.position if not self.moving else sum_coords(self.player.position, (0, self.view_bob*math.sin(self.game.client.ticks/self.view_bob_smooth)))

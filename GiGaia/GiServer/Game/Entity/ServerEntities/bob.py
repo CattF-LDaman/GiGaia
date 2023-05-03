@@ -62,8 +62,8 @@ class Bob(Physical, BobBase):
         #     if closest[0].position[1] < self.position[1]:
         #         self.jump()
 
-        # if self.hugging:
-        #     self.jump()
+        if self.hugging:
+            self.jump()
 
     def tick(self):
 

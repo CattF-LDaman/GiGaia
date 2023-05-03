@@ -3,7 +3,7 @@ from . import CONNECT_NUM_TRIES
 from .authentication import authenticate, AuthenticationError
 
 from GiGaia.GiCore.version import VERSION_BYTES, VERSION_STRING, version_to_string, version_from_bytes
-from GiGaia.GiCore.Networking import BOND_E_WRONGVERSION,BOND_S_SAMEVERSION, BOND_E_USERNAMECOLLIDE, BOND_S_USERNAMEOK
+from GiGaia.GiCore.Networking import BOND_E_WRONGVERSION,BOND_S_SAMEVERSION, BOND_E_USERNAMECOLLIDE, BOND_S_USERNAMEOK, BOND_E_USERNAMEINVALID
 
 import socket
 
@@ -54,9 +54,16 @@ def login(conn, username):
     if username_ack == BOND_E_USERNAMECOLLIDE:
 
         raise UsernameCollision("User with same username already on server.")
+    
+    elif username_ack == BOND_E_USERNAMEINVALID:
+
+        raise InvalidUsername("Invalid username.")
 
 class VersionMismatch(Exception):
     pass
 
 class UsernameCollision(Exception):
+    pass
+
+class InvalidUsername(Exception):
     pass

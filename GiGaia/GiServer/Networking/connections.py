@@ -1,7 +1,7 @@
 
 from GiGaia.GiCore.threading import threaded_daemon
 from GiGaia.GiCore.version import VERSION_BYTES, VERSION_STRING, version_to_string, version_from_bytes
-from GiGaia.GiCore.Networking import BOND_E_WRONGVERSION,BOND_S_SAMEVERSION, BOND_E_USERNAMECOLLIDE, BOND_S_USERNAMEOK
+from GiGaia.GiCore.Networking import BOND_E_WRONGVERSION,BOND_S_SAMEVERSION, BOND_E_USERNAMECOLLIDE, BOND_S_USERNAMEOK, INVALID_USERNAMES, BOND_E_USERNAMEINVALID
 
 from GiGaia.GiServer.handle import Handle
 from GiGaia.GiServer.Networking.authentication import authenticate
@@ -59,14 +59,20 @@ def bond_connection(server,conn,addr):
 
         conn.send(BOND_S_SAMEVERSION)
 
-        client_username = conn.recvsized(lensize=1).decode("ascii")
+        client_username = conn.recvsized(lensize=1).decode("ascii").strip().replace(" ","")
 
         if client_username in server.user_clients:
             conn.send(BOND_E_USERNAMECOLLIDE)
             conn.close()
             server.log(f"{conn.full_address} tried to connect with username that's already online: {client_username}")
             return
-
+        
+        if client_username.lower() in INVALID_USERNAMES:
+            conn.send(BOND_E_USERNAMEINVALID)
+            conn.close()
+            server.log(f"{conn.full_address} chose an invalid username: {client_username}")
+            return
+        
         conn.send(BOND_S_USERNAMEOK)
 
         client = Handle(server,conn,addr,client_username)

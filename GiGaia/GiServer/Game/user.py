@@ -17,6 +17,13 @@ class User:
 
         self.state = None
     
+    def set_privileges(self, level=1):
+        self.data.set_privileges(level)
+
+    @property
+    def privileges(self):
+        return self.data.privileges
+
     def disconnect(self, reason="No reason specified."):
 
         self.game.log(f"User '{self.name}' disconnected by server: {reason}")

@@ -32,6 +32,8 @@ class Playing(Userstate):
         self.h.subscribe("CS_CROUCH", self.handle_crouch_packet)
         self.h.subscribe("CS_WSET", self.handle_wset)
 
+        self.h.subscribe("CS_CHAT_OUT", self.handle_chat)
+
     def setup(self):
 
         self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),-5000), {"name":self.name}, player=self)
@@ -43,6 +45,14 @@ class Playing(Userstate):
     def leave(self): # Called when player leaves
 
         self.entity.destroy()
+
+    def handle_chat(self, chat):
+
+        self.game.chat.handle_chat(self, chat)
+
+    def send_msg(self, msg, user='SERVER'):
+
+        self.h.send("SC_CHAT", {'content':str(msg), 'user':user})
 
     def update_entities(self):
 

@@ -13,12 +13,14 @@ class Keybinds(Datafile):
         "MOVE_RIGHT": pygame.K_d,
         "JUMP": pygame.K_SPACE,
         "CROUCH": pygame.K_LSHIFT,
-        "INVENTORY": pygame.K_i
+        "INVENTORY": pygame.K_i,
+        "CHAT": pygame.K_t,
+        "CHAT_SEND": pygame.K_RETURN
     }
 
     AUTO_CREATE = True
 
-    DATA_VERSION = 1
+    DATA_VERSION = 2
     STRUC = [
         (keyb, D_INT32) for keyb in DEFAULT_KEYBINDS.keys() 
     ]

@@ -41,6 +41,7 @@ class Widget:
         self.always_redraw = always_redraw
         self.skip_draw = skip_draw
         self.skip_event = skip_event
+        self.hidden = False
         self.disable_updates = False
         self.resized = False
 
@@ -77,10 +78,12 @@ class Widget:
         pass
 
     def start_input(self):
-        self.uim.capture_input(self)
+        if self not in self.uim.capturing_input:
+            self.uim.capture_input(self)
 
     def stop_input(self):
-        self.uim.stop_capture_input(self)
+        if self in self.uim.capturing_input:
+            self.uim.stop_capturing_input(self)
 
     def resize(self, w=None, h=None):
         nz = list(self._size)
@@ -89,6 +92,16 @@ class Widget:
         self._size = tuple(nz)
         self.resized = True
 
+    def hide(self):
+        self.hidden = True
+        for child in self.children:
+            child.hide()
+
+    def reveal(self):
+        self.hidden = False
+        for child in self.children:
+            child.reveal()
+
     @property
     def age(self):
         return self.uim.cur_tick - self.birth
@@ -96,6 +109,14 @@ class Widget:
     @property
     def capturing(self):
         return self in self.uim.capturing_input
+
+    @property
+    def height(self):
+        return self.size[1]
+
+    @property
+    def width(self):
+        return self.size[0]
 
     @property
     def size(self):
@@ -166,13 +187,14 @@ class Widget:
     def delete(self):
         if not self.deleted:
             self.handle_delete()
+            self.stop_input()
             for child in self.children:
                 child.delete()
             self.ui_manager.widgets[self.layer].remove(self)
             self.deleted = True
 
     def draw_master(self):
-        if self.skip_draw:
+        if self.skip_draw or self.hidden:
             return
 
         if self.updated or self.always_redraw:
