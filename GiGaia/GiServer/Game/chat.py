@@ -6,10 +6,14 @@ class Chat:
         self.game = game
         self.traffic = game.traffic
 
+    def broadcast_chat(self, username, chat_msg):
+
+        self.traffic.broadcast("SC_CHAT", {'user':username, 'content':chat_msg})
+        self.game.log(f"CHAT <{username}> {chat_msg}")
+
     def handle_chat(self, player, chat):  # When a chat is received
 
         if chat.content.startswith("/"):
             self.game.server.terminal.parse(chat.content[1:], player)
         else:
-            self.traffic.broadcast("SC_CHAT", {'user':player.name, 'content':chat.content})
-            self.game.log(f"CHAT <{player.name}> {chat.content}")
+            self.broadcast_chat(player.name, chat.content)

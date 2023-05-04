@@ -1,11 +1,11 @@
 
 from .admin import stop, reloadconf, clients, disconnect, version, privileges
-from .game import players, tickrate, bob, bobcoin, entities, world, superplayer, addtime, tp
+from .game import players, tickrate, bob, bobcoin, entities, world, superplayer, addtime, tp, say
 
 import os
 import inspect
 
-all_cmds = [stop, reloadconf, clients, tickrate, disconnect, players, bob, bobcoin, entities, version, world, superplayer, addtime, tp, privileges]
+all_cmds = [stop, reloadconf, clients, tickrate, disconnect, players, bob, bobcoin, entities, version, world, superplayer, addtime, tp, privileges, say]
 
 commands = {cmd.__name__:cmd for cmd in all_cmds}
 

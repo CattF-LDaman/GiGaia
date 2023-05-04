@@ -64,3 +64,11 @@ def tp(server, args, player=None):
         player.entity.position[1] = int(args[2])
 
     return f"Teleported {player_name} to ({args[1]} {args[2]})"
+
+def say(server, args, player=None):
+
+    name = "SERVER"
+    if player:
+        name = player.name
+
+    server.game.chat.broadcast_chat(name, " ".join(args))

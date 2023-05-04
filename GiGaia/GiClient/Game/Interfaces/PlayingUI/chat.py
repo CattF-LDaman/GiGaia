@@ -39,6 +39,7 @@ class Chat(Frame):
     def chat_in(self, user, chat):
         self.history.append(f"{user}: {chat}")
         self.chat_contents.change("\n".join(self.history[-10:]))
+        self.reveal()
 
     def send(self):
 

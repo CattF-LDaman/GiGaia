@@ -36,7 +36,7 @@ class Terminal:
 
                 if not player:
                     self.server.log(f"OUT:\n{out}\n")
-                else:
+                elif out:
                     player.send_msg(str(out), "CMD")
 
             except Exception as e:
