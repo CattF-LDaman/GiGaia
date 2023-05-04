@@ -21,6 +21,7 @@ class Game:
         
         from GiGaia.GiClient import RUNNING_CLIENT
         self.client = RUNNING_CLIENT
+        self.log = self.client.log
 
         self.config = self.client.config
 
