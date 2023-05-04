@@ -144,7 +144,7 @@ class Handle:
                     for out_packet in packets:
                         self.conn.sendsized(create_packet(packet_type, out_packet or {}))
                         self.sent += 1
-                    self.outbox[packet_type] = []
+                self.outbox.clear()
 
         except ConnectionError as ce:
             self.close(True if "Connection closed" not in str(ce) and "[WinError 10054]" not in str(ce) else False)
