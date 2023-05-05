@@ -124,6 +124,11 @@ class Client:
 
                     self.log(f"{self.clock.get_fps()} FPS")
 
+                elif event.key == pygame.K_F12:
+                    
+                    pygame.image.save(self.window, os.path.join(self.dirs["screenshots"], f"scr_{self.session_id.hex()}{int(time.time())}.png"))
+                    self.log("Screenshot taken.")
+
             if self.state == CLIENT_STATE_INGAME:
                 self.game.handle_event(event)
             elif self.state == CLIENT_STATE_MENU:

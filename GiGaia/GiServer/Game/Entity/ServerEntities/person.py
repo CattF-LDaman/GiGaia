@@ -8,7 +8,7 @@ class Person(Physical, PersonBase):
     PERSON_PHYSICS = {
         "mass": 95,
         "width": 30,
-        "height": 60,
+        "height": 60-4,
         "friction": 10,
         "air_friction": 10,
     }

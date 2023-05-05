@@ -2,7 +2,7 @@
     "display": "Platform",
 
     "sprite": {
-        "shape": "Dirty",
+        "shape": "Platform",
         "components": {
             "base": [255, 0, 0],
             "grain": [255, 50, 50],
