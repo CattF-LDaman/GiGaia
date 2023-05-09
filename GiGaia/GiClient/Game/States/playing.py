@@ -30,6 +30,8 @@ class Playing(State):
         self.last_game_tick = 0
         self.ms_per_tick = int(1000/State.TICKRATE)
 
+        self.selected_tile = 0  # SHOULD MOVE TO NEW CLASS.
+
         self.player_eid = None
 
         self.p.subscribe("SC_PLAYER", self.set_player)
@@ -61,6 +63,13 @@ class Playing(State):
                             c.updated = True
                     case self.keybinds.INVENTORY if self.ui.chat.hidden:
                         self.ui.open_window(Inventory)
+            case pygame.MOUSEWHEEL:
+                tiles = self.game.assets.tiles
+                if event.y > 0:
+                    self.selected_tile = min(self.selected_tile+1,len(tiles))
+                elif event.y < 0:
+                    self.selected_tile = max(self.selected_tile-1,1)
+                self.ui.chat.chat_in("GAME", f"TILE: {tiles[self.selected_tile].display_name}")
 
     def handle_movement(self):
 
@@ -87,7 +96,7 @@ class Playing(State):
 
         mp = pygame.mouse.get_pressed()
         if mp[0]:
-            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":3})
+            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":self.selected_tile})
         elif mp[2]:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})
         elif mp[1]:

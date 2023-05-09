@@ -56,6 +56,7 @@ class Playing(Interface):
 
         self.chat = self.uim.add_widget(Chat, self)
         self.chat.hide()
+        
         #self.uim.add_widget(Message, text="GiGaia", text_scale=10, position=[0, 0], anchor="center", relative_anchor="center", relative_to=self.ui, skip_event=True)
 
     def entity_name(self, ent):
