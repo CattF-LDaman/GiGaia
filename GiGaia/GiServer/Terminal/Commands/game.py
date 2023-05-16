@@ -51,19 +51,24 @@ def addtime(server, args, player=None):
 def tp(server, args, player=None):
     """Teleport player"""
 
-    if len(args) != 3:
+    if not player and len(args) != 3:
         return "usage: tp <PLAYER NAME> <X> <Y>"
-    
-    player_name = args[0]
-    if player_name not in server.game.players:
-        return f"No such player: {player_name}"
-    
-    player = server.game.players[player_name]
-    if player.entity:
-        player.entity.position[0] = int(args[1])
-        player.entity.position[1] = int(args[2])
+    elif player and len(args) == 2:
+        x = int(args[0])
+        y = int(args[1])
+    elif len(args) == 3:
+        x = int(args[1])
+        y = int(args[2])
+        player_name = args[0]
+        if player_name not in server.game.players:
+            return f"No such player: {player_name}"
+        player = server.game.players[player_name]
 
-    return f"Teleported {player_name} to ({args[1]} {args[2]})"
+    if player.entity:
+        player.entity.position[0] = x
+        player.entity.position[1] = y
+
+    return f"Teleported {player.name} to ({args[1]} {args[2]})"
 
 def say(server, args, player=None):
 
@@ -72,3 +77,44 @@ def say(server, args, player=None):
         name = player.name
 
     server.game.chat.broadcast_chat(name, " ".join(args))
+
+def fly(server, args, player=None):
+    """Toggles flight for a specified player or yourself."""
+
+    if not args and player is None:
+        return "usage: fly <PLAYER NAME>"
+    elif args:
+        player_name = args[0]
+        if player_name not in server.game.players:
+            return f"No such player: {player_name}"
+        player = server.game.players[player_name]
+    
+    flying_enabled = player.entity.toggle_flight()
+
+    return f"Flying has been {'enabled' if flying_enabled else 'disabled'} for {player.name}."
+    
+def flyspeed(server, args, player=None):
+    """Changes or shows a player's flight speed."""
+    speed = None
+    # if len(args) < 2 and player is None:
+    #     return "usage: flyspeed <PLAYER NAME> <SPEED>"
+    if len(args) == 2:
+        player_name = args[0]
+        if player_name not in server.game.players:
+            return f"No such player: {player_name}"
+        player = server.game.players[player_name]
+        speed = int(args[1])
+    elif len(args) == 1:
+        try:
+            speed = int(args[0])
+        except ValueError:
+            player_name = args[0]
+            if player_name not in server.game.players:
+                return f"No such player: {player_name}"
+            player = server.game.players[player_name]
+
+    if speed is not None:
+        player.entity.change("flight_speed", speed)
+        return f"Flight speed for {player.name} changed to {speed}."
+
+    return f"{player.name}'s flight speed is {player.entity.props['flight_speed']}."

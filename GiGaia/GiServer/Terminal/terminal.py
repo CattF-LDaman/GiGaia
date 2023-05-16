@@ -12,6 +12,8 @@ class Terminal:
 
     def parse(self, cmd_in, player=None):
 
+        cmd_in = cmd_in.strip()
+
         cmd = cmd_in.split(" ")[0]
         args = cmd_in.split(" ")[1:]
 

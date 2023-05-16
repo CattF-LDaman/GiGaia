@@ -20,6 +20,7 @@ SC_UPDATE_CHUNK = (
     ("tiles", D_CHUNK)
 )
 
+# Sync time value
 SC_TIME = (
     ("time", D_DEC),
 )

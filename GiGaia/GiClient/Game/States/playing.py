@@ -54,6 +54,7 @@ class Playing(State):
 
     def handle_event(self, event):
 
+        p = pygame.key.get_pressed()
         match event.type:
             case pygame.KEYDOWN:
                 match event.key:
@@ -63,6 +64,12 @@ class Playing(State):
                             c.updated = True
                     case self.keybinds.INVENTORY if self.ui.chat.hidden:
                         self.ui.open_window(Inventory)
+                    case self.keybinds.CROUCH if p[self.keybinds.MOVE_DOWN]:
+                        self.player.crouch(True)
+            case pygame.KEYUP:
+                match event.key:
+                    case self.keybinds.CROUCH:
+                        self.player.crouch(False) # Send crouch packet again to stop crouching
             case pygame.MOUSEWHEEL:
                 tiles = self.game.assets.tiles
                 if event.y > 0:
@@ -86,8 +93,9 @@ class Playing(State):
             self.player.move(1)
             self.moving = True
 
-        if p[self.keybinds.MOVE_DOWN] and p[self.keybinds.CROUCH]:
-            self.player.crouch()
+        if p[self.keybinds.MOVE_DOWN] or p[self.keybinds.CROUCH]:
+            if self.player.props["flying"]:
+                self.player.crouch(True)
 
     def handle_wset(self):  # Temporary
 

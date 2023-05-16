@@ -20,9 +20,9 @@ class Person(Entity, PersonBase):
 
         self.em.p.send("CS_JUMP")
     
-    def crouch(self):
+    def crouch(self, c):
 
-        self.em.p.send("CS_CROUCH")
+        self.em.p.send("CS_CROUCH", {"crouching":c})
 
     def draw(self, surf):
         

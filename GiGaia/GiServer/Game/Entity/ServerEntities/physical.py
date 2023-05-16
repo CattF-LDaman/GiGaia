@@ -79,7 +79,11 @@ class Physical(Entity, PhysicalBase):
         else:
             vel_x *= 1 / (1 + (dt * self.props["air_friction"]))
 
-        grav = TILE_SIZE_PIXELS*dt*2*self.props["mass"]
+        grav = 0
+        if self.props["has_gravity"]:
+            grav = TILE_SIZE_PIXELS*dt*2*self.props["mass"]
+        else:
+            vel_y *= 1 / (1 + (dt * self.props["air_friction"]))
 
         nvel = round_coord((vel_x, vel_y+grav), 2)
         self.velocity = nvel

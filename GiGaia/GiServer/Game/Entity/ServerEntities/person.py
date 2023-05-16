@@ -30,19 +30,35 @@ class Person(Physical, PersonBase):
         mx = movement
         speed = self.props["speed"]
 
-        self.add_velocity(mx*speed if self.grounded else mx*speed)
+        self.add_velocity(mx*speed if not self.props["flying"] else mx*self.props["flight_speed"])
 
     def jump(self):
 
-        jump = self.props["jump_strength"]
-        self.set_velocity(y=-jump if self.grounded else None)
+        if not self.props["flying"]:
+            self.set_velocity(y=-self.props["jump_strength"] if self.grounded else None)
+        else:
+            self.add_velocity(y=-self.props["flight_speed"])
 
     def crouch(self):
-
+        if self.props["flying"]:
+            self.add_velocity(y=self.props["flight_speed"])
         self.ghost_platforms = True
+
+    def stop_crouch(self):
+
+        self.ghost_platforms = False
+
+    def toggle_flight(self):
+
+        if not self.props["flying"]:
+            self.change("flying", True)
+            self.change("has_gravity", False)
+            return True
+        else:
+            self.change("has_gravity", True)
+            self.change("flying", False)
+            return False
 
     def tick(self):
 
         self.update_physics()
-
-        self.ghost_platforms = False

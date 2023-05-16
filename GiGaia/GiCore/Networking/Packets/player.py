@@ -1,6 +1,7 @@
 
-from GiGaia.GiCore.Data.datatypes import D_INT8S, D_FPOS, D_TILEREF, D_INT16
+from GiGaia.GiCore.Data.datatypes import D_INT8S, D_FPOS, D_TILEREF, D_INT16, D_BOOL
 
+# For left and right movement
 CS_MOVE = (
     ("x", D_INT8S),
 )
@@ -13,4 +14,6 @@ CS_WSET = (
     ("tile", D_INT16)
 )
 
-CS_CROUCH = ()
+CS_CROUCH = (
+    ("crouching", D_BOOL),
+)

@@ -29,6 +29,7 @@ SC_LOGIN_CONFIRM = (
     ("msg", D_STRING, 1)
 )
 
+# Makes player EID known to client
 SC_PLAYER = (
     ("eid", D_INT64),
 )

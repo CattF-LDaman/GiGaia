@@ -77,7 +77,10 @@ class Playing(Userstate):
 
     def handle_crouch_packet(self, cp):
 
-        self.entity.crouch()
+        if cp.crouching:
+            self.entity.crouch()
+        else:
+            self.entity.stop_crouch()
 
     def update_world(self):
 

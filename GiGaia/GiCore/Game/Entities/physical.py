@@ -1,7 +1,7 @@
 
 from .entity import Entity
 
-from GiGaia.GiCore.Data.datatypes import D_INT16, D_VEC2, D_DEC
+from GiGaia.GiCore.Data.datatypes import D_INT16, D_VEC2, D_DEC, D_BOOL
 
 class Physical(Entity):
 
@@ -14,7 +14,8 @@ class Physical(Entity):
         ("friction", D_DEC): 2,
         ("air_friction", D_DEC): 1,
         ("width", D_INT16): 1,
-        ("height", D_INT16): 1
+        ("height", D_INT16): 1,
+        ("has_gravity", D_BOOL): True
     }
 
 
