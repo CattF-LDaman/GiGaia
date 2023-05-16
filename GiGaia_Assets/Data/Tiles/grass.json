@@ -1,0 +1,13 @@
+{
+    "display": "Grass",
+
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [0, 133, 31],
+            "grain": [0, 143, 41],
+            "border": [0, 123, 21]
+        }
+    }
+
+}

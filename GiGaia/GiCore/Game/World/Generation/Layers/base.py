@@ -48,7 +48,7 @@ class Base(Layer):
         
         nval = sum(self.normalize(self.noise.noise2(x*s, self._grab_level))*w for w,s in zip(self.weights, self.smooths))
 
-        return self.crown_base + (self.ground_extend*nval)
+        return int(self.crown_base + (self.ground_extend*nval))
     
     def is_crown(self, x, h):
 
@@ -60,6 +60,10 @@ class Base(Layer):
             return True
         
         return False
+
+    def is_grass(self, x, y):
+
+        return y == -self._height_at(x)
 
     def is_ground(self, x, y):
 
@@ -75,6 +79,8 @@ class Base(Layer):
             return 0
         
         if self.is_crown(x, y):
+            if self.is_grass(x, y):
+                return self.tiles.GRASS
             return self.tiles.DIRT
-        
+            
         return self.tiles.STONE
