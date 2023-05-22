@@ -18,7 +18,7 @@ class Setup(Userstate):
                                         'theme_color':self.game.config.theme_color,
                                         'description':self.game.config.description, 
                                         'connected':len(self.game.users), 
-                                        'user_exist':self.user.data.exists,
+                                        'user_exist':False if not self.user.data.exists else not self.user.data.remove_pass,
                                         'tickrate':self.game.config.tickrate,
                                     })
         
@@ -30,12 +30,16 @@ class Setup(Userstate):
                 return
 
             if self.user.data.exists:
-                if self.user.data.check_password(lgn.password):
+                if self.user.data.remove_pass:
                     login_success = True
+                    self.user.data.change_password(lgn.password)
                     break
                 else:
-                    self.h.send("SC_LOGIN_CONFIRM", {'is_ok': False, 'msg':"Invalid credentials."})
-
+                    if self.user.data.check_password(lgn.password):
+                        login_success = True
+                        break
+                    else:
+                        self.h.send("SC_LOGIN_CONFIRM", {'is_ok': False, 'msg':"Invalid credentials."})
             else:
                 self.user.data.create(lgn.password)
                 login_success = True

@@ -1,6 +1,6 @@
 
 from GiGaia.GiCore.Data.datafile import Datafile
-from GiGaia.GiCore.Data.datatypes import D_RAW,D_INT64,D_INT8
+from GiGaia.GiCore.Data.datatypes import D_RAW,D_INT64,D_INT8,D_BOOL
 from GiGaia.GiCore.Data.hashing import hash_pwd, hash_str
 
 import os
@@ -8,10 +8,11 @@ import time
 
 class UserData(Datafile):
 
-    DATA_VERSION = 2
+    DATA_VERSION = 3
     STRUC = (
             ("pwd_hash", D_RAW, 1),
             ("salt", D_RAW, 1),
+            ("remove_pass",D_BOOL),
             ("last_login", D_INT64),
             ("last_write", D_INT64),
             ("privileges",D_INT8)
@@ -50,6 +51,7 @@ class UserData(Datafile):
 
         self.salt = os.urandom(16)
         self.pwd_hash = hash_pwd(pwd, self.salt)
+        self.remove_pass = False
 
         if self.exists:
             self.save()

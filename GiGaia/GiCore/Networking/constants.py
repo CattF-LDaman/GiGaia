@@ -10,4 +10,4 @@ BOND_E_USERNAMEINVALID = b"\x08"
 BOND_S_SAMEVERSION = b"\x02"
 BOND_S_USERNAMEOK = b"\x06"
 
-INVALID_USERNAMES = ["server","cmd","","andrewtate"]
+INVALID_USERNAMES = ["server","cmd","sys","","andrewtate"]

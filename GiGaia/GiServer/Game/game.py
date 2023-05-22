@@ -37,6 +37,7 @@ class Game:
         self.users[client.username] = User(self, client)
         self.users[client.username].setup()
         self.log(f"{client.username} joined the game.",3)
+        self.chat.broadcast_chat("SYS",f"{client.username} joined the game.")
 
     def leave(self, client):
 
@@ -44,6 +45,7 @@ class Game:
         if client.username in self.players:
             self.players.pop(client.username).leave()
         self.log(f"{client.username} left the game.",3)
+        self.chat.broadcast_chat("SYS",f"{client.username} left the game.")
 
     @property
     def current_tickrate(self):

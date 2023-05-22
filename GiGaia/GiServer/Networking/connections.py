@@ -7,6 +7,7 @@ from GiGaia.GiServer.handle import Handle
 from GiGaia.GiServer.Networking.authentication import authenticate
 
 import socket
+import re
 
 @threaded_daemon
 def accept_connections(server):
@@ -59,7 +60,7 @@ def bond_connection(server,conn,addr):
 
         conn.send(BOND_S_SAMEVERSION)
 
-        client_username = conn.recvsized(lensize=1).decode("ascii").strip().replace(" ","")
+        client_username = re.sub(r'\W+', '',conn.recvsized(lensize=1).decode("ascii").strip().replace(" ","_"))
 
         if client_username in server.user_clients:
             conn.send(BOND_E_USERNAMECOLLIDE)

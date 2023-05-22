@@ -1,4 +1,5 @@
 from GiGaia.GiCore import INFO
+from GiGaia.GiServer.Data.userdata import UserData
 
 import time
 
@@ -69,3 +70,22 @@ def privileges(server, args, player=None):
     
     server.game.users[user].set_privileges(level)
     return f"User {user} is now privilege level {level}."
+
+def rempass(server, args, player=None):
+    """Removes specified user password."""
+
+    if len(args) != 1:
+        return "Usage: rempass [USER]"
+    
+    user_data = UserData(server.game.dirs["users"], args[0])
+
+    if not user_data.exists:
+        return f"User '{args[0]}' not found."
+    
+    if player and player.user.privileges <= user_data.privileges:
+        return "Target player has equal or higher privileges than you."
+
+    user_data.remove_pass = True
+    user_data.save()
+
+    return f"'{args[0]}' must now reset their password on login."
