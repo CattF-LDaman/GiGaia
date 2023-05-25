@@ -16,7 +16,8 @@ class Chat(Frame):
 
         self.create()
 
-        self.history = []
+        self.log = []
+        self.history = [] # TODO
 
         self.cancel_pop_up_hide = False
 
@@ -52,8 +53,8 @@ class Chat(Frame):
         self.chat_in(cp.user, cp.content)
 
     def chat_in(self, user, chat):
-        self.history.append(f"{user}: {chat}")
-        self.chat_contents.change("\n".join(self.history[-10:]))
+        self.log.append(f"{user}: {chat}")
+        self.chat_contents.change("\n".join(self.log[-10:]))
         self.pop_up()
 
     def send(self):

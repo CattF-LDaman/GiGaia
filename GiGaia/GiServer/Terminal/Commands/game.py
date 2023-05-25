@@ -118,3 +118,9 @@ def flyspeed(server, args, player=None):
         return f"Flight speed for {player.name} changed to {speed}."
 
     return f"{player.name}'s flight speed is {player.entity.props['flight_speed']}."
+
+def troverride(server, args, player=None):
+    """Changes the server tickrate. (temporary)"""
+
+    server.config.game.tickrate = int(args[0])
+    return "Tickrate changed."
