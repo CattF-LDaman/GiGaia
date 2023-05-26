@@ -37,6 +37,10 @@ class Menu:
         self.join_status = None
         self.join_failed = False
 
+        self.lost_connection = None
+        self.last_server = None
+        self.last_username = None
+
         self.switch('Start')
 
     def switch(self, page):
@@ -49,6 +53,9 @@ class Menu:
 
     @threaded_daemon
     def join(self, addr, username):
+        
+        self.last_server = addr
+        self.last_username = username
         
         gm_succ = self.client.setup_game(username, addr[0], addr[1])
         if not gm_succ:

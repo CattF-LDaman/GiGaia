@@ -24,6 +24,12 @@ class User:
     def privileges(self):
         return self.data.privileges
 
+    def kick(self, reason):
+    
+        self.handle.send("SC_BYE", {"reason":reason})
+        self.handle.close_gracefully()
+        self.game.log(f"User '{self.name}' kicked from server: {reason}")
+
     def disconnect(self, reason="No reason specified."):
 
         self.game.log(f"User '{self.name}' disconnected by server: {reason}")

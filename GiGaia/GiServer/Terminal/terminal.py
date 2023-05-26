@@ -58,4 +58,5 @@ class Terminal:
 
             cmd_in = input()
 
-            self.parse(cmd_in)
+            if self.running:
+                self.parse(cmd_in)

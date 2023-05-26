@@ -33,3 +33,7 @@ SC_LOGIN_CONFIRM = (
 SC_PLAYER = (
     ("eid", D_INT64),
 )
+
+SC_BYE = (
+    ("reason", D_STRING, 2),
+)

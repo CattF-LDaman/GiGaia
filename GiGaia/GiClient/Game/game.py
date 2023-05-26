@@ -97,6 +97,7 @@ class Game:
         
         self.postman = Postman(self)
         self.postman.hold(PID.SC_LOAD_STATE)
+        self.postman.subscribe(PID.SC_BYE, self.disconnect_by_server)
         self.postman.start()
 
         self.ui_manager = self.uim = UIManager(self.client)
@@ -140,9 +141,14 @@ class Game:
         else:
             self.client.window.blit(self.screen, (0,0))
 
-    def close(self):
+    def disconnect_by_server(self, rp):
+
+        self.close(rp.reason)
+
+    def close(self, reason=None):
         if not self.closed:
             self.closed = True
             self.postman.close()
             self.client.game = None
             self.client.state = CLIENT_STATE_MENU
+            self.client.menu.lost_connection = reason

@@ -8,6 +8,8 @@ from GiGaia.GiClient.UI.Widgets.text import Message
 
 from GiGaia.GiClient.UI.Widgets.textinput import Input
 
+import string
+
 class Play(MenuPage):
 
     def __init__(self, menu):
@@ -57,10 +59,17 @@ class ConnectTo(MenuPage):
 
         self.msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.15], text_scale=2)
 
-        self.user_in = self.uim.add_widget(Input, size=30, allowed_chars=None, text_scale=2, position=[0, 0.3], name="Username", anchor="center", relative_anchor="midtop", relative_to=self.w)
+        last_user = self.menu.last_username
+        if self.menu.last_server:
+            last_ip = self.menu.last_server[0]
+            last_port = str(self.menu.last_server[1])
+        else:
+            last_ip = last_port = None
 
-        self.ip_in = self.uim.add_widget(Input, size=30, allowed_chars=None, text_scale=2, position=[0, 0.4], name="IP", anchor="center", relative_anchor="midtop", relative_to=self.w)
-        self.port_in = self.uim.add_widget(Input, size=5, isize_w=self.user_in.size[0] , allowed_chars="0123456789", text_scale=2, position=[0, 0.5], name="Port", default=str(self.menu.config.networking.default_port), anchor="center", relative_anchor="midtop", relative_to=self.w)
+        self.user_in = self.uim.add_widget(Input, size=30, allowed_chars=string.ascii_letters+string.digits, default=last_user if last_user else "", text_scale=2, position=[0, 0.3], name="Username", anchor="center", relative_anchor="midtop", relative_to=self.w)
+
+        self.ip_in = self.uim.add_widget(Input, size=30, allowed_chars=None, default=last_ip if last_ip else "", text_scale=2, position=[0, 0.4], name="IP", anchor="center", relative_anchor="midtop", relative_to=self.w)
+        self.port_in = self.uim.add_widget(Input, size=5, isize_w=self.user_in.size[0], allowed_chars="0123456789", text_scale=2, position=[0, 0.5], name="Port", default=str(self.menu.config.networking.default_port) if not last_port else last_port, anchor="center", relative_anchor="midtop", relative_to=self.w)
 
         self.inputs_order = [self.user_in, self.ip_in, self.port_in]
 

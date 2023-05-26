@@ -44,7 +44,7 @@ class Postman:
             for w in self.waiting.values():
                 w.set()
             self.game.client.log(f"Connection {'lost' if lost else 'closed'} with {self.conn.full_address}",3 if lost else 2)
-            self.game.close()
+            self.game.close("Connection lost." if lost else None)
 
     def recv(self, packet_type, timeout=None):
         packet_type = self._parse_packet_type(packet_type)

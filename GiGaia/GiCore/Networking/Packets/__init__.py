@@ -5,7 +5,7 @@ from GiGaia.GiCore.Data.datatypes import pack, D_INT8
 from GiGaia.GiCore.Data import struc
 
 from .general import SC_TEST
-from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING, SC_PLAYER
+from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING, SC_PLAYER, SC_BYE
 from .entity import SC_ENTITY, SC_ENTITY_POS, SC_ENTITY_UPD_PROP, SC_ENTITY_DESTROY
 from .player import CS_MOVE, CS_WSET, CS_JUMP, CS_CROUCH
 from .world import SC_CHUNK, SC_UPDATE_CHUNK, SC_UPDATE_TILE, SC_TIME
@@ -16,6 +16,7 @@ PACKET_TYPES = {
 0: SC_TEST,
 1: SC_CHAT,
 2: CS_CHAT_OUT,
+3: SC_BYE,
 
 10: SC_LOAD_STATE,
 11: SC_GAME_INFO,
@@ -50,6 +51,7 @@ PACKET_NAMES = {
 0: "SC_TEST",
 1: "SC_CHAT",
 2: "CS_CHAT_OUT",
+3: "SC_BYE",
 
 10: "SC_LOAD_STATE",
 11: "SC_GAME_INFO",

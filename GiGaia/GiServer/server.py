@@ -95,6 +95,9 @@ class Server:
 
         self.logger.close()
 
+        self.game.running = False
+        self.terminal.running = False
+
         sys.exit(exit_code)
 
     def run(self):

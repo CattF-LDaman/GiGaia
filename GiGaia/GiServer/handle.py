@@ -18,6 +18,7 @@ class Handle:
 
         self.active = False
         self.closed = False
+        self.closing = False
 
         self.subscribers = {}
         self.outbox = {}
@@ -66,6 +67,11 @@ class Handle:
         self.receiver()
         self.sender()
 
+    def close_gracefully(self): # Disabled receiving and sends remaining packets, then closes.
+
+        self.closing = True
+        self.can_send.release(100)
+
     def close(self, lost = False):
 
         if not self.closed:
@@ -74,7 +80,7 @@ class Handle:
             self.closed = True
             if not lost:
                 self.conn.close()
-            self.can_send.release(10)
+            self.can_send.release(100)
             for w in self.waiting.values():
                 w.set()
             self.server.remove_client(self)
@@ -100,7 +106,7 @@ class Handle:
     def receiver(self):
 
         try:
-            while self.active:
+            while self.active and not self.closing:
 
                 in_bin = self.conn.recvsized()
                 if not in_bin:
@@ -139,6 +145,9 @@ class Handle:
 
                 if not self.active:
                     break
+
+                if self.closing and not self.outbox:
+                    self.close()
 
                 for packet_type, packets in self.outbox.copy().items():
                     for out_packet in packets:

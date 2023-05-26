@@ -13,6 +13,11 @@ class Start(MenuPage):
     def quit(self):
         self.menu.client.close()
 
+    def update(self):
+
+        if self.menu.lost_connection:
+            self.menu.switch("LostConn")
+
     def create(self):
 
         self.uim.add_widget(GameTitle, self.w)
