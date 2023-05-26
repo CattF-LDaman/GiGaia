@@ -1,0 +1,17 @@
+
+from .entity import Entity
+from GiGaia.GiCore.Game.Entities import Bitch as BitchBase
+
+import pygame
+
+class Bitch(Entity, BitchBase):
+
+    def __init__(self, entity_manager, eid, position, props):
+        super().__init__(entity_manager, eid, position, props)
+
+        self.rect = pygame.Rect(0,0,8,8)
+
+    def draw(self, surf):
+
+        self.rect.center = self.draw_pos
+        pygame.draw.rect(surf, self.props["color"], self.rect, border_radius=self.rect.width//3)

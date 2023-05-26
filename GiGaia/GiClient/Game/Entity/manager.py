@@ -57,6 +57,6 @@ class EntityManager:
 
         self.handle_packets()
 
-        for e in self.entities.values():
+        for e in tuple(self.entities.values()):
 
             e.draw(self.game.screen)

@@ -49,6 +49,6 @@ class EntityManager:
 
         self.map = {}
 
-        for entity in self.entities.values():
+        for entity in tuple(self.entities.values()):
 
             entity.update()

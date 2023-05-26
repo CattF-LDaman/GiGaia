@@ -124,3 +124,9 @@ def troverride(server, args, player=None):
 
     server.config.game.tickrate = int(args[0])
     return "Tickrate changed."
+
+def stresstest(server, args, player=None):
+
+    for _ in range(int(args[0])):
+
+        server.game.entity_manager.spawn("Bitch", player.entity.position)
