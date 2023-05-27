@@ -96,7 +96,7 @@ class WorldData(Datafile):
         for region_pos,region in self.world.regions.copy().items():
             if region_pos not in self.region_files:
                 self.create_region_file(region)
-            self.region_files[region_pos].save()
+            self.region_files[region_pos].check_save()
 
         self.last_saved = int(time.time())
         self.game_time = self.world.time.value if hasattr(self.world, "time_start") else 0
@@ -145,10 +145,16 @@ class RegionData(Datafile):
                 chunk.modified = False
 
         self.rgi.update(rgi_data)
+
+        return bool(rgi_data)
     
+    def check_save(self):
+
+        if self.update_rgi():
+            self.save()
+
     def on_save(self):
-        
-        self.update_rgi()
+        print(self.name)
 
     def on_create(self):
 

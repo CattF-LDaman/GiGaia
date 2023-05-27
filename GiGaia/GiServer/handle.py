@@ -165,10 +165,18 @@ class Handle:
         elif type(pt) == str:
             return PACKET_NAMETYPES[pt]
 
-    def send(self,packet_type, out_packet=None):
+    def send(self, packet_type, out_packet=None, unique_val=None):
         packet_type = self._parse_packet_type(packet_type)
         if packet_type not in self.outbox:
             self.outbox[packet_type]= []
+
+        if unique_val:  # If the values of a specified key match, overwrite the packet in outbox instead of adding a packet
+            for p in self.outbox[packet_type]:
+                if p[unique_val] == out_packet[unique_val]:
+                    p.update(out_packet)
+                    self.can_send.release()
+                    return
+                
         self.outbox[packet_type].append(out_packet)
         self.can_send.release()
 

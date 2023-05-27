@@ -131,8 +131,10 @@ class World:
     def handle_modifications(self):
 
         for chunk in self.modified_chunks:
+            cmods = chunk.modifications.copy()
+            chunk.modifications.clear()
             for player in chunk.observers:
-                player.world_updates[chunk.position] = chunk.modifications
+                player.world_updates[chunk.position] = cmods
             chunk.observers.clear()
         self.modified_chunks.clear()
 

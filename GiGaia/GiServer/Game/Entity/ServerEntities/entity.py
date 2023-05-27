@@ -1,5 +1,6 @@
 
 from GiGaia.GiCore.Game.Entities.entity import Entity as EntityBase
+from GiGaia.GiCore.Game.World.coords import floor_coord
 
 class Entity(EntityBase):
 
@@ -22,6 +23,7 @@ class Entity(EntityBase):
 
     def destroy(self):
         self.em.remove(self.eid)
+        self._destroy()
 
     def _destroy(self):
 
@@ -50,10 +52,10 @@ class Entity(EntityBase):
 
     def _update_position(self):
         #self.position[0], self.position[1] = int(self.position[0]), int(self.position[1])
-        if self.position != self.prev_pos:
+        if floor_coord(self.position) != self.prev_pos:
             for player in self.seen_by:
-                player.h.send("SC_ENTITY_POS", {"eid":self.eid, "position":self.position})
-            self.prev_pos = self.position.copy()
+                player.h.send("SC_ENTITY_POS", {"eid":self.eid, "position":self.position}, unique_val="eid")
+            self.prev_pos = floor_coord(self.position)
 
     def update(self):
 
@@ -67,3 +69,4 @@ class Entity(EntityBase):
 
         for player in (p for p in self.seen_by if self not in p.visible_entities or p.user.left):
             self.seen_by.remove(player)
+            player.h.send("SC_ENTITY_DESTROY", {"eid":self.eid})

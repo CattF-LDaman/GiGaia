@@ -93,10 +93,10 @@ class Server:
         else:
             self.log(f"Server closed with exit code {exit_code}")
 
-        self.logger.close()
-
         self.game.running = False
         self.terminal.running = False
+
+        self.logger.close()
 
         sys.exit(exit_code)
 

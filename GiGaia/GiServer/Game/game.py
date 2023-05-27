@@ -57,8 +57,8 @@ class Game:
         while self.running:
 
             self.dt = 1/self.config.tickrate
-            self.clock.tick(self.config.tickrate)
-            self.ticks += self.clock.get_time()
+            self.clock.tick(self.config.tickrate*self.config.time_scale)
+            self.ticks += self.clock.get_time()*self.config.time_scale
 
             for u in self.users.copy().values():
                 if u.state.ready:

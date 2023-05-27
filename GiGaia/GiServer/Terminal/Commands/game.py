@@ -119,14 +119,21 @@ def flyspeed(server, args, player=None):
 
     return f"{player.name}'s flight speed is {player.entity.props['flight_speed']}."
 
-def troverride(server, args, player=None):
-    """Changes the server tickrate. (temporary)"""
-
-    server.config.game.tickrate = int(args[0])
-    return "Tickrate changed."
-
 def stresstest(server, args, player=None):
 
     for _ in range(int(args[0])):
 
         server.game.entity_manager.spawn("Bitch", player.entity.position)
+
+def visent(server, args, player=None):
+    """Shows what entities are within a player's visibility range."""
+
+    if not args and player is None:
+        return "usage: visent <PLAYER NAME>"
+    elif args:
+        player_name = args[0]
+        if player_name not in server.game.players:
+            return f"No such player: {player_name}"
+        player = server.game.players[player_name]
+
+    return "\n".join(e.identity_str for e in player.visible_entities)

@@ -1,4 +1,5 @@
 from GiGaia.GiCore import INFO
+from GiGaia.GiCore.Networking.Packets import PACKET_NAMES
 from GiGaia.GiServer.Data.userdata import UserData
 
 import time
@@ -114,3 +115,16 @@ def kick(server, args, player=None):
     target_player.kick(f"Kicked by {player.name if player else 'server'}: {reason}")
 
     return f"'{args[0]}' has been kicked."
+
+def outbound(server, args, player=None):
+    """See how many packets of each packet type are queued to be sent to a specified user."""
+
+    if len(args) == 0:
+        return "Usage: outbound [USER]"
+    
+    if args[0] not in server.game.users:
+        return "User not found."
+
+    user = server.game.users[args[0]]
+
+    return "\n".join(f"{PACKET_NAMES[pt]}: {len(ps)}" for pt,ps in user.handle.outbox.items())

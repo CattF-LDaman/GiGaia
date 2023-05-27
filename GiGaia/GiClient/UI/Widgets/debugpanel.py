@@ -59,6 +59,8 @@ class DebugPanel(Widget):
                     "cam": gamestate.scene.camera_pos,
                     "cursor_wpos": gamestate.scene.convert_window_to_world_coord(pygame.mouse.get_pos()),
                     "player_wpos": gamestate.player.position,
+                    "player_tpos": gamestate.player.tile_pos,
+                    "player_cpos": gamestate.player.chunk_pos,
                     "delta_pos": diff_coords(gamestate.scene.camera_pos, gamestate.player.position),
                     "chunks_upd": gamestate.world.surface_updates,
                     "chunks_drawn": gamestate.world.viewport_size,
