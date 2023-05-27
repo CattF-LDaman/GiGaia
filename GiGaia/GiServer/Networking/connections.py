@@ -55,7 +55,7 @@ def bond_connection(server,conn,addr):
             conn.send(BOND_E_WRONGVERSION)
             conn.send(VERSION_BYTES)
             conn.close()
-            server.log(f"Disconnected from {conn.full_address}: wrong bG0N version: {version_to_string(version_from_bytes(client_version))}.")
+            server.log(f"Disconnected from {conn.full_address}: wrong GiGaia version: {version_to_string(version_from_bytes(client_version))}.")
             return
 
         conn.send(BOND_S_SAMEVERSION)

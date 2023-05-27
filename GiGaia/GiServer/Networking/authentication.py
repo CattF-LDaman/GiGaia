@@ -8,7 +8,7 @@ def authenticate(conn,addr):
     if conn.recv(len(AUTH_HANDSHAKE)) != AUTH_HANDSHAKE:
 
         conn.close()
-        return "Failed handshake, probably not a POA client."
+        return "Failed handshake, probably not a GiGaia client."
 
     server_key = generate_key()
     conn.send(server_key)
