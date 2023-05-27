@@ -153,9 +153,6 @@ class RegionData(Datafile):
         if self.update_rgi():
             self.save()
 
-    def on_save(self):
-        print(self.name)
-
     def on_create(self):
 
         self.rgi = {}
