@@ -137,3 +137,16 @@ def visent(server, args, player=None):
         player = server.game.players[player_name]
 
     return "\n".join(e.identity_str for e in player.visible_entities)
+
+def destent(server, args, player=None):
+    """Destroy specified entity."""
+    if not args:
+        return "usage: destent <EID>"
+
+    eid = int(args[0])
+
+    if eid not in server.game.entity_manager.entities:
+        return "Entity not found."
+    
+    server.game.entity_manager.entities[eid].destroy()
+    return "Entity destroyed."

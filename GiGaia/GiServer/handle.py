@@ -165,7 +165,7 @@ class Handle:
         elif type(pt) == str:
             return PACKET_NAMETYPES[pt]
 
-    def send(self, packet_type, out_packet=None, unique_val=None):
+    def send(self, packet_type, out_packet=None, unique_val=None, important=False):
         packet_type = self._parse_packet_type(packet_type)
         if packet_type not in self.outbox:
             self.outbox[packet_type]= []
@@ -177,7 +177,10 @@ class Handle:
                     self.can_send.release()
                     return
                 
-        self.outbox[packet_type].append(out_packet)
+        if not important:
+            self.outbox[packet_type].append(out_packet)
+        else:
+            self.outbox[packet_type].insert(0, out_packet)
         self.can_send.release()
 
     def subscribe(self, packet_type, subscriber_inbox):
