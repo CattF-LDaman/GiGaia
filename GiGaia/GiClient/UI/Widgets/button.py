@@ -22,7 +22,7 @@ class ActionButton(Widget):
             self.action()
 
         if self.hovered_once:
-            self.uim.assets.sounds["hover"].play()
+            self.uim.assets.sounds["hover2"].play()
 
         self.updated = self.updated or self.hovered or self.unhovered
 
