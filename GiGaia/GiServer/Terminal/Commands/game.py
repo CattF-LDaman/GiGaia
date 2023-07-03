@@ -1,3 +1,4 @@
+import inspect
 
 def players(server, args, player=None):
     """Show all players."""
@@ -150,3 +151,32 @@ def destent(server, args, player=None):
     
     server.game.entity_manager.entities[eid].destroy()
     return "Entity destroyed."
+
+def gent(server, args, player=None):
+    """Shows entity information by Entity Instance ID."""
+    if not args:
+        return "usage: gent <EID>"
+
+    eid = int(args[0])
+
+    if eid not in server.game.entity_manager.entities:
+        return "Entity not found."
+    
+    ent = server.game.entity_manager.entities[eid]
+    ent_props = "\n".join(f'\t--> {p} = {v}' for p,v in ent.props.items())
+    ent_attr = "\n".join(f'\t--> {p} = {v}' for p,v in vars(ent).items())
+
+    def get_first_subpckg(cls):
+        return cls.__module__.split(".")[1]
+    ent_cls_mro = ', '.join(f"{c.__name__} ({get_first_subpckg(c)})" for c in inspect.getmro(type(ent)) if c.__module__.startswith("GiGaia"))
+    
+    return f"""-- {ent.NAME}#{ent.eid} --
+    ID:       {ent.ID}
+    POSITION: {ent.position}
+    PROPERTIES:
+    {ent_props}
+    CLASS_MRO:
+        {ent_cls_mro}
+    ATTR:
+    {ent_attr}
+    """
