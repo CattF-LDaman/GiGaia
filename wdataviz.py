@@ -21,12 +21,6 @@ class WDataViz:
 
         self.out = out
 
-        # x_s = [c[0] for c in self.data.existing_region_files]
-        # y_s = [c[1] for c in self.data.existing_region_files]
-        # self.width = (max(x_s)-min(x_s))*REGION_SIZE_CHUNKS
-        # self.height = (max(y_s)-min(y_s))*REGION_SIZE_CHUNKS
-        # print(self.width, self.height)
-
         self.width = 10000
         self.height = 5000
         self.offset_x = int(self.width/2)
@@ -38,17 +32,6 @@ class WDataViz:
         print(f"{self.width}x{self.height} {self.world_name} @ {self.worlds_dir} -> {self.out}")
 
         self.visualize()
-
-    # def visualize(self):
-
-    #     for y in range(self.height):
-    #         for x in range(self.width):
-    #             x, y = x+self.offset_x, y+self.offset_y
-    #             self.p[x,y] = (255,255,255) if self.data.has_chunk((x,y)) else (0,0,0)
-    #         if y % (self.height//100) == 0:
-    #             print(int(y/self.height*100))
-
-    #     pygame.image.save(self.surf, self.out)
 
     def visualize(self):
 
