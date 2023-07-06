@@ -1,11 +1,11 @@
 {
     "display": "Grass",
-
+    
     "sprite": {
         "shape": "Dirty",
         "components": {
-            "base": [0, 133, 31],
-            "grain": [0, 143, 41],
+            "base": [117, 56, 27],
+            "grain": [129, 62, 30],
             "border": [0, 123, 21]
         }
     }

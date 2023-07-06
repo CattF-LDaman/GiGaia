@@ -9,7 +9,7 @@ import os
 import time
 
 class WorldData(Datafile):
-    AUTO_CREATE = True
+    AUTO_CREATE = False
 
     DATA_VERSION = 2
     STRUC = (

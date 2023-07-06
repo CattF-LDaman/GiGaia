@@ -35,6 +35,7 @@ class Config:
 
         "world": {
             "name":f"World_{os.urandom(3).hex()}",
+            "seed":int.from_bytes(os.urandom(8), "little"),
             "serve_range":8,
             "generator": SETTINGS,
             "chunk_tile_mod_max": 14,

@@ -23,7 +23,13 @@ class World:
         self.modified_chunks = []
 
         self.data = WorldData(self.game.server.dirs["worlds"], self.name, self)
+        
+        if not self.data.exists:
+            self.data.create(seed=self.config.seed)
         self.seed = self.data.seed
+        if not self.config.seed == self.seed:
+            self.game.log("Seed in config does not match loaded world's seed.", 3)
+
         self.generator = Generator(self.data.seed, self.game.server.assets.TIDS, self.config.generator)
         self.generator.start()
 
