@@ -2,7 +2,7 @@
     "display": "Cum",
 
     "sprite": {
-        "shape": "Dirty",
+        "shape": "Stoney",
         "components": {
             "base": [255, 230, 230],
             "grain": [255, 240, 240],

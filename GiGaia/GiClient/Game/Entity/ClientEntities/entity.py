@@ -16,7 +16,7 @@ class Entity(EntityBase):
 
         self.ghost_position = self.position.copy()
 
-        if self.props["name"]:
+        if self.props["name"] and self.eid != self.state.player_eid:
             self.state.ui.entity_name(self)
 
     def update_props(self, changes):

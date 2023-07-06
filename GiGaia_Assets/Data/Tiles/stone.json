@@ -2,7 +2,7 @@
     "display": "Stone",
 
     "sprite": {
-        "shape": "Dirty",
+        "shape": "Stoney",
         "components": {
             "base": [96, 96, 96],
             "grain": [90, 90, 90],
