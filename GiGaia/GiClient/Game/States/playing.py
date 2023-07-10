@@ -7,6 +7,7 @@ from GiGaia.GiClient.Game.Interfaces.PlayingUI.inventory import Inventory
 from GiGaia.GiClient.Game.Entity.manager import EntityManager
 from GiGaia.GiClient.Game.World.world import World
 from GiGaia.GiClient.Game.scene import Scene
+from GiGaia.GiClient.Game.World.lighting import LuxFlux
 from GiGaia.GiClient.Game.States.Playing.inventory import PlayerInventory
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
@@ -32,6 +33,9 @@ class Playing(State):
 
         self.selected_tile = 0  # SHOULD MOVE TO NEW CLASS.
 
+        self.fullbright = False
+        self.torch = False
+
         self.player_eid = None
 
         self.p.subscribe("SC_PLAYER", self.set_player)
@@ -52,6 +56,8 @@ class Playing(State):
         self.entity_manager = EntityManager(self)
         self.inventory = self.inv = PlayerInventory(self)
 
+        self.lux = LuxFlux(self)
+
     def handle_event(self, event):
 
         p = pygame.key.get_pressed()
@@ -62,6 +68,12 @@ class Playing(State):
                         self.game.log("Reloading chunk surfaces...")
                         for c in self.world.chunks.values():
                             c.updated = True
+                    case pygame.K_F5 if self.client.dev:
+                        self.torch = not self.torch
+                        self.game.log(f"Torch: {self.torch}")
+                    case pygame.K_F9 if self.client.dev:
+                        self.fullbright = not self.fullbright
+                        self.game.log(f"Fullbright: {self.fullbright}")
                     case self.keybinds.INVENTORY if self.ui.chat.hidden:
                         self.ui.open_window(Inventory)
                     case self.keybinds.CROUCH if p[self.keybinds.MOVE_DOWN]:
@@ -110,6 +122,10 @@ class Playing(State):
         elif mp[1]:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(0,), "tile":4})
 
+    def resize(self):
+
+        self.lux.resize()
+
     def tick(self):
 
         self.world.update()
@@ -125,6 +141,11 @@ class Playing(State):
 
             if not self.ui.wman.windows:
                 self.handle_wset()
+
+        if self.torch:
+            self.lux.point_light(self.scene.mouse_screen, 200, (255,255,255))
+        if not self.fullbright:
+            self.lux.apply()
 
         if self.player:
             cam_point = self.player.position if not self.moving else sum_coords(self.player.position, (0, self.view_bob*math.sin(self.game.client.ticks/self.view_bob_smooth)))

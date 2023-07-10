@@ -15,3 +15,5 @@ class Bitch(Entity, BitchBase):
 
         self.rect.center = self.draw_pos
         pygame.draw.rect(surf, self.props["color"], self.rect, border_radius=self.rect.width//3)
+
+        self.state.lux.point_light(self.draw_pos, 50, (255,0,0))

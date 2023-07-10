@@ -35,6 +35,11 @@ class Scene:
         
         return self.convert_window_to_world_coord(pygame.mouse.get_pos())
 
+    @property
+    def mouse_screen(self):
+
+        return self.convert_window_to_screen_coord(pygame.mouse.get_pos())
+
     def convert_window_to_world_coord(self,coord):
         
         coord = pygame.Vector2(coord)/self.game.scale
@@ -77,3 +82,6 @@ class Scene:
     def convert_world_to_window_coord(self,coord):
 
         return pygame.Vector2(self.origin + coord)*self.game.scale
+
+    def convert_window_to_screen_coord(self,coord):
+        return pygame.Vector2(coord)/self.game.scale

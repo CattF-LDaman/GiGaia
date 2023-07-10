@@ -25,6 +25,8 @@ class Game:
 
         self.config = self.client.config
 
+        self.state = None
+
         self.scale = self.config.client.game_scale
         self.resize()
         
@@ -41,13 +43,18 @@ class Game:
         self.closed = False
         self.quit_dialog = None
 
-        self.state = None
-
     def resize(self):
 
-        scr = self.client.window.get_size()
-        self.screen = pygame.Surface((int(scr[0]/self.scale), int(scr[1]/self.scale)))
+        self.screen = pygame.Surface(self.size)
+        if self.state:
+            self.state.resize()
 
+    @property
+    def size(self):
+         
+        scr = self.client.window.get_size()
+        return (int(scr[0]/self.scale), int(scr[1]/self.scale))
+    
     def handle_event(self, event):
 
         self.ui_manager.handle_event(event)

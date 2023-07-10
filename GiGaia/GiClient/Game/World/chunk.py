@@ -25,6 +25,10 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
 
         self.update_neighbours()
 
+    @property
+    def draw_pos(self):
+        return self.world.scene.convert_world_to_screen_coord(self.world_position)
+
     def update_neighbours(self):
         for nb in neighbours(self.position):
             self.world.update_chunk((nb[0], nb[1]))

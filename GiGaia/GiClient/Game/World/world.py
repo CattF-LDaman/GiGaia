@@ -92,6 +92,11 @@ class World:
 
         return coord_range(pix_to_chunk(topleft), pix_to_chunk(botright, ceil=True)) #coord_square(pix_to_chunk(self.scene.camera_pos), 4)
 
+    @property
+    def sky_color(self):
+
+        return self.time.sky_color(self.daycycle)
+
     def draw(self):
 
         self.game.screen.fill(self.time.sky_color(self.daycycle))
@@ -106,7 +111,7 @@ class World:
             if cp in self.chunks:
 
                 c = self.chunks[cp]
-                self.game.screen.blit(c.get_surface(), self.scene.convert_world_to_screen_coord(c.world_position))
+                self.game.screen.blit(c.get_surface(), c.draw_pos)
 
     def update(self):
 

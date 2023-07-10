@@ -2,6 +2,7 @@ from .entity import Entity
 from GiGaia.GiCore.Game.Entities.person import Person as PersonBase
 
 import pygame
+import math
 
 class Person(Entity, PersonBase):
 
@@ -28,3 +29,4 @@ class Person(Entity, PersonBase):
         
         self.rect.center = self.draw_pos
         pygame.draw.rect(surf, (0,0,255), self.rect, border_radius=self.rect.width//4)
+        self.state.lux.point_light(self.draw_pos, self.props["flight_speed"]//100)

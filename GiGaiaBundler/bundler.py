@@ -5,7 +5,7 @@ from . import entry
 from . import assets
 from . import version
 
-def bundle(bundle_target):
+def bundle(bundle_target, custom_build_id=None):
 
     print(f"Bundling {bundle_target}...")
 
@@ -28,7 +28,7 @@ def bundle(bundle_target):
     print("Done.")
 
     print("Adding build information to source...")
-    build = version.add_build(bundle_dir)
+    build = version.add_build(bundle_dir, custom_build_id)
     print(f"Build: {build}")
     print("Done.")
 

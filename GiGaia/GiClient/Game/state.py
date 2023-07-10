@@ -49,6 +49,10 @@ class State:
 
         pass
 
+    def resize(self): # Called when screen resizes
+
+        pass
+
     def handle_event(self, event):
 
         pass

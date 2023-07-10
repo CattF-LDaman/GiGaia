@@ -4,18 +4,24 @@ print("Bundle target?")
 print("[0] Client")
 print("[1] Server")
 print("[2] Both")
+print("(3) Custom build ID")
 
+custom_build_id = None
 while True:
     try:
-        bundle_target = ["Client","Server", "Both"][int(input("> "))]
+        inp = int(input("> "))
+        if inp == 3:
+            custom_build_id = input("BUILD ID: ")
+            continue
+        bundle_target = ["Client","Server", "Both"][inp]
         break
-    except IndexError:
-        print("! Choice should be 0 or 1 !")
+    except (IndexError, ValueError):
+        print("! Invalid choice !")
         continue
 
 if bundle_target == "Both":
-    bundle("Client")
-    bundle("Server")
+    bundle("Client", custom_build_id)
+    bundle("Server", custom_build_id)
 else:
-    bundle(bundle_target)
+    bundle(bundle_target, custom_build_id)
 
