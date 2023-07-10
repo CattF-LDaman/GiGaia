@@ -29,4 +29,4 @@ class Person(Entity, PersonBase):
         
         self.rect.center = self.draw_pos
         pygame.draw.rect(surf, (0,0,255), self.rect, border_radius=self.rect.width//4)
-        self.state.lux.point_light(self.draw_pos, self.props["flight_speed"]//100)
+        self.state.lux.point_light(self.draw_pos, 300, (30,30,30))
