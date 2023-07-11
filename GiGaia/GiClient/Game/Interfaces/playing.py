@@ -48,6 +48,12 @@ class Playing(Interface):
                         self.chat.send()
                     else:
                         self.chat.chat_input.start_input()
+                
+                case self.state.keybinds.CHAT_HUP if not self.chat.hidden:
+                    self.chat.history_select()
+                    
+                case self.state.keybinds.CHAT_HDOWN if not self.chat.hidden:
+                    self.chat.history_select(-1)
 
     def open_window(self, window, *args, **kwargs):
         self.wman.open_window(window, *args, **kwargs)

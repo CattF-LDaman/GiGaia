@@ -15,12 +15,15 @@ class Keybinds(Datafile):
         "CROUCH": pygame.K_LSHIFT,
         "INVENTORY": pygame.K_i,
         "CHAT": pygame.K_t,
-        "CHAT_SEND": pygame.K_RETURN
+        "CHAT_SEND": pygame.K_RETURN,
+        "CHAT_HUP": pygame.K_UP,
+        "CHAT_HDOWN": pygame.K_DOWN,
+
     }
 
     AUTO_CREATE = True
 
-    DATA_VERSION = 2
+    DATA_VERSION = 3
     STRUC = [
         (keyb, D_INT32) for keyb in DEFAULT_KEYBINDS.keys() 
     ]

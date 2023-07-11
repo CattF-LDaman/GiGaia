@@ -1,0 +1,13 @@
+{
+    "display": "Sand",
+
+    "sprite": {
+        "shape": "Dirty",
+        "components": {
+            "base": [225, 200, 150],
+            "grain": [205, 180, 130],
+            "border": [175, 150, 100]
+        }
+    }
+
+}

@@ -1,0 +1,13 @@
+{
+    "display": "Slate",
+
+    "sprite": {
+        "shape": "Stoney",
+        "components": {
+            "grain": [70, 70, 72],
+            "base": [55, 55, 57],
+            "border": [40, 40, 42]
+        }
+    }
+
+}

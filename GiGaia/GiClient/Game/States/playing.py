@@ -82,7 +82,7 @@ class Playing(State):
                 match event.key:
                     case self.keybinds.CROUCH:
                         self.player.crouch(False) # Send crouch packet again to stop crouching
-            case pygame.MOUSEWHEEL:
+            case pygame.MOUSEWHEEL if self.ui.chat.chat_contents.auto_scroll:
                 tiles = self.game.assets.tiles
                 if event.y > 0:
                     self.selected_tile = min(self.selected_tile+1,len(tiles))

@@ -25,6 +25,11 @@ class RawInput(Widget):
         self.text_input = default
         self.prev_input = self.text_input
 
+    def change(self, txt):
+
+        self.text_input = txt
+        self.updated = True
+
     def clear(self):
 
         self.text_input = ""

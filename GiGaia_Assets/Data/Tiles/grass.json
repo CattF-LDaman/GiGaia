@@ -4,10 +4,12 @@
     "sprite": {
         "shape": "Dirty",
         "components": {
-            "base": [117, 56, 27],
-            "grain": [129, 62, 30],
+            "grain": [117, 56, 27],
+            "base": [129, 62, 30],
             "border": [0, 123, 21]
         }
-    }
+    },
+
+    "alike": [1]
 
 }

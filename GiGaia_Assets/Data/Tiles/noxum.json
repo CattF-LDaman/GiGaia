@@ -1,0 +1,13 @@
+{
+    "display": "Noxum",
+
+    "sprite": {
+        "shape": "Stoney",
+        "components": {
+            "grain": [40, 40, 42],
+            "base": [30, 30, 32],
+            "border": [20, 20, 22]
+        }
+    }
+
+}

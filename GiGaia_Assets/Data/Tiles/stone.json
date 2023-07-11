@@ -4,8 +4,8 @@
     "sprite": {
         "shape": "Stoney",
         "components": {
-            "base": [96, 96, 96],
-            "grain": [90, 90, 90],
+            "grain": [96, 96, 96],
+            "base": [90, 90, 90],
             "border": [75, 75, 75]
         }
     }

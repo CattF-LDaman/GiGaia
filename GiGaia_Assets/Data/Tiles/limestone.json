@@ -1,0 +1,13 @@
+{
+    "display": "Limestone",
+
+    "sprite": {
+        "shape": "Stoney",
+        "components": {
+            "grain": [150, 145, 135],
+            "base": [155, 150, 140],
+            "border": [130, 125, 115]
+        }
+    }
+
+}

@@ -1,0 +1,13 @@
+{
+    "display": "Sandstone",
+
+    "sprite": {
+        "shape": "Stoney",
+        "components": {
+            "grain": [225, 200, 150],
+            "base": [205, 180, 130],
+            "border": [175, 150, 100]
+        }
+    }
+
+}

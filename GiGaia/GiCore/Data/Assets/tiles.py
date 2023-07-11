@@ -66,7 +66,9 @@ class Tile:
                     }
             },
 
-    "platform": False
+    "platform": False,
+
+    "alike": ()
     }
 
     def __init__(self, man, tid, tname, tile_data):
@@ -84,9 +86,13 @@ class Tile:
 
         self.is_platform = tile_data["platform"]
 
+        self.alike = tile_data["alike"]
+
         self.shape = man.tile_shapes[self.sprite_shape]
     
     def _trbl_filter(self, t):
+        if t in self.alike:
+            return 1
         match t:
             case self.id:
                 return 1

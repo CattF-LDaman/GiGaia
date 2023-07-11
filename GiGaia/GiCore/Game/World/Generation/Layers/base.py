@@ -82,5 +82,8 @@ class Base(Layer):
             if self.is_grass(x, y):
                 return self.tiles.GRASS
             return self.tiles.DIRT
-            
+        
+        if y > 2666:
+            return self.tiles.NOXUM
+        
         return self.tiles.STONE

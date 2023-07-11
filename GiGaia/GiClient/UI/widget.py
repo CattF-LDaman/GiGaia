@@ -225,7 +225,7 @@ class Widget:
             self.scrolled_down = False
             self.unclicked = False
 
-            if self.age != 0:
+            if self.age != 0 and not self.hidden:
                 if not pygame.mouse.get_pressed()[0]:
                     self.held = False
 

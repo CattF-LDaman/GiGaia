@@ -1,0 +1,11 @@
+{
+    "display": "Disturbed Noxum",
+    "sprite": {
+        "shape": "Stoney",
+        "components": {
+            "grain": [44, 30, 22],
+            "base": [28, 28, 30],
+            "border": [40, 20, 22]
+        }
+    }
+}

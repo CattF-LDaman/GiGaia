@@ -180,3 +180,7 @@ def gent(server, args, player=None):
     ATTR:
     {ent_attr}
     """
+
+def tileids(server, args, players=None):
+
+    return "\n".join(f"{t.id}: {t.display_name} ({t.name})" for t in server.assets.tiles.values())

@@ -1,0 +1,13 @@
+{
+    "display": "Granite",
+
+    "sprite": {
+        "shape": "Stoney",
+        "components": {
+            "grain": [130, 110, 110],
+            "base": [140, 120, 120],
+            "border": [120, 100, 100]
+        }
+    }
+
+}
