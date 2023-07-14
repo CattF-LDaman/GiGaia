@@ -1,17 +1,18 @@
 from .entity import Entity
 from .physical import Physical
 
-from GiGaia.GiCore.Data.datatypes import D_RBG
+from GiGaia.GiCore.Data.datatypes import D_RBG, D_INT128
 
 import random
 
-class Bitch(Physical):
+class Firefly(Physical):
 
     ID = 3
-    NAME = "Bitch"
+    NAME = "Firefly"
 
     PROPERTIES = {
         ("color", D_RBG): (255,0,0),
+        ("resting", D_INT128): 0,
     }
 
 

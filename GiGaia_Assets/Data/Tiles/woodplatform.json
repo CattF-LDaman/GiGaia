@@ -1,0 +1,15 @@
+{
+    "display": "Wooden Platform",
+
+    "sprite": {
+        "shape": "Platform",
+        "components": {
+            "base": [128, 88, 48],
+            "grain": [137, 97, 59],
+            "border": [116, 78, 41]
+        }
+    },
+
+    "platform": true
+
+}

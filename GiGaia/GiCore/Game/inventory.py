@@ -84,6 +84,7 @@ class Inventory:
 class Item:
 
     RARITIES = ["Trash", "Common", "Rare", "Epic", "Legendary", "Godlike"]
+    RARITY_COLORS = [(198, 140, 83), (171, 171, 171), (71, 117, 209), (0, 255, 204), (255, 153, 0), (255, 51, 0)]
     DEFAULT = {
         "name": "Air",
         "description": "?",
@@ -117,6 +118,7 @@ class Item:
         self.STACK_SIZE = self.item_data["stack_size"]
         self.DESCRIPTION = self.item_data["description"]
         self.RARITY = self.RARITIES[self.item_data["rarity"]]
+        self.RARITY_COLOR = self.RARITY_COLORS[self.item_data["rarity"]]
 
     @staticmethod
     def get_datastruc(inventory, item_id, data):

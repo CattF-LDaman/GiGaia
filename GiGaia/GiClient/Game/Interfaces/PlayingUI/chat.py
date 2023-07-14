@@ -8,7 +8,7 @@ import time
 
 class Chat(Frame):
 
-    MAX_STORED_MESSAGES = 2048
+    MAX_STORED_MESSAGES = 100
     POPUP_TIME = 1.5
 
     def __init__(self, ui_manager, interface):

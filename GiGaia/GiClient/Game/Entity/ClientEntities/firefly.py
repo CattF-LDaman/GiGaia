@@ -1,10 +1,10 @@
 
 from .entity import Entity
-from GiGaia.GiCore.Game.Entities import Bitch as BitchBase
+from GiGaia.GiCore.Game.Entities import Firefly as FireflyBase
 
 import pygame
 
-class Bitch(Entity, BitchBase):
+class Firefly(Entity, FireflyBase):
 
     def __init__(self, entity_manager, eid, position, props):
         super().__init__(entity_manager, eid, position, props)
@@ -16,5 +16,6 @@ class Bitch(Entity, BitchBase):
         self.rect.center = self.draw_pos
         pygame.draw.rect(surf, self.props["color"], self.rect, border_radius=self.rect.width//3)
 
-        self.state.lux.point_light(self.draw_pos, 6, (40,255,40))
-        self.state.lux.point_light(self.draw_pos, 10, (40,255,40))
+        if not self.props["resting"]:
+            self.state.lux.point_light(self.draw_pos, 6, (40,255,40))
+            self.state.lux.point_light(self.draw_pos, 10, (40,255,40))

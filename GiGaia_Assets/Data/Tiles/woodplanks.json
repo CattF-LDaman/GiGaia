@@ -1,0 +1,13 @@
+{
+    "display": "Wooden Planks",
+
+    "sprite": {
+        "shape": "Planky",
+        "components": {
+            "grain": [128, 88, 48],
+            "base": [137, 97, 59],
+            "border": [116, 78, 41]
+        }
+    }
+
+}

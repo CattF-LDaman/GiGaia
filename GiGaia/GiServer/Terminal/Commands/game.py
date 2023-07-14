@@ -124,7 +124,7 @@ def stresstest(server, args, player=None):
 
     for _ in range(int(args[0])):
 
-        server.game.entity_manager.spawn("Bitch", player.entity.position)
+        server.game.entity_manager.spawn("Firefly", player.entity.position)
 
 def visent(server, args, player=None):
     """Shows what entities are within a player's visibility range."""

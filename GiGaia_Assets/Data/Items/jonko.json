@@ -12,5 +12,7 @@
 
     "datatypes": {
         "sleuren_left": "D_INT64"
-    }
+    },
+
+    "sprite": "jonko"
 }
