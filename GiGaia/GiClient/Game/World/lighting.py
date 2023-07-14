@@ -30,6 +30,8 @@ def create_colorized_radial_gradient(radius, center_color, outer_color):
 
 class LuxFlux:
 
+    WORLD_LIGHT_LEVELS = 10
+
     def __init__(self, state):
 
         self.state = state
@@ -45,6 +47,15 @@ class LuxFlux:
         gr_rect = gr.get_rect()
         gr_rect.center = location
         self.light_surface.blit(gr, gr_rect, special_flags=pygame.BLEND_RGB_ADD)
+
+    def free_light_world(self, surf, location):
+
+        screen_loc = self.state.scene.convert_world_to_screen_coord(location)
+        self.light_surface.blit(surf, screen_loc)
+
+    def free_light(self, surf, location):
+
+        self.light_surface.blit(surf, location)
 
     @property
     def natural_light(self):

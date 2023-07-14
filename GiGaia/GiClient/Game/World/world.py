@@ -2,6 +2,7 @@
 from .chunk import Chunk
 from GiGaia.GiCore.Game.World.coords import pix_to_chunk, coord_range, coord_square, add_coord, tile_to_tileref
 from GiGaia.GiCore.Game.World.timestamp import Timestamp
+from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE
 
 import time
 import pygame
@@ -54,6 +55,13 @@ class World:
             return 0
 
         return self.chunks[chunk].tiles[z][tileref[1]][tileref[0]]
+    
+    def get_tileref_at(self, x, y):
+        chunk, tileref = tile_to_tileref((x,y))
+        if chunk not in self.chunks:
+            return None
+
+        return self.chunks[chunk], tileref
 
     def update_tile(self, x, y):
         chunk, tileref = tile_to_tileref((x,y))
@@ -112,6 +120,7 @@ class World:
 
                 c = self.chunks[cp]
                 self.game.screen.blit(c.get_surface(), c.draw_pos)
+                #self.state.lux.free_light(c.lighting, c.draw_pos)
 
     def update(self):
 
