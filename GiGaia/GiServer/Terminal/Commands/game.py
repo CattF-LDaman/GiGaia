@@ -184,3 +184,9 @@ def gent(server, args, player=None):
 def tileids(server, args, players=None):
 
     return "\n".join(f"{t.id}: {t.display_name} ({t.name})" for t in server.assets.tiles.values())
+
+def summon(server, args, player=None):
+
+    for _ in range(int(args[1]) if len(args) > 1 else 1):
+
+        server.game.entity_manager.spawn(args[0], player.entity.position if player else (0,0))
