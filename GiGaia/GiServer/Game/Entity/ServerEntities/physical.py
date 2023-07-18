@@ -25,6 +25,10 @@ class Physical(Entity, PhysicalBase):
         self.ghost_platforms = False
         self.step_up = False
 
+    def resize(self):
+        self.rect = pygame.Rect(0,0,self.props["width"],self.props["height"])
+        self.check_rect = pygame.Rect(0,0,self.props["width"]+(TILE_SIZE_PIXELS*2),self.props["height"]+(TILE_SIZE_PIXELS*2))
+
     def _check_collision(self, ignore_platforms=False):
 
         for chunk in self.game.world.grab_all(pix_chunk_range(self.check_rect.topleft, self.check_rect.bottomright)):
@@ -56,7 +60,7 @@ class Physical(Entity, PhysicalBase):
         self.rect.center = self.position
         self.check_rect.center = self.position
 
-        if (col := self._check_collision(True)):
+        if (col := self._check_collision(True)) and not self.props["noclip"]:
             self.position[0] = prev_x
             self.hugging = True
 
@@ -70,7 +74,7 @@ class Physical(Entity, PhysicalBase):
         self.rect.center = self.position
         self.check_rect.center = self.position
 
-        if (col := self._check_collision(vel_y < 0 if not self.ghost_platforms else True)):
+        if (col := self._check_collision(vel_y < 0 if not self.ghost_platforms else True)) and not self.props["noclip"]:
             if vel_y > 0:
                 self.grounded = True
             self.position[1] = prev_y
@@ -100,6 +104,14 @@ class Physical(Entity, PhysicalBase):
         #self.change("vel", (vel_x+(x*self.game.dt) if x is not None else vel_x, vel_y+(y*self.game.dt) if y is not None else vel_y))
         vel_x, vel_y = self.velocity
         self.velocity = (vel_x+(x*self.game.dt) if x is not None else vel_x, vel_y+(y*self.game.dt) if y is not None else vel_y)
+
+    def toggle_noclip(self):
+        if not self.props["noclip"]:
+            self.change("noclip", True)
+            return True
+        else:
+            self.change("noclip", False)
+            return False
 
     def tick(self):
 

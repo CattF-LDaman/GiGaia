@@ -75,7 +75,7 @@ def privileges(server, args, player=None):
     return f"User {user} is now privilege level {level}."
 
 def rempass(server, args, player=None):
-    """Removes specified user password."""
+    """Removes specified user's password."""
 
     if len(args) != 1:
         return "Usage: rempass [USER]"

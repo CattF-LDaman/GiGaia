@@ -17,7 +17,7 @@ class Inventory(Window):
 
     def create(self):
 
-        self.container_title = self.uim.add_widget(Message, text="", relative_to=self, position=(0,0.1), text_scale=3, layer=self.layer+1, relative_anchor="midtop", anchor="midtop")
+        self.container_title = self.uim.add_widget(Message, text="", relative_to=self, position=(0,0.1), shadow=True, text_scale=3, layer=self.layer+1, relative_anchor="midtop", anchor="midtop")
         self.msg = self.uim.add_widget(Message, text=str(self.game.client.session_id), relative_to=self, layer=self.layer+1, relative_anchor="center", anchor="center")
 
     def update_window(self):

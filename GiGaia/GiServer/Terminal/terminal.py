@@ -45,6 +45,7 @@ class Terminal:
                 if not player:
                     self.server.log(f"Server encountered an error while executing your command:\n{''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__))}",4)
                 else:
+                    self.server.log(f"Server encountered an error while executing {player.name}'s command:\n{''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__))}",4)
                     player.send_msg(f"Server error: {str(e)}", "CMD")
         elif not player:
             self.server.log(f"Unknown command: {cmd_in}",3)

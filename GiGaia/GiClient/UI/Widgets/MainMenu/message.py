@@ -8,7 +8,7 @@ import pygame
 
 class Message(Widget):
 
-    def __init__(self, ui_manager, pagew, text="", position=(0,0), text_scale=1, color=None, shadow=None, font="basic"):
+    def __init__(self, ui_manager, pagew, text="", position=(0,0), text_scale=1, color=None, shadow=None, shadow_color=None, font="basic"):
 
         super().__init__(ui_manager, position=position, width=0, height=0, relative_to=pagew, anchor="center", relative_anchor="topleft", always_redraw=False)
 
@@ -17,6 +17,7 @@ class Message(Widget):
         self.text_color = color if color else self.uim.assets.data.ui.color_tw
 
         self.shadow = shadow
+        self.shadow_color = shadow_color
 
         self.font = font
 
@@ -36,5 +37,5 @@ class Message(Widget):
 
         self.surface.fill(self.uim.assets.data.ui.colorkey)
         if self.shadow:
-            self.uim.assets.fonts[self.font].render(self.surface, (1,1) , self.text, scale=self.text_scale, color=darken(self.text_color, 20))
+            self.uim.assets.fonts[self.font].render(self.surface, (1,1) , self.text, scale=self.text_scale, color=darken(self.text_color, 20) if not self.shadow_color else self.shadow_color)
         self.uim.assets.fonts[self.font].render(self.surface, (0,0) , self.text, scale=self.text_scale, color=pygame.Color(self.text_color))

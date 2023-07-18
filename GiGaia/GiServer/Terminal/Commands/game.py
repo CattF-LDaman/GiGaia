@@ -25,7 +25,7 @@ def entities(server, args, player=None):
 def world(server, args, player=None):
     """Displays world information."""
     w = server.game.world
-    inf = f"World: {w.name}\nLocation: {w.data.location}\nSeed: {w.data.seed}\nLoaded regions: {len(w.data.region_files)}\nTimestamp: {w.time.value}\nDay: {w.time.day}\nDay progress:{w.time.day_progress}"
+    inf = f"World: {w.name}\nLocation: {w.data.location}\nSeed: {w.data.seed}\nLoaded regions: {len(w.data.region_files)}\nTimestamp: {w.time.value}\nDay: {w.time.day}\nDay progress: {w.time.day_progress}"
     return inf
 
 def superplayer(server, args, player=None):
@@ -119,6 +119,37 @@ def flyspeed(server, args, player=None):
         return f"Flight speed for {player.name} changed to {speed}."
 
     return f"{player.name}'s flight speed is {player.entity.props['flight_speed']}."
+
+def noclip(server, args, player=None):
+    """Toggles noclip for a specified player or yourself."""
+
+    if not args and player is None:
+        return "usage: noclip <PLAYER NAME>"
+    elif args:
+        player_name = args[0]
+        if player_name not in server.game.players:
+            return f"No such player: {player_name}"
+        player = server.game.players[player_name]
+    
+    noclip_enabled = player.entity.toggle_noclip()
+
+    return f"Noclip has been {'enabled' if noclip_enabled else 'disabled'} for {player.name}."
+
+def noclipent(server, args, player=None):
+    """Toggles noclip for a specified entity."""
+
+    if not args:
+        return "usage: noclipent <EID>"
+    elif args:
+        eid = int(args[0])
+        if eid not in server.game.entity_manager.entities:
+            return f"No such entity: {eid}"
+        entity = server.game.entity_manager.entities[eid]
+    
+    noclip_enabled = entity.toggle_noclip()
+
+    return f"Noclip has been {'enabled' if noclip_enabled else 'disabled'} for {entity.NAME} {entity.eid}."
+
 
 def stresstest(server, args, player=None):
 

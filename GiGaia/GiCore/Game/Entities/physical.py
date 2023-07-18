@@ -15,7 +15,8 @@ class Physical(Entity):
         ("air_friction", D_DEC): 1,
         ("width", D_INT16): 1,
         ("height", D_INT16): 1,
-        ("has_gravity", D_BOOL): True
+        ("has_gravity", D_BOOL): True,
+        ("noclip", D_BOOL): False,
     }
 
 

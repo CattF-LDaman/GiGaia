@@ -60,5 +60,6 @@ class Person(Physical, PersonBase):
             return False
 
     def tick(self):
-
+        
+        self.get_seen(self.player)
         self.update_physics()
