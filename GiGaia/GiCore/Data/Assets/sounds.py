@@ -4,6 +4,9 @@ import pygame
 
 def load(man):
 
+    if type(man.instance).__name__ == "Server":
+        return
+
     man.instance.log("[ASSETS] Loading sounds...")
     sdir = os.path.join(man.location,"Sounds")
     for sfile in os.listdir(sdir):
