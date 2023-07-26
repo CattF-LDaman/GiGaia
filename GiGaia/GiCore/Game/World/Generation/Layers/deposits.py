@@ -63,3 +63,34 @@ class GraniteDeposits(Layer):
                 return self.tiles.GRANITE
         
         return tile
+
+class CoalDeposits(Layer):
+
+    SETTINGS = {
+        "stcoaldep_threshold": 0.65,
+        "stcoaldep_thresholdz": 0.67,
+        "stcoaldep_smooth": 8
+    }
+
+    def __init__(self, generator):
+        super().__init__(generator)
+
+        self.noise = opensimplex.OpenSimplex(seed=self.gen.seed//17+1018)
+
+        self.threshold = self.s.stcoaldep_threshold
+        self.thresholdz = self.s.stcoaldep_thresholdz
+        self.smooth_mult = 1/self.s.stcoaldep_smooth
+        
+    def _st_at(self, x, y, z):
+        
+        nval = self.noise.noise2(x*self.smooth_mult, y*self.smooth_mult)
+
+        return nval > (self.threshold if z == 0 else self.thresholdz)
+
+    def get(self, x, y, z, tile):
+
+        if tile == self.tiles.STONE:
+            if self._st_at(x, y, z):
+                return self.tiles.STONECOAL
+        
+        return tile

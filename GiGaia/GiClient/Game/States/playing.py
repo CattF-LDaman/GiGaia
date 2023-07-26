@@ -115,7 +115,7 @@ class Playing(State):
         chunk, tileref = pix_to_tileref(self.scene.mouse)
 
         mp = pygame.mouse.get_pressed()
-        if mp[0]:
+        if mp[0] and self.selected_tile:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":self.selected_tile})
         elif mp[2]:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})
@@ -139,7 +139,7 @@ class Playing(State):
 
                 self.last_game_tick = self.game.client.ticks
 
-            if not self.ui.wman.windows:
+            if not self.ui.wman.windows and not (self.ui.game_menu and not self.ui.game_menu.deleted):
                 self.handle_wset()
 
         if self.torch:

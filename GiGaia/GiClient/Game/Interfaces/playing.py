@@ -33,7 +33,7 @@ class Playing(Interface):
                         self.wman.windows.pop(-1)
                     elif not self.chat.hidden:
                         self.chat.hide()
-                    elif self.game_menu:
+                    elif self.game_menu and not self.game_menu.deleted:
                         self.game_menu.delete()
                         self.game_menu = None
                     else:

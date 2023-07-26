@@ -3,6 +3,7 @@ from GiGaia.GiCore.Networking.Packets import PACKET_NAMES
 from GiGaia.GiServer.Data.userdata import UserData
 
 import time
+import os
 
 def stop(server, args, player=None):
     """Stop server, nicely."""
@@ -128,3 +129,8 @@ def outbound(server, args, player=None):
     user = server.game.users[args[0]]
 
     return "\n".join(f"{PACKET_NAMES[pt]}: {len(ps)}" for pt,ps in user.handle.outbox.items())
+
+def pid(server, args, player=None):
+    """Gets the server's process ID."""
+
+    return str(os.getpid())
