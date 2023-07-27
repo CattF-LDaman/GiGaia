@@ -63,7 +63,7 @@ class DebugPanel(Widget):
                     "player_cpos": gamestate.player.chunk_pos,
                     "delta_pos": diff_coords(gamestate.scene.camera_pos, gamestate.player.position),
                     "chunks_upd": gamestate.world.surface_updates,
-                    "chunks_drawn": gamestate.world.viewport_size,
+                    "chunks_drawn": f"{gamestate.world.viewport_size}/{self.client.config.world.max_chunk_updates_per_tick}",
                     "time": gamestate.world.time.value,
                     "day": gamestate.world.time.day,
                     "day_progress": gamestate.world.time.day_progress,

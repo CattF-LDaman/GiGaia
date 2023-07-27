@@ -17,4 +17,7 @@ DEFAULT_CONFIG = {
         "default_port": 17746
     },
 
+    "world": {
+        "max_chunk_updates_per_tick": 3,
+    }
 }

@@ -181,7 +181,10 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         
         if self.updated:
             
-            self.draw()
+            if self.world.surface_updates < self.world.game.config.world.max_chunk_updates_per_tick:
+                self.draw()
+            else:
+                return None
 
         elif self.updates:
 

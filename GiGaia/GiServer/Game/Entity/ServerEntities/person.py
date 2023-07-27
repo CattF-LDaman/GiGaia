@@ -6,11 +6,11 @@ from GiGaia.GiCore.Game.Entities import Person as PersonBase
 class Person(Physical, PersonBase):
 
     PERSON_PHYSICS = {
-        "mass": 95,
+        "mass": 115,
         "width": 30,
         "height": 60-4,
         "friction": 10,
-        "air_friction": 10,
+        "air_friction": 9,
     }
 
     def __init__(self, entity_manager, eid, position, props, player):

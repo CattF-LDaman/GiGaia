@@ -2,7 +2,8 @@
 from .chunk import Chunk
 from GiGaia.GiCore.Game.World.coords import pix_to_chunk, coord_range, coord_square, add_coord, tile_to_tileref
 from GiGaia.GiCore.Game.World.timestamp import Timestamp
-from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE
+from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE, DARK_COMPLETE_DEPTH, DARKER_FROM_DEPTH, HORIZON, COMPLETE_DARKNESS
+from GiGaia.GiCore.color_util import mult_color
 
 import time
 import pygame
@@ -101,13 +102,25 @@ class World:
         return coord_range(pix_to_chunk(topleft), pix_to_chunk(botright, ceil=True)) #coord_square(pix_to_chunk(self.scene.camera_pos), 4)
 
     @property
+    def camera_depth(self):
+
+        return self.scene.camera_pos[1] - HORIZON
+
+    @property
     def sky_color(self):
 
-        return self.time.sky_color(self.daycycle)
+        if self.camera_depth > DARKER_FROM_DEPTH:
+            difference = self.camera_depth - DARKER_FROM_DEPTH
+            ratio = difference / DARK_COMPLETE_DEPTH
+            depth_mult = max(1-min(ratio, 1), COMPLETE_DARKNESS)
+        else:
+            depth_mult = 1
+
+        return mult_color(self.time.sky_color(self.daycycle), depth_mult)
 
     def draw(self):
 
-        self.game.screen.fill(self.time.sky_color(self.daycycle))
+        self.game.screen.fill(self.sky_color)
 
         viewport_chunks = self.get_viewport_chunks()
 
@@ -119,7 +132,9 @@ class World:
             if cp in self.chunks:
 
                 c = self.chunks[cp]
-                self.game.screen.blit(c.get_surface(), c.draw_pos)
+
+                if (chunk_surface := c.get_surface()):
+                    self.game.screen.blit(chunk_surface, c.draw_pos)
                 #self.state.lux.free_light(c.lighting, c.draw_pos)
 
     def update(self):
