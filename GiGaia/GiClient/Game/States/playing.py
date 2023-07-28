@@ -74,6 +74,8 @@ class Playing(State):
                     case pygame.K_F9 if self.client.dev:
                         self.fullbright = not self.fullbright
                         self.game.log(f"Fullbright: {self.fullbright}")
+                    case pygame.K_F11 if self.client.dev:
+                        self.world.add_dev_light(self.scene.mouse)
                     case self.keybinds.INVENTORY if self.ui.chat.hidden:
                         self.ui.open_window(Inventory)
                     case self.keybinds.CROUCH if p[self.keybinds.MOVE_DOWN]:

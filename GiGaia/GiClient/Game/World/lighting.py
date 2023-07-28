@@ -4,8 +4,8 @@ import multiprocessing
 import numpy as np
 from functools import lru_cache
 
-@lru_cache(maxsize=512)
-def create_colorized_radial_gradient(radius, center_color, outer_color):
+@lru_cache(maxsize=1024*6)
+def create_colorized_radial_gradient(radius, center_color, outer_color, intensity=1):
     size = (2 * radius, 2 * radius)
     surface = pygame.Surface(size, pygame.SRCALPHA)
     center = (radius, radius)
@@ -26,6 +26,8 @@ def create_colorized_radial_gradient(radius, center_color, outer_color):
             pixels[x, y] = pygame.Color(*interpolated_color, alpha)
     
     del pixels
+    for _ in range(intensity-1):
+        surface.blit(surface.copy(), (0,0), special_flags=pygame.BLEND_ADD)
     return surface
 
 class LuxFlux:
@@ -41,9 +43,15 @@ class LuxFlux:
 
         self.resize()
 
-    def point_light(self, location, radius, color=(255,255,255)):
+        for c in range(20):
+            self.preload_point_light(self.state.world.dev_light_radius, self.state.world.dev_light_color(c), self.state.world.dev_light_intensity)
 
-        gr = create_colorized_radial_gradient(radius, color+ (255,), (0,0,0,255))
+    def preload_point_light(self, radius, color=(255,255,255), intensity=1):
+        create_colorized_radial_gradient(radius, color+ (255,), (0,0,0,255), intensity)
+
+    def point_light(self, location, radius, color=(255,255,255), intensity=1):
+
+        gr = create_colorized_radial_gradient(radius, color+ (255,), (0,0,0,255), intensity)
         gr_rect = gr.get_rect()
         gr_rect.center = location
         self.light_surface.blit(gr, gr_rect, special_flags=pygame.BLEND_RGB_ADD)

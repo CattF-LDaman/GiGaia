@@ -6,6 +6,8 @@ from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE, DARK_COMPLETE_DEPTH, DARK
 from GiGaia.GiCore.color_util import mult_color
 
 import time
+import math
+import random
 import pygame
 from functools import lru_cache
 
@@ -30,6 +32,18 @@ class World:
 
         self.p.hold_all("SC_CHUNK","SC_UPDATE_TILE","SC_UPDATE_CHUNK")
         self.p.subscribe("SC_TIME", self.update_time)
+
+        self.dev_lights = []
+        self.dev_light_color_base = (255, 113, 61)
+        self.dev_light_radius = 200
+        self.dev_light_intensity = 2
+
+    def dev_light_color(self, brightness): # brightness: 0-20
+        return mult_color(self.dev_light_color_base, int(brightness)/20)
+
+    def add_dev_light(self, loc):
+
+        self.dev_lights.append([loc, 1])
 
     def create_chunk(self, chunk_pos, tiles):
 
@@ -136,6 +150,14 @@ class World:
                 if (chunk_surface := c.get_surface()):
                     self.game.screen.blit(chunk_surface, c.draw_pos)
                 #self.state.lux.free_light(c.lighting, c.draw_pos)
+        
+        self.handle_dev_lights()
+
+    def handle_dev_lights(self):
+
+        for dl in self.dev_lights:
+            dl[1] = max(min(dl[1]+math.sin(dl[1]+dl[0][0]+self.time_value*10)*random.uniform(0.8,0.1), 20), 15)
+            self.state.lux.point_light(self.scene.convert_world_to_screen_coord(dl[0]), self.state.world.dev_light_radius, self.dev_light_color(dl[1]), self.dev_light_intensity)
 
     def update(self):
 
