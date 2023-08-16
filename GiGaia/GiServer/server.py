@@ -107,4 +107,6 @@ class Server:
         connections.accept_connections(self)
         self.game.loop()
 
+        self.log("Server started.", 10)
+
         self.terminal.run()

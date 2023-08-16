@@ -196,7 +196,7 @@ def litent(server, args, player=None):
     ent = server.game.entity_manager.entities[eid]
     ent.change("lit", not ent.props["lit"])
 
-    return "Entity (un)lit."
+    return f"Entity {'un' if not ent.props['lit'] else ''}lit."
 
 def gent(server, args, player=None):
     """Shows entity information by Entity Instance ID."""
@@ -233,6 +233,13 @@ def tileids(server, args, players=None):
 
 def summon(server, args, player=None):
 
-    for _ in range(int(args[1]) if len(args) > 1 else 1):
+    try:
+        for _ in range(amount := int(args[1]) if len(args) > 1 else 1):
 
-        server.game.entity_manager.spawn(args[0], player.entity.position if player else (0,0))
+            server.game.entity_manager.spawn(args[0], player.entity.position if player else (0,0))
+        
+        return f"Spawned {amount} {args[0]}"
+    except KeyError:
+        return f"Entity '{args[0]}' not found"
+    except ValueError:
+        return f"{args[1]} is not a number (amount)"
