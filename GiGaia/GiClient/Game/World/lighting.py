@@ -67,18 +67,26 @@ class LuxFlux:
 
     @property
     def natural_light(self):
-        light = min(sum(self.state.world.sky_color)/3*2,255)
+        light = min(sum(self.state.world.sky_color)/3*1.5,255)
         return (light,) * 3  
 
     def resize(self):
 
         self.light_surface = pygame.Surface(self.game.size)        
+        self.lit_up_surface = pygame.Surface(self.game.size)
+        self.lit_up_surface.set_colorkey((0,0,0))
+        self.reset()
+
+    def reset(self):
         self.light_surface.fill(self.natural_light)
+        self.lit_up_surface.fill(((0,0,0)))
 
     def apply(self):
 
         self.game.screen.blit(self.light_surface, (0, 0), special_flags=pygame.BLEND_RGBA_MULT)
-        self.light_surface.fill(self.natural_light)
+        self.game.screen.blit(self.lit_up_surface, (0, 0))
+        
+        self.reset()
 
 class LuxChunks:
 

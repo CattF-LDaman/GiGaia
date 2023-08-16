@@ -48,7 +48,7 @@ class DebugPanel(Widget):
                 "recv":self.client.game.postman.received,
                 "drop":self.client.game.postman.dropped,
                 "user": self.client.game.username,
-                "gamestate": gamestate
+                "gamestate": type(gamestate).__name__
             }
 
             if gamestate.sid == SIDS.PLAYING:

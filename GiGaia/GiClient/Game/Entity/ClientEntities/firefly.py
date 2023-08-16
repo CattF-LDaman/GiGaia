@@ -19,3 +19,4 @@ class Firefly(Entity, FireflyBase):
         if not self.props["resting"]:
             self.state.lux.point_light(self.draw_pos, 6, (40,255,40))
             self.state.lux.point_light(self.draw_pos, 10, (40,255,40))
+            pygame.draw.rect(self.state.lux.lit_up_surface, (40,255,40), self.rect)

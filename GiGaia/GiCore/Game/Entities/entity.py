@@ -1,14 +1,15 @@
 
 from GiGaia.GiCore.Game.World.coords import pix_to_chunk, pix_to_tile
 
-from GiGaia.GiCore.Data.datatypes import D_STRING
+from GiGaia.GiCore.Data.datatypes import D_STRING, D_BOOL
 
 class Entity:
 
     ID = 0
     NAME = "BaseEntity"
     PROPERTIES = {
-        ("name", D_STRING, 1): ""
+        ("name", D_STRING, 1): "",
+        ("lit", D_BOOL): False,
     }
 
     def __init__(self, eid, position=(0,0)):

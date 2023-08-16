@@ -157,7 +157,10 @@ class World:
 
         for dl in self.dev_lights:
             dl[1] = max(min(dl[1]+math.sin(dl[1]+dl[0][0]+self.time_value*10)*random.uniform(0.8,0.1), 20), 15)
-            self.state.lux.point_light(self.scene.convert_world_to_screen_coord(dl[0]), self.state.world.dev_light_radius, self.dev_light_color(dl[1]), self.dev_light_intensity)
+            self.state.lux.point_light(dl_p := self.scene.convert_world_to_screen_coord(dl[0]), self.state.world.dev_light_radius, self.dev_light_color(dl[1]), self.dev_light_intensity)
+            dl_rect = pygame.Rect(0, 0, dl[1]//2, dl[1]//2)
+            dl_rect.center = dl_p
+            pygame.draw.rect(self.state.lux.lit_up_surface, self.dev_light_color_base, dl_rect)
 
     def update(self):
 

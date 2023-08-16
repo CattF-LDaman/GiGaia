@@ -183,6 +183,21 @@ def destent(server, args, player=None):
     server.game.entity_manager.entities[eid].destroy()
     return "Entity destroyed."
 
+def litent(server, args, player=None):
+    """Makes entity visible in the dark."""
+    if not args:
+        return "usage: litent <EID>"
+
+    eid = int(args[0])
+
+    if eid not in server.game.entity_manager.entities:
+        return "Entity not found."
+    
+    ent = server.game.entity_manager.entities[eid]
+    ent.change("lit", not ent.props["lit"])
+
+    return "Entity (un)lit."
+
 def gent(server, args, player=None):
     """Shows entity information by Entity Instance ID."""
     if not args:
