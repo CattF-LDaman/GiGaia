@@ -35,6 +35,7 @@ class Playing(State):
 
         self.fullbright = False
         self.torch = False
+        self.force_crash = False
 
         self.player_eid = None
 
@@ -64,6 +65,7 @@ class Playing(State):
         match event.type:
             case pygame.KEYDOWN:
                 match event.key:
+
                     case pygame.K_F10:
                         self.game.log("Reloading chunk surfaces...")
                         for c in self.world.chunks.values():
@@ -76,10 +78,15 @@ class Playing(State):
                         self.game.log(f"Fullbright: {self.fullbright}")
                     case pygame.K_F11 if self.client.dev:
                         self.world.add_dev_light(self.scene.mouse)
+                    case pygame.K_F4 if self.client.dev and pygame.key.get_pressed()[pygame.K_ESCAPE] and pygame.key.get_pressed()[pygame.K_END]:
+                        self.client.log("Crashing game state...", 4)
+                        self.force_crash = True
+                    
                     case self.keybinds.INVENTORY if self.ui.chat.hidden:
                         self.ui.open_window(Inventory)
                     case self.keybinds.CROUCH if p[self.keybinds.MOVE_DOWN]:
                         self.player.crouch(True)
+
             case pygame.KEYUP:
                 match event.key:
                     case self.keybinds.CROUCH:
@@ -129,6 +136,9 @@ class Playing(State):
         self.lux.resize()
 
     def tick(self):
+
+        if self.force_crash:
+            raise "Goodbye!"
 
         self.world.update()
         self.entity_manager.update()

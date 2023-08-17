@@ -134,3 +134,13 @@ def pid(server, args, player=None):
     """Gets the server's process ID."""
 
     return str(os.getpid())
+
+def ping(server, args, player=None):
+    """Roundtrip time of connection"""
+    cid = " ".join(args)
+    c = server.identify(cid)
+    if c:
+        c.send("A_PING", {"timestamp":int(time.perf_counter()*10000)})
+        return
+        
+    return f"Client '{cid}' not found."

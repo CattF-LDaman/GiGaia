@@ -34,6 +34,8 @@ class Handle:
         self.waiting = {}
         self.__w_received = {}
 
+        self.subscribe("A_PING", self.ping_recv)
+
     @property
     def full_address(self):
 
@@ -85,6 +87,10 @@ class Handle:
                 w.set()
             self.server.remove_client(self)
             self.server.log(f"Connection {'lost' if lost else 'closed'} with {self.identifier}",3 if lost else 2)
+
+    def ping_recv(self, ping_p):
+
+        self.server.log(f"[PING] {self.identifier}: {round(time.perf_counter()*1000 - ping_p.timestamp/10, 1)} ms")
 
     def recv(self, packet_type, timeout=None):
         packet_type = self._parse_packet_type(packet_type)

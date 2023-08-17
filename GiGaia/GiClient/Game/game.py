@@ -81,6 +81,7 @@ class Game:
                     else:
                         self.fps_counter.delete()
                         self.fps_counter = None
+
                 case pygame.K_F2:
                     if self.quit_dialog and not self.quit_dialog.deleted:
                         self.quit_dialog.delete()

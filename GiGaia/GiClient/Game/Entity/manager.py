@@ -59,4 +59,5 @@ class EntityManager:
 
         for e in tuple(self.entities.values()):
 
+            e.update_ghost()
             e.draw(self.game.screen if not e.props["lit"] else self.state.lux.lit_up_surface)

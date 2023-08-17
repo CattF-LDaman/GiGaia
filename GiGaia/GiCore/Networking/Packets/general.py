@@ -1,8 +1,6 @@
 
-from GiGaia.GiCore.Data.datatypes import D_INT64, D_STRING
+from GiGaia.GiCore.Data.datatypes import D_INT64
 
-
-SC_TEST = (
+A_PING = (
     ("timestamp",D_INT64),
-    ("message",D_STRING,2)
 )

@@ -27,6 +27,8 @@ class Postman:
         self.waiting = {}
         self.__w_received = {}
 
+        self.subscribe("A_PING", self.ping_recv)
+
     def start(self):
 
         self.active = True
@@ -61,6 +63,10 @@ class Postman:
             return None
         
         return self.__w_received.pop(packet_type)
+
+    def ping_recv(self, ping_p):
+
+        self.send("A_PING", {"timestamp":ping_p.timestamp})
 
     @threaded_daemon
     def receiver(self):

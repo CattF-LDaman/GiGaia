@@ -36,7 +36,7 @@ class Terminal:
 
                 out = cmd_func(self.server, args, player)
 
-                if not player:
+                if not player and out:
                     self.server.log(f"OUT:\n{out}\n")
                 elif out:
                     player.send_msg(str(out), "CMD")

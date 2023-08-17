@@ -14,7 +14,10 @@ DEFAULT_CONFIG = {
     "logging": Logger.DEFAULT_CONFIG,
 
     "networking": {
-        "default_port": 17746
+        "default_port": 17746,
+        "entity_ghosting": True,
+        "entity_ghost_speed": 25,
+        "player_ghost_speed": 50
     },
 
     "world": {
