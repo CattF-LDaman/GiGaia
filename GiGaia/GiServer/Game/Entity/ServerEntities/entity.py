@@ -15,6 +15,8 @@ class Entity(EntityBase):
 
         self.prev_pos = None
 
+        self.destroyed = False
+
         self.set_properties(props)
 
     def tick(self):
@@ -22,8 +24,14 @@ class Entity(EntityBase):
         pass
 
     def destroy(self):
+
+        if self.destroyed:
+            return
+        
         self.em.remove(self.eid)
         self._destroy()
+        
+        self.destroyed = True
 
     def _destroy(self):
 

@@ -107,7 +107,7 @@ class Playing(Userstate):
         self.game.world.get_chunk(ws.chunk).set_at(ws.tileref.x, ws.tileref.y, ws.tileref.z, ws.tile)
 
 
-    def handle_destroy(self, ds):
+    def handle_destroy(self, ds): # Tile destruction should be handled elsewhere
         
         dest_tile_id = self.game.world.get_chunk(ds.chunk).get(ds.tileref.x,ds.tileref.y,ds.tileref.z)
         if not dest_tile_id:
@@ -116,7 +116,7 @@ class Playing(Userstate):
         dest_tile = self.game.assets.tiles[dest_tile_id].name
         dest_pos = add_coord(tile_to_pix(tileref_to_tile((ds.chunk, (ds.tileref.x, ds.tileref.y)))), TILE_SIZE_PIXELS//2)
 
-        self.game.entity_manager.spawn("ItemEntity", dest_pos, props={"item":f"tile{dest_tile}"})
+        self.game.entity_manager.spawn("ItemEntity", dest_pos, props={"item":f"tile{dest_tile}"}).add_velocity(random.randint(-9000,9000), random.randint(-9000,9000))
         self.game.world.get_chunk(ds.chunk).set_at(ds.tileref.x, ds.tileref.y, ds.tileref.z, 0)
 
     def tick(self):
