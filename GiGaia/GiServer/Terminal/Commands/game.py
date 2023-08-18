@@ -1,4 +1,7 @@
 import inspect
+import random
+
+from GiGaia.GiCore.Game.World.coords import sum_coords
 
 def players(server, args, player=None):
     """Show all players."""
@@ -243,3 +246,31 @@ def summon(server, args, player=None):
         return f"Entity '{args[0]}' not found"
     except ValueError:
         return f"{args[1]} is not a number (amount)"
+    
+def rainitems(server, args, player=None):
+    
+    if not player:
+        return "Must be a player for this one."
+    
+    for _ in range(int(args[0]) if args else 1):
+        server.game.entity_manager.spawn("ItemEntity", sum_coords(player.entity.position, (random.randint(-150,150), random.randint(-600, -300))), props={"item":random.choice(list(server.assets.data.Items.__dict__.keys()))})
+    return "Here they come baby"
+
+def destall(server, args, player=None):
+    """Destroy all entities with type."""
+    if not args:
+        return "usage: destent <EID>"
+
+    etype = args[0]
+    try:
+        etype = int(args[0])
+    except ValueError:
+        pass
+    
+    destroyed = 0
+    for ent in server.game.entity_manager.entities.copy().values():
+        if ent.ID == etype or ent.NAME == etype:
+            destroyed += 1
+            ent.destroy()
+
+    return f"Killed {destroyed} entities."

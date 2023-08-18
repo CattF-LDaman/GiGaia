@@ -14,6 +14,11 @@ CS_WSET = (
     ("tile", D_INT16)
 )
 
+CS_DESTROY = (
+    ("chunk", D_FPOS),
+    ("tileref", D_TILEREF),
+)
+
 CS_CROUCH = (
     ("crouching", D_BOOL),
 )

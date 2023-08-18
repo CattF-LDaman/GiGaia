@@ -53,6 +53,17 @@ def load(man):
     man.tiles = tiles
     man.tile_names = tile_names
 
+    for tile in man.tiles.values():
+        tile_item = {
+                    "name":tile.display_name,
+                    "description":"I'm a tile",
+                    "type":"generic",
+                    "rarity":1,
+
+                    "stack_size":100
+                    }
+        setattr(data.Items, f"tile{tile.name}", tile_item)
+
 class Tile:
 
     DEFAULTS = {

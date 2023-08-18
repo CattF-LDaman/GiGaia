@@ -15,7 +15,7 @@ class UIManager:
 
         self.dimensions = self.ui_layer.get_size()
 
-        self.widgets = [[] for _ in range(32)]
+        self.widgets = [[] for _ in range(33)]
 
         self.capturing_input = []
         self.bp_press_start = 0

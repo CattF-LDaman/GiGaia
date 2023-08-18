@@ -10,6 +10,8 @@ class PlayerInventory(Inventory):
         self.updates = {"add_item":[], "add_container":[]}
 
     def add_item(self, container, item_id, amount=1, data=None):
+        if not data:
+            data = {}
         super().add_item(container, item_id, amount, data)
         self.updates["add_item"].append((container, item_id, amount, data))
 

@@ -11,7 +11,7 @@ from GiGaia.GiClient.Game.World.lighting import LuxFlux
 from GiGaia.GiClient.Game.States.Playing.inventory import PlayerInventory
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
-from GiGaia.GiCore.Game.World.coords import pix_to_tileref, sum_coords, mult_coord
+from GiGaia.GiCore.Game.World.coords import pix_to_tileref, pix_to_tile, sum_coords, mult_coord
 
 import pygame
 import math
@@ -127,9 +127,15 @@ class Playing(State):
         if mp[0] and self.selected_tile:
             self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":self.selected_tile})
         elif mp[2]:
-            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})
-        elif mp[1]:
-            self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(0,), "tile":4})
+            #self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(l,), "tile":0})
+            self.p.send("CS_DESTROY", {"chunk":chunk, "tileref":tileref+(l,)})
+        elif mp[1]: # tile picking
+            mp_tile = pix_to_tile(self.scene.mouse)
+            self.selected_tile = self.world.get_at(mp_tile[0], mp_tile[1], 0)
+            if not self.selected_tile:
+                self.selected_tile = self.world.get_at(mp_tile[0], mp_tile[1], 1)
+
+            #self.p.send("CS_WSET", {"chunk":chunk, "tileref":tileref+(0,), "tile":4})
 
     def resize(self):
 

@@ -6,14 +6,14 @@ from functools import lru_cache
 class Base(Layer):
 
     SETTINGS = {
-        "ground_height": 4000,  # Max height from y=0 to y=-HEIGHT the 'ground' can be
-        "ground_base": 3500,
+        "ground_height": 6000,  # Max height from y=0 to y=-HEIGHT the 'ground' can be
+        "ground_base": 4800,
 
         "crown_base": 8,
         "crown_variance": 4,
         "crown_smooth": 10,
         
-        "base_smooth": 11000,  # Gets used in special sauce, lower = more noisey, higher = smoother
+        "base_smooth": 21000,  # Gets used in special sauce, lower = more noisey, higher = smoother
         "base_noise_layers": [0.3, 0.2, 0.0, 0.15, 0.3, 0.15],  # weights
         "magic": 3
     }

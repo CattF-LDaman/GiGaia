@@ -35,6 +35,9 @@ class Entity(EntityBase):
         if prop not in self.props:
             raise ValueError(f"Property '{prop}' doesn't exist.")
 
+        if self.props[prop] == val:
+            return
+
         self.props[prop] = val
         self.changes[prop] = val
 

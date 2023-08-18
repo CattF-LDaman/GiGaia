@@ -143,6 +143,7 @@ def pack_datastruc(data):
 
     struc, strucdata = data
     out = io.BytesIO()
+
     for dataname, datatype, *datalen in struc:  # datalen is actually a list of 'other arguments'
 
         out.write(len(dataname).to_bytes(1,"little")+dataname.encode('ascii'))

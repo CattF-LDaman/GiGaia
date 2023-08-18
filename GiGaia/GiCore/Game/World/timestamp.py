@@ -11,7 +11,7 @@ class Timestamp:
         self.day, self.time_of_day = divmod(tval, TIME_LENGTH_DAY)
         self.day_progress = self.time_of_day/TIME_LENGTH_DAY
 
-        self.is_day = self.day_progress < 0.72 and self.day_progress > 0.21
+        self.is_day = self.day_progress < 0.7 and self.day_progress > 0.2
         self.is_night = not self.is_day
 
     def sky_color(self, cycle):

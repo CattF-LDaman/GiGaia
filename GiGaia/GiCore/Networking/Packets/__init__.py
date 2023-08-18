@@ -4,10 +4,10 @@ from types import SimpleNamespace
 from GiGaia.GiCore.Data.datatypes import pack, D_INT8
 from GiGaia.GiCore.Data import struc
 
-from .general import A_PING
+from .general import A_PING, SC_SOUND
 from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING, SC_PLAYER, SC_BYE
 from .entity import SC_ENTITY, SC_ENTITY_POS, SC_ENTITY_UPD_PROP, SC_ENTITY_DESTROY
-from .player import CS_MOVE, CS_WSET, CS_JUMP, CS_CROUCH
+from .player import CS_MOVE, CS_WSET, CS_JUMP, CS_CROUCH, CS_DESTROY
 from .world import SC_CHUNK, SC_UPDATE_CHUNK, SC_UPDATE_TILE, SC_TIME
 from .inventory import SC_ADD_ITEM, SC_ADD_CONTAINER
 from .chat import SC_CHAT, CS_CHAT_OUT
@@ -36,6 +36,7 @@ PACKET_TYPES = {
 51: CS_WSET,
 52: CS_JUMP,
 53: CS_CROUCH,
+54: CS_DESTROY,
 
 60: SC_CHUNK,
 61: SC_UPDATE_CHUNK,
@@ -44,6 +45,8 @@ PACKET_TYPES = {
 
 70: SC_ADD_ITEM,
 71: SC_ADD_CONTAINER,
+
+80: SC_SOUND
 
 }
 
@@ -71,6 +74,7 @@ PACKET_NAMES = {
 51: "CS_WSET",
 52: "CS_JUMP",
 53: "CS_CROUCH",
+54: "CS_DESTROY",
 
 60: "SC_CHUNK",
 61: "SC_UPDATE_CHUNK",
@@ -80,6 +84,7 @@ PACKET_NAMES = {
 70: "SC_ADD_ITEM",
 71: "SC_ADD_CONTAINER",
 
+80: "SC_SOUND"
 }
 
 PACKET_NAMETYPES = {value:key for key,value in PACKET_NAMES.items()}

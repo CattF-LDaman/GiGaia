@@ -1,6 +1,7 @@
 from GiGaia.GiClient.UI.widget import Widget
 
 from GiGaia.GiClient.UI.Widgets.button import ActionButton
+from GiGaia.GiClient.UI.Widgets.text import Message
 
 import pygame
 
@@ -15,6 +16,7 @@ class GameMenu(Widget):
         self.inner_rect.height = self.size[1]-10
         self.inner_rect.center = self.rect.center
 
+        self.uim.add_widget(Message, text="GiGaia", position=[0, 0.04], text_scale=2, shadow=True, shadow_color=(31, 96, 64), color=ui_manager.assets.data.ui.color_txt, font="fat", anchor="center", relative_anchor="midtop", layer=31, relative_to=self)
         self.uim.add_widget(ActionButton, text="Continue", width=0.9, height=50, action=self.delete, position=[0, 0.1], anchor="center", relative_anchor="midtop", relative_to=self, layer=31)
         self.uim.add_widget(ActionButton, text="Quit", width=0.9, height=50, action=game.close, position=[0, 0.2], anchor="center", relative_anchor="midtop", relative_to=self, layer=31)
 

@@ -98,6 +98,9 @@ class Game:
 
         login(self.conn, self.username)
 
+    def play_sound(self, sound_p):
+
+        self.assets.sounds[sound_p.sound].play()
 
     def start(self):  # Most initialisation of networking and game should go here.
 
@@ -106,6 +109,7 @@ class Game:
         self.postman = Postman(self)
         self.postman.hold(PID.SC_LOAD_STATE)
         self.postman.subscribe(PID.SC_BYE, self.disconnect_by_server)
+        self.postman.subscribe(PID.SC_SOUND, self.play_sound)
         self.postman.start()
 
         self.ui_manager = self.uim = UIManager(self.client)

@@ -98,6 +98,10 @@ class Chunk:
         self.modified = True
         self._collision.clear()  # Collision rects need to be regenerated
 
+    def get(self, tileref_x, tileref_y, tileref_z):
+
+        return self.tiles[tileref_z][tileref_y][tileref_x]
+
     def serve(self, player):
 
         if not self.tiles:

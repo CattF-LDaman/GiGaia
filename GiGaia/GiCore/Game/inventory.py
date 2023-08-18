@@ -90,8 +90,8 @@ class Item:
         "description": "?",
         "type": "generic", # Determines behaviour,
         "rarity": 1,
-        "data": None,
-        "datatypes": None,
+        "data": {},
+        "datatypes": {}
     }
 
     def __init__(self, inventory, item_id, amount=1, data=None):
@@ -103,7 +103,7 @@ class Item:
         if not self.item_data["data"]:
             self.item_data["data"] = {}
         if not self.item_data["datatypes"]:
-            self.item_data["datatypes"] = None
+            self.item_data["datatypes"] = {}
 
         self.inventory = self.inv = inventory
         self.amount = amount
@@ -111,7 +111,7 @@ class Item:
         # self.data = {**self.item_data["data"], **data}
         # self.DATATYPES = {k:DATATYPE_NAMETYPES[v] for k,v in self.item_data["datatypes"].items()}
 
-        self.data, self.DATATYPES = Item.get_datastruc(inventory, item_id, data)
+        self.DATATYPES, self.data = Item.get_datastruc(inventory, item_id, data)
 
         self.ID = item_id
         self.NAME = self.item_data["name"]
@@ -135,6 +135,8 @@ class Item:
         if self.amount+amount > self.STACK_SIZE:
             left = amount - (self.STACK_SIZE - self.amount)
             self.amount = self.STACK_SIZE
+        else:
+            self.amount += amount
         return left
 
     def match(self, item_id, data=None):

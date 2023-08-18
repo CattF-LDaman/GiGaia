@@ -13,7 +13,7 @@ class DebugPanel(Widget):
 
     def __init__(self, ui_manager):
 
-        super().__init__(ui_manager, position=[0, 16], layer=31, width=ui_manager.ui_layer.get_width(), height=250, anchor="topleft", always_redraw=True)
+        super().__init__(ui_manager, position=[0, 16], layer=32, width=ui_manager.ui_layer.get_width(), height=250, anchor="topleft", always_redraw=True)
 
         self.contents = {}
 

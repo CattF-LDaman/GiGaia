@@ -9,7 +9,7 @@ class Physical(Entity):
     NAME = "Physical"
 
     PROPERTIES = {
-        ("vel", D_VEC2): (0,0),
+        #("vel", D_VEC2): (0,0),
         ("mass", D_DEC): 1,
         ("friction", D_DEC): 2,
         ("air_friction", D_DEC): 1,

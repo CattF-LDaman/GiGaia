@@ -16,4 +16,4 @@ TIME_LENGTH_DAY = 30*60
 DARKER_FROM_DEPTH = 0
 DARK_COMPLETE_DEPTH = 1800
 COMPLETE_DARKNESS = 0.01
-HORIZON = -1000 # Everything 'above' (below in game) this Y position is considered underground (for depth), so Y 500 more than Y HORIZON is 500 deep underground
+HORIZON = -4000 # Everything 'above' (below in game) this Y position is considered underground (for depth), so Y 500 more than Y HORIZON is 500 deep underground

@@ -1,6 +1,7 @@
 
 from GiGaia.GiServer.Game.userstate import Userstate
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
+from GiGaia.GiCore.Game.World.coords import tileref_to_tile, tile_to_pix, add_coord, TILE_SIZE_PIXELS
 
 from GiGaia.GiServer.Game.Entity.ServerEntities.person import Person
 from GiGaia.GiServer.Game.Userstates.Playing.inventory import PlayerInventory
@@ -31,12 +32,13 @@ class Playing(Userstate):
         self.h.subscribe("CS_JUMP", self.handle_jump_packet)
         self.h.subscribe("CS_CROUCH", self.handle_crouch_packet)
         self.h.subscribe("CS_WSET", self.handle_wset)
+        self.h.subscribe("CS_DESTROY", self.handle_destroy)
 
         self.h.subscribe("CS_CHAT_OUT", self.handle_chat)
 
     def setup(self):
 
-        self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),-5000), {"name":self.name}, player=self)
+        self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),-16000), {"name":self.name}, player=self)
         self.h.send("SC_PLAYER", {'eid':self.entity.eid})
         self.game.players[self.name] = self
 
@@ -53,6 +55,10 @@ class Playing(Userstate):
     def send_msg(self, msg, user='SERVER'):
 
         self.h.send("SC_CHAT", {'content':str(msg), 'user':user})
+
+    def play_sound(self, sound):
+
+        self.h.send("SC_SOUND", {'sound':sound})
 
     def update_entities(self):
 
@@ -99,6 +105,19 @@ class Playing(Userstate):
     def handle_wset(self, ws):
 
         self.game.world.get_chunk(ws.chunk).set_at(ws.tileref.x, ws.tileref.y, ws.tileref.z, ws.tile)
+
+
+    def handle_destroy(self, ds):
+        
+        dest_tile_id = self.game.world.get_chunk(ds.chunk).get(ds.tileref.x,ds.tileref.y,ds.tileref.z)
+        if not dest_tile_id:
+            return
+        
+        dest_tile = self.game.assets.tiles[dest_tile_id].name
+        dest_pos = add_coord(tile_to_pix(tileref_to_tile((ds.chunk, (ds.tileref.x, ds.tileref.y)))), TILE_SIZE_PIXELS//2)
+
+        self.game.entity_manager.spawn("ItemEntity", dest_pos, props={"item":f"tile{dest_tile}"})
+        self.game.world.get_chunk(ds.chunk).set_at(ds.tileref.x, ds.tileref.y, ds.tileref.z, 0)
 
     def tick(self):
 
