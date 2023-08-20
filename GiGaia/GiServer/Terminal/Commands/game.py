@@ -72,7 +72,7 @@ def tp(server, args, player=None):
         player.entity.position[0] = x
         player.entity.position[1] = y
 
-    return f"Teleported {player.name} to ({args[1]} {args[2]})"
+    return f"Teleported {player.name} to ({x} {y})"
 
 def say(server, args, player=None):
 
