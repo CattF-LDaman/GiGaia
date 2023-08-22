@@ -202,6 +202,7 @@ class Widget:
             self.uim.redraws += 1
             self.updated = False
 
+        return (self.surface, self.widget_rect)
         self.ui_manager.ui_layer.blit(self.surface, self.widget_rect)
 
     def update_master(self):

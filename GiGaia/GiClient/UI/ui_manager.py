@@ -100,10 +100,13 @@ class UIManager:
                     for w in self.capturing_input:
                         w.text_input = w.text_input[:-1]
 
+            widget_blits = []
             for layer in self.widgets:
                 for widget in layer:
                     widget.update_master()
-                    widget.draw_master()
+                    if (w_blit := widget.draw_master()):
+                        widget_blits.append(w_blit)
+            self.ui_layer.blits(widget_blits)
 
             self.rmb_clicks = []
             self.lmb_clicks = []

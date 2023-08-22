@@ -61,6 +61,7 @@ class Font:
             ts = pygame.Surface(self.get_size2(txt, 1, line_spacing))
             ts.set_colorkey((0,0,0))
 
+            char_blits = []
             for linenum, line in enumerate(txt.split("\n")):
                 for cp,c in enumerate(line):
 
@@ -71,10 +72,12 @@ class Font:
                     
                     try:
                         cs = self.get_char(c)
-                        ts.blit(cs,(cp*self.size,linenum*self.size+(line_spacing*linenum)))
+                        #ts.blit(cs,(cp*self.size,linenum*self.size+(line_spacing*linenum)))
+                        char_blits.append((cs,(cp*self.size,linenum*self.size+(line_spacing*linenum))))
                     except ValueError:
                         if invalid_char_exception:
                             raise
+                ts.blits(char_blits)
 
             ts = pygame.transform.scale(ts,(int(ts.get_width()*scale),int(ts.get_height()*scale))) if scale != 1 else ts
 

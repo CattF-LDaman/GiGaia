@@ -52,10 +52,12 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         self.update_neighbours()
 
     def draw_layer(self, l, layer):
+        tile_draws = []
         for y, row in enumerate(layer):
             for x, tile in enumerate(row):
                 if tile:
-                    self.draw_tile(x, y, l, tile)
+                    tile_draws.append(self.draw_tile(x, y, l, tile, blit_later=True))
+        self.surf_layers[l].blits(tile_draws)
 
     def lit(self, x, y, strength=0, starter=None):
 
@@ -116,7 +118,7 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
                     relchunk, reltileref = self.world.get_tileref_at(*sum_coords(tpos, offset))
                     relchunk.lit(*reltileref, strength, starter or tpos)
 
-    def draw_tile(self, x, y, l, tile):
+    def draw_tile(self, x, y, l, tile, blit_later=False):
 
         surf_tpos = mult_coord((x,y), TILE_SPRITE_SIZE)
 
@@ -146,6 +148,9 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         
 
         # pygame.draw.rect(self._lighting, (int(lit/self.lux.WORLD_LIGHT_LEVELS*255),)*3, tr)
+
+        if blit_later:
+            return (t_asset.get_sprite(trbl, l, trand), surf_tpos)
 
         self.surf_layers[l].blit(t_asset.get_sprite(trbl, l, trand), surf_tpos)
 

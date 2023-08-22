@@ -141,6 +141,7 @@ class World:
         self.surface_updates = 0
         self.viewport_size = len(viewport_chunks)
 
+        viewport_surfs = []
         for cp in viewport_chunks:
 
             if cp in self.chunks:
@@ -148,9 +149,10 @@ class World:
                 c = self.chunks[cp]
 
                 if (chunk_surface := c.get_surface()):
-                    self.game.screen.blit(chunk_surface, c.draw_pos)
-                #self.state.lux.free_light(c.lighting, c.draw_pos)
-        
+                    viewport_surfs.append((chunk_surface, c.draw_pos))
+                    #self.game.screen.blit(chunk_surface, c.draw_pos)
+        self.game.screen.blits(viewport_surfs)
+
         self.handle_dev_lights()
 
     def handle_dev_lights(self):
