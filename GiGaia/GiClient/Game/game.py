@@ -138,7 +138,7 @@ class Game:
 
         self.screen.fill(self.background)
         if self.fps_counter:
-            self.fps_counter.change(str(int(self.client.clock.get_fps())))
+            self.fps_counter.change(f"{int(self.client.clock.get_fps())} {int(1/self.dt)}")
 
         self.handle_state()
 

@@ -168,6 +168,6 @@ class Client:
                 except Exception as e:
                     self.log(f"Game encountered an error:\n{''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__))}",4)
                     self.state = CLIENT_STATE_MENU
-                    self.menu.lost_connection = f"Game error: {e}"
+                    self.menu.lost_connection = f"Game error: {''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__)) if self.dev else self.log_file_path}"
 
             pygame.display.flip()

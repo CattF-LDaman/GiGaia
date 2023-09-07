@@ -15,7 +15,7 @@ class Info(MenuPage):
 
     def enter(self):
 
-        if hash_str(self.secret.content) == 'f5a889e84f9fabbf3ec0b8a9669c506104a2a619763c610528d4ee4fef0f050e':
+        if hash_str(self.secret.content) == 'eee11fe142bcdd71e9c425d409aff1eff1b848151f25ee47251ee171f63f6462':
             self.client.dev = True
 
     def create(self):
