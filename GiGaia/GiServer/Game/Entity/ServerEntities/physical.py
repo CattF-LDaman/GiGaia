@@ -41,7 +41,7 @@ class Physical(Entity, PhysicalBase):
                     continue
                 if col_rect.colliderect(self.rect):
                     step_up = False
-                    if self.step_up and col_rect.bottom == self.rect.bottom:
+                    if self.step_up and col_rect.bottom in [self.rect.bottom, self.rect.bottom-1, self.rect.bottom+1]:
                         step_up = self.game.world.is_empty((tpos[0], tpos[1]-1), (tpos[0], tpos[1]-1-math.ceil(self.rect.height/TILE_SIZE_PIXELS)))
                     return (col_rect, step_up)
         return False

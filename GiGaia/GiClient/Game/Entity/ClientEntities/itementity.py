@@ -14,4 +14,5 @@ class ItemEntity(Entity, ItemEntityBase):
     def draw(self, surf):
 
         self.rect.center = self.draw_pos
-        pygame.draw.rect(surf, (80,80,80), self.rect, border_radius=self.rect.width//4)
+        pygame.draw.rect(surf, (105,105,105), self.rect, border_radius=self.rect.width//4)
+        #self.game.assets.fonts["basic"].render(surf, self.rect.midtop-pygame.Vector2(0, 4), self.props['item'], scale=1, color=(255,255,255), blit_anchor_center=True)

@@ -26,7 +26,12 @@ class Person(Entity, PersonBase):
         self.em.p.send("CS_CROUCH", {"crouching":c})
 
     def draw(self, surf):
-        
+
+        if self.rect.width != self.props["width"]:
+            self.rect.width = self.props["width"]
+        if self.rect.height != self.props["height"]:
+            self.rect.height = self.props["height"] - int(4/60*self.props["height"])
+
         self.rect.center = self.draw_pos
         pygame.draw.rect(surf, (0,0,255), self.rect, border_radius=self.rect.width//4)
         #self.state.lux.point_light(self.draw_pos, 700, (30,30,30))

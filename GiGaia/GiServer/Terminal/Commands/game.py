@@ -48,6 +48,26 @@ def superplayer(server, args, player=None):
 
     return "God is dead."
 
+def miniplayer(server, args, player=None):
+    """Smaller man."""
+
+    if not args and not player:
+        return "usage: playersize <PLAYER NAME>"
+    
+    player_name = args[0] if args else player.name
+    if player_name not in server.game.players:
+        return f"No such player: {player_name}"
+    
+    player = server.game.players[player_name]
+    if player.entity:
+        player.entity.change("width", 3)
+        player.entity.change("height", 6)
+        player.entity.change("speed", 3200//2)
+        player.entity.change("jump_strength", 650//2)
+        player.entity.resize()
+
+    return "God is dead."
+
 def addtime(server, args, player=None):
 
     server.game.world.time_start += int(args[0])
@@ -152,7 +172,6 @@ def noclipent(server, args, player=None):
     noclip_enabled = entity.toggle_noclip()
 
     return f"Noclip has been {'enabled' if noclip_enabled else 'disabled'} for {entity.NAME} {entity.eid}."
-
 
 def stresstest(server, args, player=None):
 
