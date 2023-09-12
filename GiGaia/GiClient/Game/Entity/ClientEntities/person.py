@@ -30,7 +30,7 @@ class Person(Entity, PersonBase):
         if self.rect.width != self.props["width"]:
             self.rect.width = self.props["width"]
         if self.rect.height != self.props["height"]:
-            self.rect.height = self.props["height"] - int(4/60*self.props["height"])
+            self.rect.height = self.props["height"]# - int(4/60*self.props["height"])
 
         self.rect.center = self.draw_pos
         pygame.draw.rect(surf, (0,0,255), self.rect, border_radius=self.rect.width//4)
