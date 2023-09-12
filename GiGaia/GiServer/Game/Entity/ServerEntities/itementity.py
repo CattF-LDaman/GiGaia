@@ -15,7 +15,7 @@ class ItemEntity(Physical, ItemEntityBase):
     }
 
     FLY_RANGE = 55
-    PICKUP_RANGE = 4
+    PICKUP_RANGE = 8
     FLY_SPEED = 2000
 
     def __init__(self, entity_manager, eid, position, props):
