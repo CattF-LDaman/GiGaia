@@ -1,0 +1,33 @@
+
+== 0.1.0 Collect 'n Craft ==
+
+    - 0.0.3 Inventory -
+        + Flesh out inventory system/UI
+        + Hotbar or equivalent system
+        + Item sprites
+        + System for action panels (eg. workbench/crafting/smelting/... UI)
+        + Item usage system
+
+    - 0.0.4 Craft -
+        + Crafting
+        + World object system
+            # certain objects have inventories
+            # object saving
+        + Placeable object items
+            # test item: fingerpot
+        & some random decorative natural occurring objects like small portruding rocks or smth along those lines
+
+    - 0.0.5 Collect -
+        + Tile damage, tiles take time to destroy
+            + Some tools break some tiles better
+        + Object destruction
+        + Living entity sprite system/style
+            + Person sprite
+        + Entity/Living damage
+
+    - 0.0.6 Nature -
+        + Grass
+        + Tree
+        ? Vegetation system or just use objects ?
+        + Parallax backgrounds
+        + Cow
