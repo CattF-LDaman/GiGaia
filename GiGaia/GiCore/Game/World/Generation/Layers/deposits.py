@@ -68,7 +68,7 @@ class CoalDeposits(Layer):
 
     SETTINGS = {
         "stcoaldep_threshold": 0.65,
-        "stcoaldep_thresholdz": 0.67,
+        "stcoaldep_thresholdz": 0.67, # Makes coal deposits in second layer a little smaller
         "stcoaldep_smooth": 8
     }
 
