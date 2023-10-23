@@ -10,7 +10,7 @@ class Connection:
 
         self.closed = False
 
-        self._obf = SessionObfuscator(in_key, out_key)
+        #self._obf = SessionObfuscator(in_key, out_key)
 
     @property
     def full_address(self):
@@ -21,7 +21,7 @@ class Connection:
         if self.closed:
             return None
 
-        self.conn.send(self._obf.obf(data))
+        self.conn.send(data) #self.conn.send(self._obf.obf(data))
 
     def recv(self,n):
         if self.closed:
@@ -30,7 +30,8 @@ class Connection:
         in_bin = self.conn.recv(n)
         if not in_bin:
             raise ConnectionError("Connection closed.")
-        return self._obf.deobf(in_bin)
+        return in_bin
+        #return self._obf.deobf(in_bin)
 
     def sendsized(self,data,lensize=4):
         if self.closed:
