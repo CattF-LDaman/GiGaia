@@ -293,3 +293,7 @@ def destall(server, args, player=None):
             ent.destroy()
 
     return f"Killed {destroyed} entities."
+
+def itmtest(server, args, player=None):
+    if player:
+        player.inv.add_item('person', "jonko", 1, {"sleuren_left":int(args[0])})

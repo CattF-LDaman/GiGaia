@@ -24,10 +24,6 @@ class Playing(Userstate):
 
         self.movement = 0
 
-        self.inv = PlayerInventory(self)
-        self.inv.add_container("person")
-        self.inv.add_item("person","jonko", 6, {"sleuren_left":69})
-
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
         self.h.subscribe("CS_JUMP", self.handle_jump_packet)
         self.h.subscribe("CS_CROUCH", self.handle_crouch_packet)
@@ -38,11 +34,24 @@ class Playing(Userstate):
 
     def setup(self):
 
-        self.entity = self.game.entity_manager.spawn(Person, (random.randint(-100,100),-16000), {"name":self.name}, player=self)
+        self.data = self.game.world.data.get_player(self)
+        if not self.data.exists:
+            self.create_player()
+
+        self.entity = self.game.entity_manager.spawn(Person, self.data.position, {"name":self.name}, player=self)
         self.h.send("SC_PLAYER", {'eid':self.entity.eid})
         self.game.players[self.name] = self
 
         self.game.world.update_time_player(self)
+
+        self.inv = PlayerInventory(self)
+
+        self.inv.add_dict(self.data.inventory)
+
+    def create_player(self):
+        self.data.create(
+            start_pos = (random.randint(-100,100),-16000)
+        )
 
     def leave(self): # Called when player leaves
 

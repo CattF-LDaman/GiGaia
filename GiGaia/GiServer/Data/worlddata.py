@@ -1,9 +1,11 @@
 
 from GiGaia.GiCore.Data.datafile import Datafile
-from GiGaia.GiCore.Data.datatypes import D_DEC, D_RGI, D_INT128, D_INT64
+from GiGaia.GiCore.Data.datatypes import D_DEC, D_RGI, D_INT128, D_INT64, D_POS, D_INV
 from GiGaia.GiCore.Data.hashing import hash_pwd, hash_str
 
 from GiGaia.GiCore.Game.World.coords import chunk_region
+
+from GiGaia.GiCore.exception_util import get_traceback
 
 import os
 import time
@@ -27,17 +29,27 @@ class WorldData(Datafile):
         self.world_location = os.path.join(worlds_dir, worldname)
         
         self.region_files = {}
-        self.region_dir = os.path.join(self.world_location, "regions")
-
-        os.makedirs(self.region_dir, exist_ok=True)
+        self.region_dir = self.sub_directory("regions")
 
         self.existing_region_files = []
         for rfn in os.listdir(self.region_dir):
             if (parsed_rfn := self.parse_region_filename(rfn)):
                 self.existing_region_files.append(parsed_rfn)
 
+        self.player_files = {}
+        self.player_dir = self.sub_directory("players")
+
+        self.existing_player_files = []
+        for pfn in os.listdir(self.player_dir):
+            self.existing_player_files.append(pfn.split(".")[0])
+
         super().__init__(os.path.join(self.world_location,worldname+'.world'))
     
+    def sub_directory(self, subdir):
+        subdir_loc = os.path.join(self.world_location, subdir)
+        os.makedirs(subdir_loc, exist_ok=True)
+        return subdir_loc
+
     def get_chunk(self, cp):
 
         cr = chunk_region(cp)
@@ -63,6 +75,14 @@ class WorldData(Datafile):
     def has_region(self, rp):
 
         return rp in self.region_files or rp in self.existing_region_files
+
+    def get_player(self, player):
+
+        if player.user.data.user_hash not in self.player_files:
+            self.create_player_file(player)
+
+        self.player_files[player.user.data.user_hash].player = player
+        return self.player_files[player.user.data.user_hash]
 
     def parse_region_filename(self, name):
         try:
@@ -91,12 +111,24 @@ class WorldData(Datafile):
         except Exception:
             pass
 
+    def create_player_file(self, player):
+        
+        self.player_files[player.user.data.user_hash] = PlayerData(self, player)
+
     def on_save(self):
         
         for region_pos,region in self.world.regions.copy().items():
             if region_pos not in self.region_files:
                 self.create_region_file(region)
             self.region_files[region_pos].check_save()
+
+        for player, player_data in self.player_files.copy().items():
+            try:
+                player_data.save()
+                if player_data.player.user.left:
+                    self.player_files.pop(player)
+            except Exception as e:
+                self.world.game.log(f"Error saving player {player_data.player.name}: {get_traceback(e)}", 4)
 
         self.last_saved = int(time.time())
         self.game_time = self.world.time.value if hasattr(self.world, "time_start") else 0
@@ -157,3 +189,36 @@ class RegionData(Datafile):
 
         self.rgi = {}
         self.update_rgi()
+
+class PlayerData(Datafile):
+
+    AUTO_CREATE = False
+
+    DATA_VERSION = 1
+    STRUC = (
+            ("position", D_POS),
+            ("inventory", D_INV, 8)
+            )
+    
+    def __init__(self, worlddata, player):
+
+        self.player = player
+
+        super().__init__(os.path.join(worlddata.world_location, "players", self.name))
+
+
+    @property
+    def name(self):
+
+        return self.player.user.data.user_hash+".player"
+    
+    def on_save(self):
+
+        if self.player.entity:
+            self.position = self.player.entity.position
+            self.inventory = self.player.inv.as_dict()
+
+    def on_create(self, start_pos):
+
+        self.position = start_pos
+        self.inventory = {"person": []}

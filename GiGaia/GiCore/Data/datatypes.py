@@ -33,6 +33,8 @@ D_DEC = 22
 D_DECS = 23
 D_VEC2 = 24
 D_DDICT = 25
+D_ITEM = 26
+D_INV = 27
 
 def pack_bool(data):
 
@@ -271,47 +273,53 @@ def unpack_vec2(data):
 
     return [unpack_decs(data[:16]),unpack_decs(data[16:])]
 
-# def pack_inv(data):
-#     from GiGaia.GiCore.Data.struc import build_struc
+ITEM_STRUC = ((
+    ("item_id",D_STRING,1),
+    ("amount",D_INT16),
+    ("data", D_DDICT, 8)
+))
 
-#     contents = data
+def pack_item(data):
+    from GiGaia.GiCore.Data.struc import build_struc
 
-#     out = io.BytesIO()
+    return build_struc(ITEM_STRUC, data)
 
-#     out.write(len(data).to_bytes(1, "little"))
-#     for container in data:
-#         out.write(len(container).to_bytes(1,"little"))
-#         out.write(container.encode('ascii'))
+def unpack_item(data):
+    from GiGaia.GiCore.Data.struc import read_struc
 
-#     for container, items in data.items():
-#         for item in items:
-#             out.write()
-            
-#     struclen = len(out.getvalue())
-#     out.write(build_struc(struc, data))
+    return read_struc(ITEM_STRUC, data, namespace=False)
 
-#     return out.getvalue()
+def pack_inv(data):
 
-# def unpack_inv(data):
-#     from GiGaia.GiCore.Data.struc import read_struc
+    out = io.BytesIO()
 
-#     d = io.BytesIO(data)
-    
-#     struc_len = int.from_bytes(d.read(2),'little')
-#     struc = []
+    out.write(len(data).to_bytes(1, "little")) # Amount of containers
+    for container, items in data.items():
+        out.write(len(container).to_bytes(1,"little")) # Container name len
+        out.write(container.encode('ascii')) # Container name
+        out.write(len(items).to_bytes(4, 'little'))
+        for item in items:
+            ipacked = pack_item(item)
+            out.write(len(ipacked).to_bytes(4, 'little'))
+            out.write(ipacked)
 
-#     while d.tell() < struc_len:
-        
-#         _data = []
-#         cx = int.from_bytes(d.read(12),"little", signed=True)
-#         cy = int.from_bytes(d.read(12), "little", signed=True)
-#         _data.append(dataname := (cx,cy))
-#         _data.append(datatype := d.read(1)[0])
-#         if datatype in DATATYPES and not DATATYPES[datatype][2]:
-#             _data.append(datalen := d.read(1)[0])
-#         struc.append(_data)
+    return out.getvalue()
 
-#     return read_struc(struc, d.read(), namespace=False)
+def unpack_inv(data):
+
+    d = io.BytesIO(data)
+    inv = {}
+
+    container_amount = int.from_bytes(d.read(1),'little')
+    for _ in range(container_amount):
+        container = d.read(int.from_bytes(d.read(1),'little')).decode("ascii")
+        inv[container] = []
+        container_item_amount = int.from_bytes(d.read(4),'little')
+        for _ in range(container_item_amount):
+            item_datasize = int.from_bytes(d.read(4),'little')
+            inv[container].append(unpack_item(d.read(item_datasize)))
+
+    return inv
 
 DT_PACK = 0
 DT_UNPACK = 1
@@ -346,6 +354,8 @@ D_DEC: (pack_dec, unpack_dec, 16),
 D_DECS: (pack_decs, unpack_decs, 16),
 D_VEC2: (pack_vec2, unpack_vec2, 32),
 D_DDICT: (pack_datastruc, unpack_datastruc_dict, None),
+D_ITEM: (pack_item, unpack_item, None),
+D_INV: (pack_inv, unpack_inv, None)
 }
 
 DATATYPE_NAMES = {
@@ -374,7 +384,10 @@ DATATYPE_NAMES = {
     D_TILEREF: 'D_TILEREF',
     D_DEC: 'D_DEC',
     D_DECS: 'D_DECS',
-    D_VEC2: 'D_VEC2'
+    D_VEC2: 'D_VEC2',
+    D_DDICT: 'D_DDICT',
+    D_ITEM: 'D_ITEM',
+    D_INV: 'D_INV'
 }
 
 DATATYPE_NAMETYPES = {value:key for key,value in DATATYPE_NAMES.items()}

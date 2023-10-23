@@ -11,6 +11,20 @@ class Inventory:
         self.containers = {}
         self.contents = {}
 
+    def add_dict(self, d):
+        for container, items in d.items():
+            self.add_container(container)
+            for item in items:
+                self.add_item(container, item['item_id'], item['amount'], item['data'][1] if type(item['data']) == tuple else item['data'])
+
+    def as_dict(self):
+        inv_dict = {}
+        for container, items in self.contents.items():
+            inv_dict[container] = []
+            for item in items:
+                inv_dict[container].append(item.as_dict())
+        return inv_dict
+
     def add_container(self, container):
         if container not in self.containers_data:
             raise ValueError(f"Container '{container} doesn't exist")
@@ -119,6 +133,9 @@ class Item:
         self.DESCRIPTION = self.item_data["description"]
         self.RARITY = self.RARITIES[self.item_data["rarity"]]
         self.RARITY_COLOR = self.RARITY_COLORS[self.item_data["rarity"]]
+
+    def as_dict(self):
+        return {'item_id':self.ID, 'amount':self.amount, 'data':(self.DATATYPES, self.data)}
 
     @staticmethod
     def get_datastruc(inventory, item_id, data):

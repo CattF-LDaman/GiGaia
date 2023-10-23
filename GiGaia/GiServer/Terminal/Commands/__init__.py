@@ -1,6 +1,6 @@
 
 from .admin import stop, reloadconf, clients, disconnect, version, privileges, rempass, kick, outbound, pid, ping
-from .game import players, tickrate, bob, bobcoin, entities, world, superplayer, miniplayer, addtime, tp, say, fly, flyspeed, visent, stresstest, destent, gent, tileids, summon, noclip, noclipent, litent, rainitems, destall
+from .game import players, tickrate, bob, bobcoin, entities, world, superplayer, miniplayer, addtime, tp, say, fly, flyspeed, visent, stresstest, destent, gent, tileids, summon, noclip, noclipent, litent, rainitems, destall, itmtest
 
 import os
 import inspect
@@ -39,7 +39,8 @@ all_cmds = [stop,
             litent,
             ping,
             rainitems,
-            destall
+            destall,
+            itmtest
         ]
 
 commands = {cmd.__name__:cmd for cmd in all_cmds}
