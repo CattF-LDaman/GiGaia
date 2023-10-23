@@ -19,20 +19,10 @@ class SessionObfuscator:  # Makes it harder but still very trivial to read/chang
         self.in_key = in_key
         self.out_key = out_key
 
-    def _shift_in_key(self):
-
-        self.in_key = self.in_key[1:] + self.in_key[0].to_bytes(1,"little")
-
-    def _shift_out_key(self):
-
-        self.out_key = self.out_key[1:] + self.out_key[0].to_bytes(1,"little")
-
     def obf(self,data:bytes):
 
-        self._shift_out_key()
         return data.translate(bytes.maketrans(bytearray(b for b in range(256)),self.out_key))
 
     def deobf(self,data:bytes):
 
-        self._shift_in_key()
         return data.translate(bytes.maketrans(self.in_key,bytearray(b for b in range(256))))
