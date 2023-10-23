@@ -103,7 +103,7 @@ def read_packet(packet_data):
     packet_data = packet_data[1:]
 
     if packet_type not in PACKET_TYPES:
-        raise ValueError("unknown packet type")
+        raise ValueError("unknown packet type: {packet_type}, data: {packet_data}")
     
     packet_out = struc.read_struc(PACKET_TYPES[packet_type], packet_data).__dict__
     packet_out['_PNAME'] = PACKET_NAMES[packet_type]

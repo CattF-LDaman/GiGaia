@@ -84,7 +84,12 @@ class Postman:
 
                 if not in_bin:
                     self.close()
-                in_packet_type, in_packet = read_packet(in_bin)
+
+                try:
+                    in_packet_type, in_packet = read_packet(in_bin)
+                except Exception as e:
+                    self.dropped += 1
+                    self.game.client.log(f"Packet error: {type(e)}: {in_bin.hex()}", 4)
 
                 self.received += 1
                 
