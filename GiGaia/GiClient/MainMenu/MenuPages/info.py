@@ -8,15 +8,26 @@ from GiGaia.GiClient.UI.Widgets.textinput import RawInput
 from GiGaia.GiCore import INFO
 from GiGaia.GiCore.Data.hashing import hash_str
 
+import random
+
 class Info(MenuPage):
 
     def __init__(self, menu):
         super().__init__(menu, "Start")
 
-    def enter(self):
+        self.tapped = 0
 
-        if hash_str(self.secret.content) == 'f5a889e84f9fabbf3ec0b8a9669c506104a2a619763c610528d4ee4fef0f050e':
-            self.client.dev = True
+    def enter(self):
+        
+        if self.tapped <= 9:
+            self.uim.assets.sounds[f"h{self.tapped}"].play()
+            self.tapped += 1
+        else:
+            if hash_str(self.secret.content) == 'f5a889e84f9fabbf3ec0b8a9669c506104a2a619763c610528d4ee4fef0f050e':
+                self.uim.assets.sounds["hkill"].play()
+                self.client.dev = True
+            else:
+                self.uim.assets.sounds["swoosh"].play()
 
     def create(self):
 
