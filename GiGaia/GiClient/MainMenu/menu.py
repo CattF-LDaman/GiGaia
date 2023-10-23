@@ -36,6 +36,7 @@ class Menu:
 
         self.join_status = None
         self.join_failed = False
+        self.join_fail_details = None
 
         self.lost_connection = None
         self.last_server = None
@@ -69,11 +70,15 @@ class Menu:
         except Exception as e:
             self.client.log("Unable to join: " + ''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__)), 4)
             self.join_status = type(e).__name__
+            self.join_fail_details = str(e)
             self.join_failed = True
+            self.client.game = None
             return
     
     def start_join(self, addr, username):
 
+        self.join_failed = False
+        self.join_fail_details = None
         self.join_status = "Joining..."
         self.switch('Joining')
         self.join(addr, username)

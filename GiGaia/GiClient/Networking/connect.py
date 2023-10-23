@@ -32,6 +32,7 @@ def connect(addr):
         except (ConnectionError, AuthenticationError) as e:
 
             rc.log(f"Connection error on try {t+1}/{CONNECT_NUM_TRIES}: {type(e).__name__}: {e}")
+            rc.menu.join_fail_details = f"Retrying... Try {t+1}/{CONNECT_NUM_TRIES}"
             if t+1 == CONNECT_NUM_TRIES:
                 return e
 

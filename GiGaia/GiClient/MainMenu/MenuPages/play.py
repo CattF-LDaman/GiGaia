@@ -101,6 +101,12 @@ class Joining(MenuPage):
     def update(self):
 
         self.msg.change(self.menu.join_status)
+        if self.menu.join_fail_details:
+            if len(self.menu.join_fail_details) > 46:
+                self.err_details.text_scale = 1
+            else:
+                self.err_details.text_scale = 2
+            self.err_details.change(self.menu.join_fail_details)
 
         if self.menu.join_failed:
 
@@ -110,7 +116,9 @@ class Joining(MenuPage):
 
             if not self.cancel_button:
                 self.cancel_button = self.uim.add_widget(ActionButton, self.w, "Back", action=self.back, position=[0.5, 0.85])
-        
+        else:
+            self.err_msg.change("")
+
         self.msg.adapt_size()
 
 
@@ -118,7 +126,8 @@ class Joining(MenuPage):
 
         self.uim.add_widget(Title, self.w, "Join server")
 
-        self.msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.35], text_scale=4)
+        self.msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.30], text_scale=4)
         self.err_msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.5], color=self.uim.assets.data.ui.color_err, text_scale=3)
+        self.err_details = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.55], color=self.uim.assets.data.ui.color_err, text_scale=2)
 
         #self.uim.add_widget(ActionButton, self.w, "Cancel", action=self.enter, position=[0.5, 0.85])
