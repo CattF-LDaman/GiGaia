@@ -47,6 +47,7 @@ class DebugPanel(Widget):
                 "sent":self.client.game.postman.sent,
                 "recv":self.client.game.postman.received,
                 "drop":self.client.game.postman.dropped,
+                "frag":self.client.game.postman.conn.fragmentations,
                 "user": self.client.game.username,
                 "gamestate": type(gamestate).__name__
             }

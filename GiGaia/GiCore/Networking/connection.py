@@ -10,6 +10,8 @@ class Connection:
 
         self.closed = False
 
+        self.fragmentations = 0
+
         self._obf = SessionObfuscator(in_key, out_key)
 
     @property
@@ -28,6 +30,10 @@ class Connection:
             return None
 
         in_bin = self.conn.recv(n)
+        if len(in_bin) != n:
+            self.fragmentations += 1
+            while len(in_bin) < n and not self.closed:
+                in_bin += self.conn.recv(n - len(in_bin))
         if not in_bin:
             raise ConnectionError("Connection closed.")
         return self._obf.deobf(in_bin)
@@ -46,6 +52,7 @@ class Connection:
         p_len = int.from_bytes(self.recv(lensize),"little")
         if p_len > 2**(lensize*8):
             raise ConnectionError("Packet size too large.")
+        
         return self.recv(p_len)
 
     def close(self):

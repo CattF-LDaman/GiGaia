@@ -14,7 +14,7 @@ def authenticate(conn, addr):
 
     conn.send(AUTH_OBF_HANDSHAKE)
 
-    if conn.recv(9) != b"bG0N":
+    if conn.recv(4) != b"bG0N":
 
         return "Obfuscation handshake failed."
 
