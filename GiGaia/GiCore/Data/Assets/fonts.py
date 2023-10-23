@@ -48,6 +48,9 @@ class Font:
 
     def render(self,surf,loc,txt,scale=1,blit_flags=0,line_spacing=1,blit_anchor_center=False,color=None,invalid_char_exception = False,multiline=True):
 
+        if not txt:
+            return
+
         if not multiline:
             txt = ''.join(txt.splitlines())
 
