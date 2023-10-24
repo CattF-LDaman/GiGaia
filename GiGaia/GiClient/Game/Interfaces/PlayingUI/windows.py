@@ -82,4 +82,6 @@ class Window(Widget):
     def draw(self):
 
         self.surface.fill(self.uim.assets.data.ui.colorkey)
-        pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.content_rect, border_radius=20)
+        self.surface.blit(pygame.transform.scale(self.uim.assets.window, self.size), (0,0))
+        
+        #pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.content_rect, border_radius=20)

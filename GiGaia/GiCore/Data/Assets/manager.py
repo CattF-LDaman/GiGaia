@@ -1,5 +1,5 @@
 
-from . import datafiles, fonts, sounds, tiles, items
+from . import datafiles, fonts, sounds, tiles, items, misc
 
 import traceback
 import os
@@ -15,7 +15,7 @@ class AssetsManager:
         self.instance = instance
         self.location = instance.dirs["assets"]
 
-        self.assets = {"fonts":{}, "icon":None, "data":{}, "sounds":{}}
+        self.assets = {"fonts":{}, "icon":None, "data":{}, "sounds":{}, "window":None}
 
     def __getitem__(self, indx):
         return self.assets.get(indx)
@@ -27,6 +27,7 @@ class AssetsManager:
         sounds.load(self)
         tiles.load(self)
         items.load(self)
+        misc.load(self)
 
         self.load_icon()
 
