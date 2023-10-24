@@ -32,6 +32,8 @@ class Config:
             "login_attempts": 5,
             "entity_visibility_range": 6,
             "entity_update_freq": 60,
+
+            "ping_every": 500,
         },
 
         "world": {

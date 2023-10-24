@@ -34,6 +34,7 @@ class Handle:
         self.waiting = {}
         self.__w_received = {}
 
+        self.ping = 1
         self.subscribe("A_PING", self.ping_recv)
 
     @property
@@ -68,6 +69,7 @@ class Handle:
         self.active = True
         self.receiver()
         self.sender()
+        self.send_ping()
 
     def close_gracefully(self): # Disabled receiving and sends remaining packets, then closes.
 
@@ -90,7 +92,12 @@ class Handle:
 
     def ping_recv(self, ping_p):
 
-        self.server.log(f"[PING] {self.identifier}: {round(time.perf_counter()*1000 - ping_p.timestamp/10, 1)} ms")
+        self.ping = round(time.perf_counter()*1000 - ping_p.timestamp/10, 1)
+        self.send("SC_REPORT_PING", {"ms":int(self.ping)})
+        #self.server.log(f"[PING] {self.identifier}: {round(time.perf_counter()*1000 - ping_p.timestamp/10, 1)} ms")
+
+    def send_ping(self):
+        self.send("A_PING", {"timestamp":int(time.perf_counter()*10000)})
 
     def recv(self, packet_type, timeout=None):
         packet_type = self._parse_packet_type(packet_type)

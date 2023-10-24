@@ -33,6 +33,8 @@ class DebugPanel(Widget):
             "fps_s": self.fps_s,
             "res":self.client.window.get_size(),
             "dt": self.client.dt,
+            "dt_ms": self.client.dt_ms,
+            "dt_var": self.client.dt_var,
             "ms": self.client.ticks,
             "s": self.client.ticks//1000,
             "widgets": ', '.join([str(widget.__class__.__name__) for layer in self.uim.widgets for widget in layer]),
@@ -48,6 +50,8 @@ class DebugPanel(Widget):
                 "recv":self.client.game.postman.received,
                 "drop":self.client.game.postman.dropped,
                 "frag":self.client.game.postman.conn.fragmentations,
+                "ping":self.client.game.postman.ping,
+                "mpexpire": min(self.client.dt_ms+self.client.dt_var+self.client.game.postman.ping, 600),
                 "user": self.client.game.username,
                 "gamestate": type(gamestate).__name__
             }

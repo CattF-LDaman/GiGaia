@@ -22,12 +22,15 @@ class Postman:
         self.sent = 0
         self.dropped = 0
 
+        self.ping = 1
+
         self.can_send = threading.Event()
 
         self.waiting = {}
         self.__w_received = {}
 
         self.subscribe("A_PING", self.ping_recv)
+        self.subscribe("SC_REPORT_PING", self.ping_report)
 
     def start(self):
 
@@ -67,6 +70,10 @@ class Postman:
     def ping_recv(self, ping_p):
 
         self.send("A_PING", {"timestamp":ping_p.timestamp})
+
+    def ping_report(self, ping_rep_p):
+
+        self.ping = ping_rep_p.ms
 
     @threaded_daemon
     def receiver(self):

@@ -28,6 +28,8 @@ class Game:
         self.dt = 0
         self.ticks = 0
 
+        self.next_ping = 0
+
         self.world = World(self)
         self.entity_manager = EntityManager(self)
         self.chat = Chat(self)
@@ -63,6 +65,9 @@ class Game:
             for u in self.users.copy().values():
                 if u.state.ready:
                     u.state.tick()
+                    if self.ticks > self.next_ping:
+                        u.handle.send_ping()
+                        self.next_ping = self.ticks + self.config.ping_every
 
             self.world.tick()
 

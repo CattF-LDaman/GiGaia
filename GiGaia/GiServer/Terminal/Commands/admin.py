@@ -22,11 +22,11 @@ def reloadconf(server, args, player=None):
 def clients(server, args, player=None):
     """Show all connected clients."""
     out = ""
-    tbl_head = f"{'USER':>16} | {'TIME_CONN':>16} | {'ADDR':>32} | {'RECV':>16} | {'SENT':>16}"
+    tbl_head = f"{'USER':>16} | {'TIME_CONN':>16} | {'ADDR':>32} | {'RECV':>16} | {'SENT':>16} | {'PING':>16}"
     out += (tbl_head)+"\n"
     out += ("-"*len(tbl_head))+"\n"
     for client in server.clients:
-        out += f"{client.username[:16]:>16} | {client.time_active[:16]:>16} | {client.full_address[:32]:>32} | {client.received:>16} | {client.sent:>16}"+"\n"
+        out += f"{client.username[:16]:>16} | {client.time_active[:16]:>16} | {client.full_address[:32]:>32} | {client.received:>16} | {client.sent:>16} | {client.ping:>16}"+"\n"
     out += ("-"*len(tbl_head))
     return out
 
@@ -141,7 +141,7 @@ def ping(server, args, player=None):
     cid = " ".join(args)
     c = server.identify(cid)
     if c:
-        c.send("A_PING", {"timestamp":int(time.perf_counter()*10000)})
-        return
+        c.send_ping()
+        return f"{c.identifier}'s ping is {c.ping}"
         
     return f"Client '{cid}' not found."

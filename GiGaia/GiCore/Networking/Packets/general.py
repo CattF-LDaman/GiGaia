@@ -1,8 +1,12 @@
 
-from GiGaia.GiCore.Data.datatypes import D_INT64, D_STRING
+from GiGaia.GiCore.Data.datatypes import D_INT64, D_INT16, D_STRING
 
 A_PING = (
     ("timestamp",D_INT64),
+)
+
+SC_REPORT_PING = (
+    ("ms", D_INT16),
 )
 
 SC_SOUND = (
