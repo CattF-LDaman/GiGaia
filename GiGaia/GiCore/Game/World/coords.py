@@ -108,6 +108,10 @@ def pix_chunk_range(A,B):
 
     return coord_range(Ac,Bc)
 
+def pix_chunk_square(coord, r):
+    sq = coord_square(coord, r)
+    return pix_chunk_range(sq[0], sq[1])
+
 def neighbours(coord):
 
     return ((coord[0], coord[1]-1),(coord[0], coord[1]+1),(coord[0]-1, coord[1]),(coord[0]+1, coord[1]))

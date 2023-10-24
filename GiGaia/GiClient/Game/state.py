@@ -1,3 +1,4 @@
+import time
 
 class State:
 
@@ -26,6 +27,7 @@ class State:
 
     def setup_master(self):
 
+        time.sleep(0.1)
         self.p.send("A_WAITING")
         self.setup()
         if self.ui:
