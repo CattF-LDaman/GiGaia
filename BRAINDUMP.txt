@@ -8,6 +8,9 @@ Automation
 A way to physically protect your base from other players (very hard walls? vault?)
     + Players have to put in a lot of resources to get in to fortified bases
 Security features
+Forcefield
+
+Power generation/consumption
 
 Mining
 
@@ -20,7 +23,5 @@ Combat
 
 What one has/can should scale up satisfyingly, from being weak and poor to OP and decked out.
 
-TileShit
-Empty: No tile
-Hug: Same tile
-Touch: Diff tile
+Cool: https://docs.python.org/3/library/tokenize.html#module-tokenize
+
