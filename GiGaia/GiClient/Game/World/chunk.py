@@ -1,5 +1,5 @@
 
-from GiGaia.GiCore.Game.World.coords import chunk_to_pix, mult_coord, tileref_to_tile, sum_coords, neighbours, tile_to_pix, tile_to_tileref
+from GiGaia.GiCore.Game.World.coords import chunk_to_pix, mult_coord, tileref_to_tile, sum_coords, neighbours
 from GiGaia.GiCore.Game.World import CHUNKSURF_SIZE_PIXELS, CHUNK_SIZE_PIXELS, TILE_SPRITE_SIZE, CHUNK_SIZE_TILES, TILE_SIZE_PIXELS
 
 import pygame
@@ -22,9 +22,6 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
 
         self.updated = True
         self.updates = []
-
-        self._lighting = pygame.Surface((CHUNK_SIZE_PIXELS, CHUNK_SIZE_PIXELS))
-        self.lux = self.world.state.lux
 
         self.update_neighbours()
 
