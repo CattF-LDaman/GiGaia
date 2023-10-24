@@ -13,7 +13,10 @@ def build_struc(struc,struc_data):
     for field in struc:
 
         field_data = struc_data[field[_FIELD_NAME]]
-        field_data_packed = pack(field[_FIELD_DATATYPE], field_data)
+        try:
+            field_data_packed = pack(field[_FIELD_DATATYPE], field_data)
+        except Exception as e:
+            raise type(e)(f"{field[_FIELD_NAME]}: {str(e)}")
 
         if DATATYPES[field[_FIELD_DATATYPE]][DT_SIZE] is None:
 
