@@ -17,8 +17,6 @@ class Terminal:
         cmd = cmd_in.split(" ")[0]
         args = cmd_in.split(" ")[1:]
 
-        self.server.log((f"<{player.name}> " if player else "")+f"CMD: {cmd_in}")
-
         if not player:
             level = 6
         else:
@@ -33,6 +31,8 @@ class Terminal:
                     if privileges[cmd_func] > level:
                         player.send_msg("Insufficient privileges.","CMD")
                         return
+                    
+                self.server.log((f"<{player.name}> " if player else "")+f"CMD: {cmd_in}")
 
                 out = cmd_func(self.server, args, player)
 

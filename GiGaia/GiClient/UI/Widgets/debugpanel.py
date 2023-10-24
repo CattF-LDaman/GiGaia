@@ -51,7 +51,7 @@ class DebugPanel(Widget):
                 "drop":self.client.game.postman.dropped,
                 "frag":self.client.game.postman.conn.fragmentations,
                 "ping":self.client.game.postman.ping,
-                "mpexpire": min(self.client.dt_ms+self.client.dt_var+self.client.game.postman.ping, 600),
+                "mpexpire": min(int(self.client.dt_ms+self.client.dt_var+(self.client.game.postman.ping/2)+5), 600),
                 "user": self.client.game.username,
                 "gamestate": type(gamestate).__name__
             }

@@ -138,8 +138,11 @@ def pid(server, args, player=None):
 
 def ping(server, args, player=None):
     """Roundtrip time of connection"""
-    cid = " ".join(args)
-    c = server.identify(cid)
+    if not args and player:
+        c = player.handle
+    else:
+        cid = " ".join(args)
+        c = server.identify(cid)
     if c:
         c.send_ping()
         return f"{c.identifier}'s ping is {c.ping}"

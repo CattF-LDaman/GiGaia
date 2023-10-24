@@ -14,7 +14,7 @@ class Postman:
         self.closed = False
 
         self.subscribers = {}
-        self.outbox = {}
+        self.outbox = {pn:[] for pn in PACKET_NAMETYPES if pn.startswith(('A','CS'))}
 
         self.holding = {}
 
@@ -131,7 +131,7 @@ class Postman:
                 if not self.active:
                     break
 
-                for packet_type, packets in self.outbox.items():
+                for packet_type, packets in tuple(self.outbox.items()):
                     for out_packet in packets:
                         self.conn.sendsized(create_packet(packet_type, out_packet or {}))
                         self.sent += 1
