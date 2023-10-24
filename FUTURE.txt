@@ -2,7 +2,7 @@
 == 0.1.0 Collect 'n Craft ==
 
     - 0.0.3 Inventory -
-        + Player persistence
+        + Player persistence (DONE)
         + Flesh out inventory system/UI
         + Hotbar or equivalent system
         + Item sprites
