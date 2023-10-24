@@ -26,11 +26,12 @@ class Config:
             "description":"Join me!",
             "theme_color":[198, 140, 83],
 
-            "tickrate": 60,
+            "tickrate": 128,
             "time_scale": 1,
             
             "login_attempts": 5,
-            "entity_visibility_range": 6
+            "entity_visibility_range": 6,
+            "entity_update_freq": 60,
         },
 
         "world": {

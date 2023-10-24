@@ -13,6 +13,8 @@ class EntityManager:
         self.entities = {}
         self._cur_eid = 0 # Entity Instance ID
 
+        self.pos_update_every = int(1000/self.game.config.entity_update_freq)
+
         self.map = {}
 
     def _get_eid(self):

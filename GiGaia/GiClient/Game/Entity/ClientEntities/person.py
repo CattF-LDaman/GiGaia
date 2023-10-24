@@ -14,7 +14,7 @@ class Person(Entity, PersonBase):
 
     def move(self, x):
         
-        self.em.p.send("CS_MOVE", {"x":x})
+        self.em.p.send("CS_MOVE", {"x":x, "expire":self.game.dt_ms+self.game.dt_var})
         #self.ghost_position[0] += x*self.game.dt
 
     def jump(self):

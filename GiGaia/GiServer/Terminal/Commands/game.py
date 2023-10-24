@@ -297,3 +297,16 @@ def destall(server, args, player=None):
 def itmtest(server, args, player=None):
     if player:
         player.inv.add_item('person', "jonko", 1, {"sleuren_left":int(args[0])})
+
+def timescale(server, args, player=None):
+    """Change game time scale (until restart)"""
+    if not args:
+        return 'usage: timescale <SCALE>'
+    
+    try:
+        scale = float(args[0])
+    except ValueError:
+        return 'SCALE should be a number.'
+    
+    server.game.config.time_scale = scale
+    return f"Changed time_scale to {scale}"

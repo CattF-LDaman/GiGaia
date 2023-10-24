@@ -20,6 +20,7 @@ class Person(Physical, PersonBase):
         super().__init__(entity_manager, eid, position, props)
 
         self.player = player # Userstates.playing class
+        self.priority.append(player)
 
         self.step_up = True
 

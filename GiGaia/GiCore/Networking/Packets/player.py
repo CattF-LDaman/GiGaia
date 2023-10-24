@@ -4,6 +4,7 @@ from GiGaia.GiCore.Data.datatypes import D_INT8S, D_FPOS, D_TILEREF, D_INT16, D_
 # For left and right movement
 CS_MOVE = (
     ("x", D_INT8S),
+    ("expire", D_INT16)
 )
 
 CS_JUMP = ()

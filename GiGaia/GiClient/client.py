@@ -60,6 +60,8 @@ class Client:
         self.clock = pygame.time.Clock()
 
         self.dt = 0
+        self.dt_ms = 0
+        self.dt_var = 0
         self.ticks = 0
 
         self.state = None
@@ -152,8 +154,11 @@ class Client:
     def loop(self):
 
         while self.running:
-
-            self.dt = self.clock.tick(self.config.client.max_fps)/1000
+            
+            self._prev_dt_ms = self.dt_ms
+            self.dt_ms = self.clock.tick(self.config.client.max_fps)
+            self.dt_var = abs(self.dt_ms - self._prev_dt_ms)
+            self.dt = self.dt_ms/1000
             self.ticks += self.clock.get_time()
 
             self.handle_events()

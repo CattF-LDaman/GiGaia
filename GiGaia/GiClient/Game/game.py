@@ -135,6 +135,8 @@ class Game:
     def tick(self):
 
         self.dt = self.client.dt
+        self.dt_ms = self.client.dt_ms
+        self.dt_var = self.client.dt_var
 
         self.screen.fill(self.background)
         if self.fps_counter:

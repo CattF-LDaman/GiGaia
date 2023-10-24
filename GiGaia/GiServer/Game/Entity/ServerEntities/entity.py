@@ -11,9 +11,11 @@ class Entity(EntityBase):
         self.game = self.em.game
 
         self.seen_by = []
+        self.priority = []  # Priority every-tick position updates, for eg. a player's own entity
         self.changes = {}
 
         self.prev_pos = None
+        self.next_pos_update = 0
 
         self.destroyed = False
 
@@ -61,10 +63,10 @@ class Entity(EntityBase):
             self.seen_by.append(player)
             self.em.traffic.send(player.name, "SC_ENTITY", {"eid":self.eid, "id":self.ID, "position":self.position, "props":(self.PROPERTIES.keys(), self.props)})
 
-    def _update_position(self):
+    def _update_position(self, players):
         #self.position[0], self.position[1] = int(self.position[0]), int(self.position[1])
         if floor_coord(self.position) != self.prev_pos:
-            for player in self.seen_by:
+            for player in players:
                 player.h.send("SC_ENTITY_POS", {"eid":self.eid, "position":self.position}, unique_val="eid", important=player.entity==self)
             self.prev_pos = floor_coord(self.position)
 
@@ -75,7 +77,11 @@ class Entity(EntityBase):
         self.em.map[self.chunk_pos].append(self)
 
         self.tick()
-        self._update_position()
+        if self.game.ticks > self.next_pos_update:
+            self._update_position(self.seen_by)
+            self.next_pos_update = self.game.ticks+self.em.pos_update_every
+        elif self.priority:
+            self._update_position(self.priority)
         self._update_properties()
 
         for player in (p for p in self.seen_by if self not in p.visible_entities or p.user.left):

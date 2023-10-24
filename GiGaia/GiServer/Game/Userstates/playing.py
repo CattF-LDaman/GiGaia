@@ -23,6 +23,7 @@ class Playing(Userstate):
         self.world_updates = {}
 
         self.movement = 0
+        self.movement_expire = 0
 
         self.h.subscribe("CS_MOVE", self.handle_move_packet)
         self.h.subscribe("CS_JUMP", self.handle_jump_packet)
@@ -81,9 +82,11 @@ class Playing(Userstate):
         #self.entity.position[0] += self.movement[0] * self.game.dt
         #self.entity.position[1] += self.movement[1] * self.game.dt
         self.entity.move(self.movement)
-        self.movement = 0
+        if self.game.ticks > self.movement_expire:
+            self.movement = 0
 
     def handle_move_packet(self, mp):
+        self.movement_expire = self.game.ticks+mp.expire
         self.movement = math.copysign(1, mp.x)#max(self.movement[0], mp.x, key=abs)
 
     def handle_jump_packet(self, jp):
