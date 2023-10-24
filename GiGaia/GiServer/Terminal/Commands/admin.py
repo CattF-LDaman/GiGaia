@@ -9,6 +9,7 @@ def stop(server, args, player=None):
     """Stop server, nicely."""
     for user in tuple(server.game.users.values()):
         user.kick("Server closed." if len(args) == 0 else f"Server closed: {args[0]}")
+    time.sleep(0.5) # Wait for all of em to get sent.
     server.close()
 
 def reloadconf(server, args, player=None):
