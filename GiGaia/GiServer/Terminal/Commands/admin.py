@@ -12,7 +12,7 @@ def stop(server, args, player=None):
     server.close()
 
 def reloadconf(server, args, player=None):
-    """Reloads config from files."""
+    """DEPRECATED: Reloads config from files."""
     server.config.load()
     server.logger.config = server.config.logging.__dict__
 
@@ -102,8 +102,8 @@ def kick(server, args, player=None):
     
     player_name = args[0]
     reason = "No reason."
-    if len(args) == 2:
-        reason = args[1]
+    if len(args) >= 2:
+        reason = " ".join(args[1:])
     
     if player_name not in server.game.users:
         return "Player not found."
