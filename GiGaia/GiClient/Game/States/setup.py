@@ -13,6 +13,11 @@ class Setup(State):
 
         self.game_info = None
 
+        self.p.subscribe("SC_GAME_INFO", self.recv_game_info)
+
+    def recv_game_info(self, gip):
+        self.game_info = gip
+
     def submit(self, password):
         
         self.p.send("CS_LOGIN", {"password":hash_pwd_nosalt(password.encode("utf-8")+b'GiG', cycles=500)})
@@ -22,5 +27,5 @@ class Setup(State):
 
     def setup(self):
 
-        self.game_info = self.p.recv("SC_GAME_INFO", 5)
+        self.game_info = self.p.recv("SC_GAME_INFO", 2)
         State.TICKRATE = self.game_info.tickrate

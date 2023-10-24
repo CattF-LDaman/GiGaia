@@ -181,8 +181,8 @@ class Postman:
         packet_type = self._parse_packet_type(packet_type)
 
         if packet_type in self.holding and self.holding[packet_type]:
-            out = self.holding[packet_type]
-            self.hold(packet_type)
+            out = self.holding[packet_type].copy()
+            self.holding[packet_type].clear()
 
             return out
         

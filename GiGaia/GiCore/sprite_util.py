@@ -15,3 +15,9 @@ def replace_color(sprite, c_from, c_to):
     csp.replace(tuple(c_from),tuple(c_to))
     csp.close()
     return sprite
+
+def flat_square(color, size):
+
+    s = pygame.Surface((size, size))
+    s.fill(color)
+    return s

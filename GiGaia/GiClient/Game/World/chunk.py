@@ -1,10 +1,13 @@
 
 from GiGaia.GiCore.Game.World.coords import chunk_to_pix, mult_coord, tileref_to_tile, sum_coords, neighbours
 from GiGaia.GiCore.Game.World import CHUNKSURF_SIZE_PIXELS, CHUNK_SIZE_PIXELS, TILE_SPRITE_SIZE, CHUNK_SIZE_TILES, TILE_SIZE_PIXELS
+from GiGaia.GiCore.sprite_util import flat_square
 
 import pygame
 
 class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL EMPTY THEN RESET
+
+    MISSING_TILE = flat_square((255,50,255), TILE_SPRITE_SIZE)
 
     def __init__(self, world, position, tiles):
         
@@ -30,8 +33,20 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         return self.world.scene.convert_world_to_screen_coord(self.world_position)
 
     def update_neighbours(self):
-        for nb in neighbours(self.position):
-            self.world.update_chunk((nb[0], nb[1]))
+        # for nb in neighbours(self.position):
+        #     self.world.update_chunk((nb[0], nb[1]))
+        def update_tile_nb(x, y):
+            tile_pos = tileref_to_tile((self.position, (x, y)))
+            for nb in neighbours(tile_pos):
+                self.world.update_tile(*nb)
+
+        for y in (0, CHUNK_SIZE_TILES-1):
+            for x in range(CHUNK_SIZE_TILES):
+                update_tile_nb(x, y)
+                
+        for x in (0, CHUNK_SIZE_TILES-1):
+            for y in range(CHUNK_SIZE_TILES):
+                update_tile_nb(x, y)
 
     def set_tile(self, tr, tile):
 
@@ -66,15 +81,20 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         if not tile:
             return
 
-        t_asset = self.assets.tiles[tile]
-        tpos = tileref_to_tile((self.position, (x,y)))
-        trand = hash(str(tpos))
-        trbl = [self.world.get_at(*sum_coords(tpos, offset),l) for offset in ((0,-1),(1,0),(0,1),(-1,0))]
+        try:
+            t_asset = self.assets.tiles[tile]
+            tpos = tileref_to_tile((self.position, (x,y)))
+            trand = hash(str(tpos))
+            trbl = [self.world.get_at(*sum_coords(tpos, offset),l) for offset in ((0,-1),(1,0),(0,1),(-1,0))]
 
-        if blit_later:
-            return (t_asset.get_sprite(trbl, l, trand), surf_tpos)
+            if blit_later:
+                return (t_asset.get_sprite(trbl, l, trand), surf_tpos)
 
-        self.surf_layers[l].blit(t_asset.get_sprite(trbl, l, trand), surf_tpos)
+            self.surf_layers[l].blit(t_asset.get_sprite(trbl, l, trand), surf_tpos)
+        except KeyError:
+            if blit_later:
+                return (Chunk.MISSING_TILE, surf_tpos)
+            pygame.draw.rect(self.surf_layers[l], (255,50,255), tr) # Missing tile
 
     def draw(self):
         self.world.surface_updates += 1

@@ -1,7 +1,5 @@
 
-from GiGaia.GiCore.random_util import seeded_randchoice
-from GiGaia.GiCore.Game.World import TILE_SPRITE_SIZE
-from GiGaia.GiCore.sprite_util import rotate, replace_color
+from types import SimpleNamespace
 
 import pygame
 import os
@@ -12,6 +10,7 @@ def load(man):
     data = man.assets["data"]
 
     for item in data.Items.__dict__.values():
-        item["sprite"] = pygame.transform.scale(pygame.image.load(os.path.join(man.location, "Items", item["sprite"]+".png")), (18,18))
+        if type(item["sprite"]) == str:
+            item["sprite"] = pygame.image.load(os.path.join(man.location, "Items", item["sprite"]+".png"))
 
-    
+    man.items = {item_name:SimpleNamespace(**item) for item_name, item in data.Items.__dict__.items()}

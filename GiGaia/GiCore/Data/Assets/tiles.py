@@ -62,6 +62,12 @@ def load(man):
 
                     "stack_size":100
                     }
+        tisprite = pygame.transform.scale(pygame.transform.scale(tile.get_sprite([2 for _ in range(4)]),(3,3)),(5,5))
+        tile_item['sprite'] = pygame.Surface((9,9))
+        tile_item['sprite'].blit(tisprite, (2,2))
+        if "border" in tile.sprite_components:
+            pygame.draw.rect(tile_item['sprite'], tile.sprite_components["border"], tile_item['sprite'].get_rect(), 2)
+
         setattr(data.Items, f"tile{tile.name}", tile_item)
 
 class Tile:

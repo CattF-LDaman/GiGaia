@@ -1,5 +1,5 @@
 
-from . import datafiles, fonts, sounds, tiles
+from . import datafiles, fonts, sounds, tiles, items
 
 import traceback
 import os
@@ -26,6 +26,7 @@ class AssetsManager:
         fonts.load(self)
         sounds.load(self)
         tiles.load(self)
+        items.load(self)
 
         self.load_icon()
 

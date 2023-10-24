@@ -1,6 +1,8 @@
 
 from GiGaia.GiCore.threading import threaded_daemon
 
+import time
+
 class Userstate:
 
     def __init__(self, user):
@@ -24,5 +26,6 @@ class Userstate:
     def _setup(self):
 
         self.h.recv("A_WAITING")
+        time.sleep(0.5)
         self.setup()
         self.ready = True

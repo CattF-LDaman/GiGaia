@@ -125,10 +125,11 @@ class Playing(Userstate):
         if not dest_tile_id:
             return
         
-        dest_tile = self.game.assets.tiles[dest_tile_id].name
-        dest_pos = add_coord(tile_to_pix(tileref_to_tile((ds.chunk, (ds.tileref.x, ds.tileref.y)))), TILE_SIZE_PIXELS//2)
+        if dest_tile_id in self.game.assets.tiles: # To handle missing tile (eg. removed tile in dev)
+            dest_tile = self.game.assets.tiles[dest_tile_id].name
+            dest_pos = add_coord(tile_to_pix(tileref_to_tile((ds.chunk, (ds.tileref.x, ds.tileref.y)))), TILE_SIZE_PIXELS//2)
 
-        self.game.entity_manager.spawn("ItemEntity", dest_pos, props={"item":f"tile{dest_tile}"}).add_velocity(random.randint(-9000,9000), random.randint(-9000,9000))
+            self.game.entity_manager.spawn("ItemEntity", dest_pos, props={"item":f"tile{dest_tile}"}).add_velocity(random.randint(-9000,9000), random.randint(-9000,9000))
         self.game.world.get_chunk(ds.chunk).set_at(ds.tileref.x, ds.tileref.y, ds.tileref.z, 0)
 
     def tick(self):
