@@ -98,12 +98,6 @@ class Joining(MenuPage):
 
         pass
 
-    def back(self):
-
-        if self.menu.client.game:
-            self.menu.client.game.
-        super().back()
-
     def update(self):
 
         self.msg.change(self.menu.join_status)
