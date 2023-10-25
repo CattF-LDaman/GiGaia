@@ -69,7 +69,7 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
             for x, tile in enumerate(row):
                 if tile:
                     tile_draws.append(self.draw_tile(x, y, l, tile, blit_later=True))
-        self.surf_layers[l].blits(tile_draws)
+        self.surf_layers[l].fblits(tile_draws)
 
     def draw_tile(self, x, y, l, tile, blit_later=False):
 

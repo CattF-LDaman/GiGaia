@@ -151,7 +151,7 @@ class World:
                 if (chunk_surface := c.get_surface()):
                     viewport_surfs.append((chunk_surface, c.draw_pos))
                     #self.game.screen.blit(chunk_surface, c.draw_pos)
-        self.game.screen.blits(viewport_surfs)
+        self.game.screen.fblits(viewport_surfs)
 
         self.handle_dev_lights()
 

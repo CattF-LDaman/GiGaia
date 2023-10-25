@@ -106,7 +106,7 @@ class UIManager:
                     widget.update_master()
                     if (w_blit := widget.draw_master()):
                         widget_blits.append(w_blit)
-            self.ui_layer.blits(widget_blits)
+            self.ui_layer.fblits(widget_blits)
 
             self.rmb_clicks = []
             self.lmb_clicks = []
