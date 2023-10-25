@@ -21,6 +21,6 @@ DEFAULT_CONFIG = {
     },
 
     "world": {
-        "max_chunk_updates_per_tick": 3,
+        "max_chunk_updates_per_tick": 2,
     }
 }

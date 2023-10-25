@@ -64,3 +64,7 @@ class Person(Physical, PersonBase):
         
         self.get_seen(self.player)
         self.update_physics()
+
+        if self.game.world.has_chunk(self.chunk_pos) and not self.game.world.grab_chunk(self.chunk_pos).visited:
+            self.game.world.grab_chunk(self.chunk_pos).visited = True
+            

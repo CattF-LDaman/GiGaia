@@ -172,10 +172,9 @@ class RegionData(Datafile):
 
         rgi_data = {}
         for chunk_pos, chunk in self.region.chunks.copy().items():
-            if chunk.modified:
+            if chunk.modified or (chunk.visited and self.region.world.config.save_visited and chunk.tiles):
                 rgi_data[chunk_pos] = chunk.tiles
                 chunk.modified = False
-
         self.rgi.update(rgi_data)
 
         return bool(rgi_data)

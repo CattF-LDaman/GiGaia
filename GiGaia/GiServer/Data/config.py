@@ -42,6 +42,7 @@ class Config:
             "serve_range":8,
             "generator": SETTINGS,
             "chunk_tile_mod_max": 14,
+            "save_visited": True,
         }  
     }
 

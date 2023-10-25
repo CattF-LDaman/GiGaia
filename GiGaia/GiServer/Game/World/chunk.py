@@ -23,6 +23,7 @@ class Chunk:
         self.observers = []
         self.modifications = []
         self.modified = False  # Used to check whether to save chunk, gets reset on save.
+        self.visited = False # Gets saved if 'save_visited' is enabled in config (default)
         self.tick = 0
 
         self._collision = []
