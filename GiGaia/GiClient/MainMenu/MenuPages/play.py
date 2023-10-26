@@ -17,7 +17,7 @@ class Play(MenuPage):
 
     def create(self):
 
-        self.uim.add_widget(Title, self.w, "Play game")
+        self.uim.add_widget(Title, self.w, "Play Game")
         #self.uim.add_widget(Input, allowed_chars="1234567890.", position=[0.5, 0.5], width=600, height=200, anchor="center", always_redraw=True)
         self.uim.add_widget(PageLink, self.w, menu=self.menu, page_to="ConnectTo", text="Online", pos=0.2)
         self.uim.add_widget(PageLink, self.w, menu=self.menu, page_to="PlayLocal", text="Local", pos=0.4)
@@ -55,7 +55,7 @@ class ConnectTo(MenuPage):
 
     def create(self):
 
-        self.uim.add_widget(Title, self.w, "Join server")
+        self.uim.add_widget(Title, self.w, "Join Server")
 
         self.msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.15], text_scale=2)
 
@@ -124,7 +124,7 @@ class Joining(MenuPage):
 
     def create(self):
 
-        self.uim.add_widget(Title, self.w, "Join server")
+        self.uim.add_widget(Title, self.w, "Joining")
 
         self.msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.30], text_scale=4)
         self.err_msg = self.uim.add_widget(Message, relative_to=self.w, text="", position=[0.5, 0.5], color=self.uim.assets.data.ui.color_err, text_scale=3)

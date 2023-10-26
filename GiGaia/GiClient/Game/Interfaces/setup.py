@@ -40,7 +40,7 @@ class Setup(Interface):
         
         self.info_frame = self.uim.add_widget(Frame, position=[0, 0.15], width=0.8, height=120, anchor="midtop", relative_anchor="midtop", relative_to=self.p, skip_event=True)
         
-        self.server_name = self.uim.add_widget(Message, text=ginf.name, color=ginf.theme_color, text_scale=4, position=[0, 0], anchor="center", relative_anchor="midtop", relative_to=self.info_frame)
+        self.server_name = self.uim.add_widget(Message, text=ginf.name, color=ginf.theme_color, font='fat', text_scale=3, position=[0, 0], anchor="center", relative_anchor="midtop", relative_to=self.info_frame)
         self.server_description = self.uim.add_widget(Message, text=ginf.description, text_scale=2, position=[0, 0], anchor="center", relative_anchor="center", relative_to=self.info_frame)
         self.server_connected = self.uim.add_widget(Message, text=f"{ginf.connected-1} online", text_scale=2, position=[0, 0], anchor="center", relative_anchor="midbottom", relative_to=self.info_frame)
         
