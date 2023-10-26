@@ -33,7 +33,7 @@ class PageLink(Widget):
         else:
             self.surface.fill(self.uim.assets.data.ui.color_A)
             pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_C, self.rect, width=5)
-        self.uim.assets.fonts["basic"].render(self.surface, self.rect.center, self.text, blit_anchor_center=True, scale=3, color=pygame.Color(self.uim.assets.data.ui.color_txt))
+        self.uim.assets.fonts["basic"].render(self.surface, self.rect.center, self.text, blit_anchor_center=True, scale=3 if not self.hovered else 4, color=pygame.Color(self.uim.assets.data.ui.color_txt))
 
 class BackButton(Widget):
 
@@ -64,7 +64,7 @@ class BackButton(Widget):
         else:
             self.surface.fill(self.uim.assets.data.ui.color_A)
             pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_C, self.rect, width=5)
-        self.uim.assets.fonts["basic"].render(self.surface, self.rect.center, self.text, blit_anchor_center=True, scale=4, color=pygame.Color(self.uim.assets.data.ui.color_txt))
+        self.uim.assets.fonts["basic"].render(self.surface, self.rect.center, self.text, blit_anchor_center=True, scale=3 if not self.hovered else 5, color=pygame.Color(self.uim.assets.data.ui.color_txt))
 
 class ActionButton(Widget):
 

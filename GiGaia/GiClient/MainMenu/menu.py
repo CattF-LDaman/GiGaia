@@ -4,6 +4,7 @@ from GiGaia.GiClient import CLIENT_STATE_MENU, CLIENT_STATE_INGAME
 from GiGaia.GiClient.UI.ui_manager import UIManager
 from GiGaia.GiClient.UI.Widgets.devindicator import DevIndicator
 from GiGaia.GiClient.UI.Widgets.debugpanel import DebugPanel
+from GiGaia.GiClient.UI.Widgets.MainMenu.background import Background
 
 from GiGaia.GiClient.MainMenu.MenuPages import PAGES
 
@@ -33,6 +34,8 @@ class Menu:
             self.ui_manager.add_widget(DevIndicator)
 
         self.page = None
+
+        self.background = self.uim.add_widget(Background)
 
         self.join_status = None
         self.join_failed = False

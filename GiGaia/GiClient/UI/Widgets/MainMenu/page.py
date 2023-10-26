@@ -9,7 +9,7 @@ class PageWidget(Widget):
 
     def __init__(self, ui_manager):
 
-        super().__init__(ui_manager, position=[0.5, 0.5], layer=0, width=0.75, height=0.90, anchor="center", always_redraw=False, head_ui=True)
+        super().__init__(ui_manager, position=[0.5, 0.5], layer=0, width=0.70, height=0.8, anchor="center", always_redraw=False, head_ui=True)
         
         self.inner_rect = pygame.Rect(0,0,0,0)
         self.inner_rect.width = self.size[0]-10
@@ -28,5 +28,9 @@ class PageWidget(Widget):
 
     def draw(self):
 
-        self.surface.fill(self.uim.assets.data.ui.color_B)
+        #self.surface.fill(self.uim.assets.data.ui.color_B)
+        #self.surface.fill(self.uim.assets.data.ui.colorkey)
+        self.surface.blit(self.uim.assets.page_background, self.rect)
+        #pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.inner_rect, width=4)
+        pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_B, self.inner_rect, width=20)
         pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.inner_rect, width=4)
