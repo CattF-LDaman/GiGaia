@@ -5,7 +5,7 @@ DEFAULT_CONFIG = {
 
     "client": {
         "max_fps": 0,
-        "window_width": 800,
+        "window_width": 1000,
         "window_height": 800,
         "window_fullscreen": False,
         "game_scale": 2,

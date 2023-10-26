@@ -29,5 +29,7 @@ class Panel(Widget):
 
     def draw(self):
 
-        self.surface.fill(self.uim.assets.data.ui.color_B)
+        #self.surface.fill(self.uim.assets.data.ui.color_B)
+        self.surface.blit(self.uim.assets.page_background, self.rect)
+        pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_B, self.inner_rect, width=20)
         pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.inner_rect, width=4)

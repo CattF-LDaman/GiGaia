@@ -5,9 +5,12 @@ from GiGaia.GiClient.UI.ui_manager import UIManager
 from GiGaia.GiClient.UI.Widgets.devindicator import DevIndicator
 from GiGaia.GiClient.UI.Widgets.debugpanel import DebugPanel
 from GiGaia.GiClient.UI.Widgets.MainMenu.background import Background
+from GiGaia.GiClient.UI.Widgets.text import Message
 
 from GiGaia.GiClient.MainMenu.MenuPages import PAGES
 
+
+from GiGaia.GiCore.version import VERSION_STRING
 from GiGaia.GiCore.threading import threaded_daemon
 
 import pygame
@@ -36,6 +39,7 @@ class Menu:
         self.page = None
 
         self.background = self.uim.add_widget(Background)
+        self.version_text = self.uim.add_widget(Message, position=[-5, 7], text=VERSION_STRING, anchor='topright', relative_anchor='topright', font='basic', text_scale=2, relative_to=self.background)
 
         self.join_status = None
         self.join_failed = False
