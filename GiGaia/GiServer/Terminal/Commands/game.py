@@ -8,7 +8,10 @@ def players(server, args, player=None):
     return ", ".join(server.game.players.keys()) if server.game.players else "Nobody online :("
 
 def tickrate(server, args, player=None):
-    """Get current and target tickrate."""
+    """Get (or set) current and target tickrate."""
+    if len(args):
+        server.config.game.tickrate = int(args[0])
+        return f"Changed target tickrate to {args[0]}."
     return f"CURRENT: {server.game.current_tickrate}, TARGET: {server.config.game.tickrate}"
 
 def bobcoin(server, args, player=None):

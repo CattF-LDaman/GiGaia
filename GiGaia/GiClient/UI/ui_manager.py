@@ -63,7 +63,8 @@ class UIManager:
                     w.text_input = w.text_input[:-1]
             elif event.key == pygame.K_RETURN or event.key == pygame.K_KP_ENTER:
                 for w in self.capturing_input:
-                    w.text_input += "\n"
+                    if w.input_newline:
+                        w.text_input += "\n"
 
     def capture_input(self, widget):
         if widget not in self.capturing_input:

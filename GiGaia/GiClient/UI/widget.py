@@ -64,6 +64,7 @@ class Widget:
         self.deleted = False
 
         self.text_input = ""
+        self.input_newline = False
 
     def handle_resize(self):
         pass
