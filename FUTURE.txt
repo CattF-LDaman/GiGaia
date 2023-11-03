@@ -17,6 +17,7 @@
         + Placeable object items
             # test item: fingerpot
         & some random decorative natural occurring objects like small portruding rocks or smth along those lines
+        + Particles
 
     - 0.0.5 Collect -
         + Tile damage, tiles take time to destroy
@@ -25,6 +26,7 @@
         + Living entity sprite system/style
             + Person sprite
         + Entity/Living damage
+        + Killed entities 'explode' into flesh items and blood particles
 
     - 0.0.6 Nature -
         + Grass
