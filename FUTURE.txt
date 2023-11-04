@@ -8,6 +8,7 @@
         + Item sprites
         + System for action panels (eg. workbench/crafting/smelting/... UI)
         + Item usage system
+        + Particles
 
     - 0.0.4 Craft -
         + Crafting
@@ -17,7 +18,6 @@
         + Placeable object items
             # test item: fingerpot
         & some random decorative natural occurring objects like small portruding rocks or smth along those lines
-        + Particles
 
     - 0.0.5 Collect -
         + Tile damage, tiles take time to destroy
