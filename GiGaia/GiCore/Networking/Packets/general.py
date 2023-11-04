@@ -12,3 +12,13 @@ SC_REPORT_PING = (
 SC_SOUND = (
     ("sound", D_STRING, 1),
 )
+
+A_THROUGHPUT = (
+    ("tpstart", D_INT64),
+    ("n", D_INT64),
+    ("nmax", D_INT64)
+)
+
+A_THROUGHPUT_FINISH = (
+    ("tpstart", D_INT64),
+)

@@ -4,7 +4,7 @@ from types import SimpleNamespace
 from GiGaia.GiCore.Data.datatypes import pack, D_INT8
 from GiGaia.GiCore.Data import struc
 
-from .general import A_PING, SC_SOUND, SC_REPORT_PING
+from .general import A_PING, SC_SOUND, SC_REPORT_PING, A_THROUGHPUT, A_THROUGHPUT_FINISH
 from .game import SC_LOAD_STATE, SC_GAME_INFO, CS_LOGIN, SC_LOGIN_CONFIRM, A_WAITING, SC_PLAYER, SC_BYE
 from .entity import SC_ENTITY, SC_ENTITY_POS, SC_ENTITY_UPD_PROP, SC_ENTITY_DESTROY
 from .player import CS_MOVE, CS_WSET, CS_JUMP, CS_CROUCH, CS_DESTROY
@@ -18,6 +18,8 @@ PACKET_TYPES = {
 2: CS_CHAT_OUT,
 3: SC_BYE,
 4: SC_REPORT_PING,
+5: A_THROUGHPUT_FINISH,
+6: A_THROUGHPUT,
 
 10: SC_LOAD_STATE,
 11: SC_GAME_INFO,
@@ -57,6 +59,8 @@ PACKET_NAMES = {
 2: "CS_CHAT_OUT",
 3: "SC_BYE",
 4: "SC_REPORT_PING",
+5: "A_THROUGHPUT_FINISH",
+6: "A_THROUGHPUT",
 
 10: "SC_LOAD_STATE",
 11: "SC_GAME_INFO",

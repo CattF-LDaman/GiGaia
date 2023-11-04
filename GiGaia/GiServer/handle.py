@@ -36,6 +36,7 @@ class Handle:
 
         self.ping = 1
         self.subscribe("A_PING", self.ping_recv)
+        self.subscribe("A_THROUGHPUT", self.throughput_recv)
 
     @property
     def full_address(self):
@@ -96,8 +97,21 @@ class Handle:
         self.send("SC_REPORT_PING", {"ms":int(self.ping)})
         #self.server.log(f"[PING] {self.identifier}: {round(time.perf_counter()*1000 - ping_p.timestamp/10, 1)} ms")
 
+    def throughput_recv(self, th_p):
+
+        throughput_duration = round(time.perf_counter()*1000 - th_p.tpstart, 1)
+        throughput = int(th_p.nmax/throughput_duration*1000)
+        throughput_MiB = 8*8*8*throughput/1024/1024
+        self.server.log(f"[THROUGHPUT] {self.identifier}: ({throughput} packets/sec) ({throughput_MiB} MiB/sec) sent {th_p.nmax} packets and received one back in {throughput_duration} ms.")
+
     def send_ping(self):
         self.send("A_PING", {"timestamp":int(time.perf_counter()*10000)})
+
+    def test_throughput(self, nmax=100):
+        tpstart = time.perf_counter()*1000
+        for n in range(nmax):
+            self.send("A_THROUGHPUT", {'tpstart':int(tpstart),  "n":n, "nmax":nmax})
+        self.server.log(f"[THROUGHPUT] {self.identifier}: queued {nmax} packets in {time.perf_counter()*1000 - tpstart} ms")
 
     def recv(self, packet_type, timeout=None):
         packet_type = self._parse_packet_type(packet_type)

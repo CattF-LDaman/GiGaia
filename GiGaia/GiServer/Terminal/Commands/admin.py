@@ -148,3 +148,19 @@ def ping(server, args, player=None):
         return f"{c.identifier}'s ping is {c.ping}"
         
     return f"Client '{cid}' not found."
+
+def testtp(server, args, player=None):
+    """See how long it takes to send N packets and receive one back."""
+    N = 100
+    if not args and player:
+        c = player.handle
+    else:
+        cid = args[0]
+        c = server.identify(cid)
+    if len(args) >= 2:
+        N = int(args[1])
+    if c:
+        c.test_throughput(N)
+        return f"Testing {c.identifier}'s throughput (N = {N})"
+        
+    return f"Client '{cid}' not found."

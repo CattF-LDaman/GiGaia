@@ -30,6 +30,7 @@ class Postman:
         self.__w_received = {}
 
         self.subscribe("A_PING", self.ping_recv)
+        self.subscribe("A_THROUGHPUT", self.throughput_recv)
         self.subscribe("SC_REPORT_PING", self.ping_report)
 
     def start(self):
@@ -70,6 +71,11 @@ class Postman:
     def ping_recv(self, ping_p):
 
         self.send("A_PING", {"timestamp":ping_p.timestamp})
+
+    def throughput_recv(self, th_p):
+
+        if th_p.n == th_p.nmax-1:
+            self.send("A_THROUGHPUT", th_p.__dict__)
 
     def ping_report(self, ping_rep_p):
 
