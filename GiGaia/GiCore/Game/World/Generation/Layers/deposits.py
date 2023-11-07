@@ -94,3 +94,34 @@ class CoalDeposits(Layer):
                 return self.tiles.STONECOAL
         
         return tile
+    
+class NoxumLuxDeposits(Layer):
+
+    SETTINGS = {
+        "noxlux_threshold": 0.68,
+        "noxlux_thresholdz": 0.8,
+        "noxlux_smooth": 2
+    }
+
+    def __init__(self, generator):
+        super().__init__(generator)
+
+        self.noise = opensimplex.OpenSimplex(seed=self.gen.seed//17+1018)
+
+        self.threshold = self.s.noxlux_threshold
+        self.thresholdz = self.s.noxlux_thresholdz
+        self.smooth_mult = 1/self.s.noxlux_smooth
+        
+    def _st_at(self, x, y, z):
+        
+        nval = self.noise.noise2(x*self.smooth_mult, y*self.smooth_mult)
+
+        return nval > (self.threshold if z == 0 else self.thresholdz)
+
+    def get(self, x, y, z, tile):
+
+        if tile == self.tiles.NOXUM:
+            if self._st_at(x, y, z):
+                return self.tiles.NOXUMLUX
+        
+        return tile

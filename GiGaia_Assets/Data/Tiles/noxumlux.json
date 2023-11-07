@@ -1,0 +1,16 @@
+{
+    "display": "Lux-embedded Noxum",
+
+    "sprite": {
+        "shape": "StoneyOred",
+        "components": {
+            "grain": [40, 40, 42],
+            "base": [30, 30, 32],
+            "border": [20, 20, 22],
+            "ore": [255, 255, 255]
+        }
+    },
+
+    "alike": [9, 13]
+
+}

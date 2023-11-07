@@ -1,5 +1,4 @@
-[
-    "dirt",
+[   "dirt",
     "stone",
     "white",
     "platform",
@@ -14,5 +13,6 @@
     "distnoxum",
     "woodplatform",
     "woodplanks",
-    "stonecoal"
+    "stonecoal",
+    "noxumlux"
 ]
