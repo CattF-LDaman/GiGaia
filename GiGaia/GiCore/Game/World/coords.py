@@ -93,9 +93,9 @@ def mult_coord(coord, mult):
     
     return (coord[0]*mult, coord[1]*mult)
 
-def div_coord(coord, div):
+def div_coord(coord, div, floor=False):
     
-    return (coord[0]*div, coord[1]*div)
+    return (coord[0]/div, coord[1]/div) if not floor else (coord[0]//div, coord[1]//div)
 
 def add_coord(coord, add):
 
