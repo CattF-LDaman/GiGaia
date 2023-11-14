@@ -1,5 +1,6 @@
 
 import pygame
+from pygame._sdl2 import messagebox
 
 from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 from GiGaia.GiClient.Game.game import Game
@@ -32,12 +33,12 @@ class Client:
         GiGaia.GiClient.RUNNING_CLIENT = self  # There can only be one... MUAHAHA
         self.dev = dev
 
-        self.session_id = os.urandom(4)
+        self.session_id = os.urandom(4)  # A four-byte sequence used to help identify the current instance of the game
         self.start_time = time.time()
 
-        self.location = location
+        self.location = location  # Will run from this location, all data like logs, configs, etc. will be found in this directory
 
-        self.dirs = create_directory_structure(self.location)
+        self.dirs = create_directory_structure(self.location)  # Dictionary containing the location of data directories eg. self.dirs['logs']
 
         self.config = Config(self.dirs["configs"], DEFAULT_CONFIG)
 
@@ -51,7 +52,7 @@ class Client:
 
         if self.dev:
             self.log("Running GiGaia in development mode!", 3)
-            shutil.copytree("GiGaia_Assets",self.dirs["assets"], dirs_exist_ok=True)
+            shutil.copytree("GiGaia_Assets",self.dirs["assets"], dirs_exist_ok=True)  # Copies the current assets from dev environment to data dir
             self.log("Assets duplicated to data directory.")
 
         self.window = pygame.display.set_mode((self.config.client.window_width,self.config.client.window_height), pygame.RESIZABLE if not self.config.client.window_fullscreen else pygame.FULLSCREEN)
@@ -59,22 +60,22 @@ class Client:
 
         self.clock = pygame.time.Clock()
 
-        self.dt = 0
-        self.dt_ms = 0
-        self.dt_var = 0
-        self.ticks = 0
+        self.dt = 0  # Deltatime in seconds (frame time)
+        self.dt_ms = 0  # Deltatime in ms
+        self.dt_var = 0  # Difference between frame times of two last ticks
+        self.ticks = 0  # Ticks isn't actually the number of ticks, but the total number of ms that has passed
 
-        self.state = None
+        self.state = None  # A constant, defines what to do every frame. (Main menu or in-game) GiGaia.GiClient: CLIENT_STATE_INGAME, CLIENT_STATE_MENU
         self.running = False
 
-        self.game = None
-        self.menu = None
+        self.game = None  # The game object, gets created when joining in 'self.setup_game'
+        self.menu = None  # Main menu object, created in 'self.run'
 
-        self.assets = AssetsManager(self)
+        self.assets = AssetsManager(self) # Handles assets, obviously
         self.assets.load()
         pygame.display.set_icon(self.assets.assets.icon)
 
-        self.keybinds = Keybinds(self.location)
+        self.keybinds = Keybinds(self.location)  # Keybinds datafile, loaded from data dir
 
         self.log("Client initialized.")
 
@@ -85,7 +86,8 @@ class Client:
             self.state = CLIENT_STATE_MENU
             self.loop()
         except Exception as e:
-            self.log(f"Fatal error encountered:\n{''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__))}",5)
+            self.log(err_msg := f"Fatal error encountered:\n{''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__))}",5)
+            messagebox("Crashed!", err_msg+f'\n{self.log_file_path}', error=True)
             self.close(1)
 
     def close(self,exit_code=0):
