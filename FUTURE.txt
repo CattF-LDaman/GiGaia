@@ -9,6 +9,7 @@
         + System for action panels (eg. workbench/crafting/smelting/... UI)
         + Item usage system
         + Particles
+        + Tool for capturing frame times and graphing them (pygal)
 
     - 0.0.4 Craft -
         + Crafting
