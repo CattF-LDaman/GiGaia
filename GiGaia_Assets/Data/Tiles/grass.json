@@ -4,8 +4,8 @@
     "sprite": {
         "shape": "Dirty",
         "components": {
-            "grain": [117, 56, 27],
-            "base": [129, 62, 30],
+            "grain": [79, 36, 26],
+            "base": [86, 39, 29],
             "border": [0, 123, 21]
         }
     },
