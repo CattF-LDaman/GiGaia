@@ -40,7 +40,7 @@ class Window(Widget):
         
         self.handle_resize()
 
-        self.uim.add_widget(Message, text=self.TITLE, text_scale=2, shadow=True, font="fat", anchor="midtop", relative_anchor="midtop", layer=self.layer+1, relative_to=self)
+        self.uim.add_widget(Message, text=self.TITLE, text_scale=2, shadow=True, font="fat", anchor="midbottom", relative_anchor="midtop", layer=self.layer+1, relative_to=self)
 
         self.closable = closable
         self.movable = movable
@@ -81,7 +81,8 @@ class Window(Widget):
 
     def draw(self):
 
-        self.surface.fill(self.uim.assets.data.ui.colorkey)
-        self.surface.blit(pygame.transform.scale(self.uim.assets.window, self.size), (0,0))
-        
-        #pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.content_rect, border_radius=20)
+        #self.surface.fill(self.uim.assets.data.ui.colorkey)
+        self.surface.blit(self.uim.assets.window, (0,0))
+
+        pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_B, self.content_rect, width=10)
+        pygame.draw.rect(self.surface, self.uim.assets.data.ui.color_A, self.content_rect, width=2)

@@ -2,6 +2,7 @@
 from .windows import Window
 
 from GiGaia.GiClient.UI.Widgets.text import Message
+from GiGaia.GiClient.UI.Widgets.frame import Frame, ColorFrame
 
 class Inventory(Window):
 
@@ -19,6 +20,9 @@ class Inventory(Window):
 
         self.container_title = self.uim.add_widget(Message, text="", relative_to=self, position=(0,0.1), shadow=True, text_scale=3, layer=self.layer+1, relative_anchor="midtop", anchor="midtop")
         self.msg = self.uim.add_widget(Message, text=str(self.game.client.session_id), relative_to=self, layer=self.layer+1, relative_anchor="center", anchor="center")
+        
+        self.inv_panel = self.uim.add_widget(ColorFrame, position=(0.02, 0.05), fill_color=self.uim.assets.data.ui.color_B, width=0.45, height=0.9, anchor='topleft', relative_anchor='topleft', relative_to=self, layer=self.layer+1)
+        self.future_panel = self.uim.add_widget(ColorFrame, position=(-0.02, 0.05), fill_color=self.uim.assets.data.ui.color_B0, width=0.45, height=0.9, anchor='topright', relative_anchor='topright', relative_to=self, layer=self.layer+1)
 
     def update_window(self):
 
