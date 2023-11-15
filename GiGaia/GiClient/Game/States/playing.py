@@ -144,7 +144,7 @@ class Playing(State):
     def tick(self):
 
         if self.force_crash:
-            raise "Goodbye!"
+            raise RuntimeError("Goodbye! (Force crash triggered by ESCAPE + END + F4)")
 
         self.world.update()
         self.entity_manager.update()
