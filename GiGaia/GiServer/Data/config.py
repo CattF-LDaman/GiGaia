@@ -4,7 +4,7 @@ import json
 from types import SimpleNamespace
 
 from GiGaia.GiCore.Networking import DEFAULT_SERVER_PORT
-from GiGaia.GiCore.Game.World.Generation.Layers import SETTINGS
+from GiGaia.GiCore.Game.World.Generation.Layers import SETTINGS as GENERATOR_SETTINGS
 
 
 class Config:
@@ -40,7 +40,8 @@ class Config:
             "name":f"World_{os.urandom(3).hex()}",
             "seed":int.from_bytes(os.urandom(8), "little"),
             "serve_range":8,
-            "generator": SETTINGS,
+            "generator": GENERATOR_SETTINGS,
+            "generator_processes": 4,
             "chunk_tile_mod_max": 14,
             "save_visited": True,
         }  

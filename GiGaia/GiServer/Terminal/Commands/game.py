@@ -31,7 +31,7 @@ def entities(server, args, player=None):
 def world(server, args, player=None):
     """Displays world information."""
     w = server.game.world
-    inf = f"World: {w.name}\nLocation: {w.data.location}\nSeed: {w.data.seed}\nLoaded regions: {len(w.data.region_files)}\nTimestamp: {w.time.value}\nDay: {w.time.day}\nDay progress: {w.time.day_progress}"
+    inf = f"World: {w.name}\nLocation: {w.data.location}\nSeed: {w.data.seed}\nChunks being generated: {w.generator.generating}\nLoaded regions: {len(w.data.region_files)}\nTimestamp: {w.time.value}\nDay: {w.time.day}\nDay progress: {w.time.day_progress}"
     return inf
 
 def superplayer(server, args, player=None):

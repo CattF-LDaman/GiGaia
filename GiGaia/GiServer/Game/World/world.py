@@ -30,8 +30,9 @@ class World:
         if not self.config.seed == self.seed:
             self.game.log("Seed in config does not match loaded world's seed.", 3)
 
-        self.generator = Generator(self.data.seed, self.game.server.assets.TIDS, self.config.generator)
+        self.generator = Generator(self.data.seed, self.game.server.assets.TIDS, self.config.generator, self.config.generator_processes)
         self.generator.start()
+        self.game.log(f"World generator started, using {self.config.generator_processes} processes.")
 
         self.last_save = 0
         self.last_time_upd = 0
