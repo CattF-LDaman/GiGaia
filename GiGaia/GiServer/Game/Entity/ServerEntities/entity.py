@@ -67,7 +67,8 @@ class Entity(EntityBase):
         #self.position[0], self.position[1] = int(self.position[0]), int(self.position[1])
         if floor_coord(self.position) != self.prev_pos:
             for player in players:
-                player.h.send("SC_ENTITY_POS", {"eid":self.eid, "position":self.position}, unique_val="eid", important=player.entity==self)
+                player.entity_position_updates[self.eid] = self.position
+                #player.h.send("SC_ENTITY_POS", {"eid":self.eid, "position":self.position}, unique_val="eid", important=player.entity==self)
             self.prev_pos = floor_coord(self.position)
 
     def update(self):

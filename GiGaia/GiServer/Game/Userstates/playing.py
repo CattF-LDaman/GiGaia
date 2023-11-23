@@ -18,6 +18,7 @@ class Playing(Userstate):
 
         self.entity = None
         self.visible_entities = []
+        self.entity_position_updates = {}
 
         self.served_chunks = []
         self.world_updates = {}
@@ -76,6 +77,9 @@ class Playing(Userstate):
         vis_range = self.game.config.entity_visibility_range
         chunk_pos = self.entity.chunk_pos
         self.game.entity_manager.look(self, (chunk_pos[0]-vis_range, chunk_pos[1]-vis_range), (chunk_pos[0]+vis_range, chunk_pos[1]+vis_range))
+        if self.entity_position_updates:
+            self.h.send("SC_ENTITIES_POS", {'updates':self.entity_position_updates.copy()}) # Copy is necessary here
+            self.entity_position_updates.clear()
 
     def handle_movement(self):
 

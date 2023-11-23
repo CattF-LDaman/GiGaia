@@ -13,7 +13,7 @@ class EntityManager:
         self.entities = {}
         self.entity_types = {}
 
-        self.p.hold_all("SC_ENTITY","SC_ENTITY_POS","SC_ENTITY_UPD_PROP","SC_ENTITY_DESTROY")
+        self.p.hold_all("SC_ENTITY","SC_ENTITY_POS","SC_ENTITIES_POS","SC_ENTITY_UPD_PROP","SC_ENTITY_DESTROY")
 
     def spawn(self, entity, eid, position, props={}):
 
@@ -30,10 +30,15 @@ class EntityManager:
 
             self.spawn(e.id, e.eid, e.position, e.props.__dict__)
 
-        for ep in self.p.fetch("SC_ENTITY_POS"):
+        # for ep in self.p.fetch("SC_ENTITY_POS"):
 
-            if ep.eid in self.entities:
-                self.entities[ep.eid].update_position(ep.position)
+        #     if ep.eid in self.entities:
+        #         self.entities[ep.eid].update_position(ep.position)
+
+        for epos in self.p.fetch("SC_ENTITIES_POS"):
+            for eid, pos in epos.updates.items():
+                if eid in self.entities:
+                    self.entities[eid].update_position(pos)
 
         for epr in self.p.fetch("SC_ENTITY_UPD_PROP"):
 

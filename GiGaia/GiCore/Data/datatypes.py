@@ -35,6 +35,7 @@ D_VEC2 = 24
 D_DDICT = 25
 D_ITEM = 26
 D_INV = 27
+D_EPOS = 28
 
 def pack_bool(data):
 
@@ -321,6 +322,27 @@ def unpack_inv(data):
 
     return inv
 
+def pack_epos(data):
+
+    out = io.BytesIO()
+
+    for eid, pos in data.items():
+        out.write(pack_int64(eid))
+        out.write(pack_pos(pos))
+
+    return out.getvalue()
+
+def unpack_epos(data):
+
+    d = io.BytesIO(data)
+    epos = {}
+    entity_amount = len(data)//(8+16) # INT64 + POS
+    for _ in range(entity_amount):
+        eid = unpack_int(d.read(8))
+        pos = unpack_pos(d.read(16))
+        epos[eid] = pos
+    return epos
+
 DT_PACK = 0
 DT_UNPACK = 1
 DT_SIZE = 2
@@ -355,7 +377,8 @@ D_DECS: (pack_decs, unpack_decs, 16),
 D_VEC2: (pack_vec2, unpack_vec2, 32),
 D_DDICT: (pack_datastruc, unpack_datastruc_dict, None),
 D_ITEM: (pack_item, unpack_item, None),
-D_INV: (pack_inv, unpack_inv, None)
+D_INV: (pack_inv, unpack_inv, None),
+D_EPOS: (pack_epos, unpack_epos, None)
 }
 
 DATATYPE_NAMES = {
@@ -387,7 +410,8 @@ DATATYPE_NAMES = {
     D_VEC2: 'D_VEC2',
     D_DDICT: 'D_DDICT',
     D_ITEM: 'D_ITEM',
-    D_INV: 'D_INV'
+    D_INV: 'D_INV',
+    D_EPOS: 'D_EPOS'
 }
 
 DATATYPE_NAMETYPES = {value:key for key,value in DATATYPE_NAMES.items()}
