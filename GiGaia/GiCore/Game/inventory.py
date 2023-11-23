@@ -133,6 +133,7 @@ class Item:
         self.DESCRIPTION = self.item_data["description"]
         self.RARITY = self.RARITIES[self.item_data["rarity"]]
         self.RARITY_COLOR = self.RARITY_COLORS[self.item_data["rarity"]]
+        self.SPRITE = self.item_data["sprite"]
 
     def as_dict(self):
         return {'item_id':self.ID, 'amount':self.amount, 'data':(self.DATATYPES, self.data)}
