@@ -10,6 +10,7 @@
         + Item usage system
         + Particles
         + Tool for capturing frame times and graphing them (pygal)
+        ? Grouping update entity position packets
 
     - 0.0.4 Craft -
         + Crafting

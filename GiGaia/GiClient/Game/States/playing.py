@@ -11,7 +11,7 @@ from GiGaia.GiClient.Game.World.lighting import LuxFlux
 from GiGaia.GiClient.Game.States.Playing.inventory import PlayerInventory
 
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
-from GiGaia.GiCore.Game.World.coords import pix_to_tileref, pix_to_tile, sum_coords, mult_coord
+from GiGaia.GiCore.Game.World.coords import pix_to_tileref, pix_to_tile, sum_coords, sub_coords
 
 import pygame
 import math
@@ -167,4 +167,6 @@ class Playing(State):
 
         if self.player:
             cam_point = self.player.position if not self.moving else sum_coords(self.player.position, (0, self.view_bob*math.sin(self.game.client.ticks/self.view_bob_smooth)))
+            if pygame.key.get_pressed()[self.keybinds.FREELOOK]:
+                cam_point = sub_coords(cam_point, sub_coords(self.game.screen.get_rect().center, self.scene.mouse_screen))
             self.scene.towards_camera(cam_point)

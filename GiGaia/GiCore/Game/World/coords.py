@@ -115,3 +115,15 @@ def pix_chunk_square(coord, r):
 def neighbours(coord):
 
     return ((coord[0], coord[1]-1),(coord[0], coord[1]+1),(coord[0]-1, coord[1]),(coord[0]+1, coord[1]))
+
+def distance(A, B):
+
+    return math.hypot(A[0]-B[0], A[0] - B[1])
+
+def normal_vec(A, B):
+
+    return div_coord(sub_coords(B, A), distance(A, B))
+
+def towards(A, B, mag=1):
+
+    return  mult_coord(normal_vec(A, B), mag)
