@@ -6,5 +6,5 @@ Version: {VERSION_STRING}
 Author: CattFawkes
 Build: {BUILD}
 
-Legalize cocaine.
+Glory to Ukraine.
 """

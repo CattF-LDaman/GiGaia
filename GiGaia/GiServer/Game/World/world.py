@@ -23,7 +23,8 @@ class World:
         self.modified_chunks = []
 
         self.data = WorldData(self.game.server.dirs["worlds"], self.name, self)
-        
+        self.game.log(f"World '{self.name}' in {self.game.server.dirs['worlds']}",10)
+    
         if not self.data.exists:
             self.data.create(seed=self.config.seed)
         self.seed = self.data.seed
