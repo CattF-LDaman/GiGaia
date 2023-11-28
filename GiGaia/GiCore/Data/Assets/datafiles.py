@@ -13,7 +13,7 @@ def load(man):
         for name in files:
             dataname, ext = os.path.splitext(name)
             if ext != ".json":
-                man.instance.log("[ASSETS] Non json file in datafiles! Ignoring.",3)
+                man.instance.log(f"[ASSETS] Non json file '{name}' in datafiles! Ignoring.",3)
                 continue
             datapath = os.path.join(root, name)
             try:
