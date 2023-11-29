@@ -18,13 +18,13 @@ class Keybinds(Datafile):
         "CHAT_SEND": pygame.K_RETURN,
         "CHAT_HUP": pygame.K_UP,
         "CHAT_HDOWN": pygame.K_DOWN,
-        "FREELOOK": pygame.K_LALT
-
+        "FREELOOK": pygame.K_LALT,
+        "STRUCTURIZER": pygame.K_F1
     }
 
     AUTO_CREATE = True
 
-    DATA_VERSION = 4
+    DATA_VERSION = 5
     STRUC = [
         (keyb, D_INT32) for keyb in DEFAULT_KEYBINDS.keys() 
     ]

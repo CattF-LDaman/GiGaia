@@ -1,5 +1,5 @@
 
-from . import datafiles, fonts, sounds, tiles, items, misc
+from . import datafiles, fonts, sounds, tiles, items, misc, structures
 
 import traceback
 import os
@@ -9,6 +9,8 @@ import json
 import types
 
 class AssetsManager:
+
+    MODULES = [datafiles, fonts, sounds, tiles, items, structures, misc]
 
     def __init__(self, instance):
 
@@ -22,12 +24,8 @@ class AssetsManager:
 
     def load(self):
 
-        datafiles.load(self)
-        fonts.load(self)
-        sounds.load(self)
-        tiles.load(self)
-        items.load(self)
-        misc.load(self)
+        for asset_module in self.MODULES:
+            asset_module.load(self)
 
         self.load_icon()
 

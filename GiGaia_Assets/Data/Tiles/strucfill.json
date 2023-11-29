@@ -1,0 +1,14 @@
+{
+    "display": "Structure Cavity",
+
+    "sprite": {
+        "shape": "Grid",
+        "components": {
+            "main": [204, 255, 255],
+            "accent": [179, 255, 255]
+        }
+    },
+
+    "platform": true
+
+}

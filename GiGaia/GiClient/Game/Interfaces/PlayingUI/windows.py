@@ -22,6 +22,9 @@ class WindowManager:
         self.windows.clear()
 
     def open_window(self, window, *args, **kwargs):
+        for w in self.windows:
+            if type(w) == window:
+                return
         self.windows.append(self.uim.add_widget(window, wman=self, layer=len(self.windows), *args, **kwargs))
 
 
@@ -32,8 +35,9 @@ class Window(Widget):
     def __init__(self, ui_manager, wman, size=(0.75,0.90), closable=True, movable=True, layer=0):
 
         self.wman = wman
+        self.interface = wman.interface
         self.ui = wman.ui
-        self.game = self.wman.interface.game
+        self.game = wman.interface.game
         self.state = self.game.state
 
         super().__init__(ui_manager, position=[0.5, 0.5], layer=layer, width=size[0], height=size[1], anchor="center", always_redraw=False, relative_to=self.ui, head_ui=True)
@@ -65,11 +69,8 @@ class Window(Widget):
 
     def update(self):
 
-        if self.clicked:
-            self.click_start = (self.position.copy(), pygame.mouse.get_pos())
-
         if self.movable and self.held:
-            self.position = sum_coords(self.click_start[0], sub_coords(self.click_start[1], pygame.mouse.get_pos()))
+            self.position = sum_coords(self.hold_start, sub_coords(pygame.mouse.get_pos(), self.hold_start))
 
         if not self == self.wman.windows[-1]:
             for child in self.children:

@@ -9,6 +9,7 @@ class Layer:
         self.seed = generator.seed
 
         self.tiles = generator.tiles
+        self.structures = generator.structures
 
         self.s = SimpleNamespace(**generator.settings[self.__class__.__name__])
 

@@ -4,8 +4,8 @@ from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 
 from GiGaia.GiCore import VERSION_STRING
 from GiGaia.GiCore.Game.states import STATE_IDS as SIDS
-from GiGaia.GiCore.Game.World.coords import diff_coords, sum_coords, mult_coord
-from GiGaia.GiCore.Game.World import CHUNK_SIZE_PIXELS
+from GiGaia.GiCore.Game.World.coords import diff_coords, sum_coords, mult_coord, div_coord
+from GiGaia.GiCore.Game.World import CHUNK_SIZE_PIXELS, TILE_SIZE_PIXELS
 
 import time
 import pygame
@@ -66,7 +66,8 @@ class DebugPanel(Widget):
                     "entities": len(gamestate.entity_manager.entities),
                     "player": gamestate.player_eid,
                     "cam": gamestate.scene.camera_pos,
-                    "cursor_wpos": gamestate.scene.convert_window_to_world_coord(pygame.mouse.get_pos()),
+                    "cursor_wpos": gamestate.scene.mouse,
+                    "cursor_tpos": div_coord(gamestate.scene.mouse, TILE_SIZE_PIXELS, floor=True),
                     "player_wpos": gamestate.player.position,
                     "player_tpos": gamestate.player.tile_pos,
                     "player_cpos": gamestate.player.chunk_pos,

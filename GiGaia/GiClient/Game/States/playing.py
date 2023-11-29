@@ -2,8 +2,6 @@
 from GiGaia.GiClient.Game.state import State
 from GiGaia.GiClient.Game.Interfaces.playing import Playing as PlayingUI
 
-from GiGaia.GiClient.Game.Interfaces.PlayingUI.inventory import Inventory
-
 from GiGaia.GiClient.Game.Entity.manager import EntityManager
 from GiGaia.GiClient.Game.World.world import World
 from GiGaia.GiClient.Game.scene import Scene
@@ -36,6 +34,7 @@ class Playing(State):
         self.fullbright = False
         self.torch = False
         self.force_crash = False
+        self.block_actions = False
 
         self.player_eid = None
 
@@ -82,8 +81,7 @@ class Playing(State):
                         self.client.log("Crashing game state...", 4)
                         self.force_crash = True
                     
-                    case self.keybinds.INVENTORY if self.ui.chat.hidden:
-                        self.ui.open_window(Inventory)
+
                     case self.keybinds.CROUCH if p[self.keybinds.MOVE_DOWN]:
                         self.player.crouch(True)
 
@@ -149,7 +147,7 @@ class Playing(State):
         self.world.update()
         self.entity_manager.update()
 
-        if not self.ui.chat.typing: # Actions disabled while typing chats go here
+        if not self.ui.chat.typing and not self.ui.wman.windows: # Actions disabled while typing chats or in windows go here
 
             if self.game.client.ticks-self.last_game_tick > self.ms_per_tick:
 

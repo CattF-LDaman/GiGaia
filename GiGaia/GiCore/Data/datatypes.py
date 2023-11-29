@@ -36,6 +36,8 @@ D_DDICT = 25
 D_ITEM = 26
 D_INV = 27
 D_EPOS = 28
+D_TILESL = 29
+D_TILES = 30
 
 def pack_bool(data):
 
@@ -343,6 +345,30 @@ def unpack_epos(data):
         epos[eid] = pos
     return epos
 
+def pack_tiles_layer(data):
+
+    return pack_int32(len(data[0])) + pack_int32(len(data)) + b"".join(pack_int16(t) for row in data for t in row)
+
+def unpack_tiles_layer(data):
+    d = io.BytesIO(data)
+    width = unpack_int(d.read(4))
+    height = unpack_int(d.read(4))
+    tiles = []
+    for r in range(height):
+        row = []
+        for t in range(width):
+            row.append(unpack_int(d.read(2)))
+        tiles.append(row)
+    return tiles
+
+def pack_tiles(data):
+    
+    return b"".join([pack_tiles_layer(chunkl) for chunkl in data])
+
+def unpack_tiles(data):
+    midp = len(data) // 2
+    return [unpack_tiles_layer(data[:midp]), unpack_tiles_layer(data[midp:])]
+
 DT_PACK = 0
 DT_UNPACK = 1
 DT_SIZE = 2
@@ -378,7 +404,9 @@ D_VEC2: (pack_vec2, unpack_vec2, 32),
 D_DDICT: (pack_datastruc, unpack_datastruc_dict, None),
 D_ITEM: (pack_item, unpack_item, None),
 D_INV: (pack_inv, unpack_inv, None),
-D_EPOS: (pack_epos, unpack_epos, None)
+D_EPOS: (pack_epos, unpack_epos, None),
+D_TILESL: (pack_tiles_layer, unpack_tiles_layer, None),
+D_TILES: (pack_tiles, unpack_tiles, None),
 }
 
 DATATYPE_NAMES = {
@@ -411,7 +439,9 @@ DATATYPE_NAMES = {
     D_DDICT: 'D_DDICT',
     D_ITEM: 'D_ITEM',
     D_INV: 'D_INV',
-    D_EPOS: 'D_EPOS'
+    D_EPOS: 'D_EPOS',
+    D_TILESL: 'D_TILESL',
+    D_TILES: 'D_TILES'
 }
 
 DATATYPE_NAMETYPES = {value:key for key,value in DATATYPE_NAMES.items()}

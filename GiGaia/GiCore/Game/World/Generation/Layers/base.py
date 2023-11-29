@@ -13,7 +13,7 @@ class Base(Layer):
         "crown_variance": 4,
         "crown_smooth": 10,
         
-        "base_smooth": 21000,  # Gets used in special sauce, lower = more noisey, higher = smoother
+        "base_smooth": 28800,  # Gets used in special sauce, lower = more noisey, higher = smoother
         "base_noise_layers": [0.3, 0.2, 0.0, 0.15, 0.3, 0.15],  # weights
         "magic": 3
     }
@@ -44,7 +44,7 @@ class Base(Layer):
         return abs((n+1)/2)
 
     @lru_cache(None)
-    def _height_at(self, x):
+    def height_at(self, x):
         
         nval = sum(self.normalize(self.noise.noise2(x*s, self._grab_level))*w for w,s in zip(self.weights, self.smooths))
 
@@ -54,7 +54,7 @@ class Base(Layer):
 
         nval = self.noise.noise2(x*self.crown_smooth_mult, self._grab_level+12345)
         crown = self.crown_base+(nval*self.crown_variance)
-        xh = self._height_at(x)
+        xh = self.height_at(x)
 
         if h <= -xh+crown:
             return True
@@ -63,11 +63,11 @@ class Base(Layer):
 
     def is_grass(self, x, y):
 
-        return y == -self._height_at(x)
+        return y == -self.height_at(x)
 
     def is_ground(self, x, y):
 
-        xh = self._height_at(x)
+        xh = self.height_at(x)
         if y >= -xh:
             return True
         

@@ -11,12 +11,13 @@ GEN_Q_OUT = 1
 
 class Generator:
 
-    def __init__(self, seed, tiles, settings={}, generators=4):  # default arg is allowed to be mutable here bitch
+    def __init__(self, seed, tiles, structures, settings={}, generators=4):  # default arg is allowed to be mutable here bitch
         
         self.seed = seed
         self.settings = self.s = {**DEFAULT_SETTINGS, **settings}
 
         self.tiles = tiles  # AssetsManager.TIDS (SimpleNamespace)
+        self.structures = structures # AssetsManager.STRUCTURES (SimpleNamespace)
 
         self.layers = [layer(self) for layer in LAYERS]
 

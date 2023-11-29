@@ -3,6 +3,7 @@ from . import TILE_SIZE_PIXELS, CHUNK_SIZE_PIXELS, CHUNK_SIZE_TILES, REGION_SIZE
 
 from functools import lru_cache
 import math
+import pygame
 
 def chunk_region(coord):
 
@@ -95,7 +96,7 @@ def mult_coord(coord, mult):
 
 def div_coord(coord, div, floor=False):
     
-    return (coord[0]/div, coord[1]/div) if not floor else (coord[0]//div, coord[1]//div)
+    return (coord[0]/div, coord[1]/div) if not floor else (int(coord[0]/div), int(coord[1]/div))
 
 def add_coord(coord, add):
 
@@ -127,3 +128,15 @@ def normal_vec(A, B):
 def towards(A, B, mag=1):
 
     return  mult_coord(normal_vec(A, B), mag)
+
+def rect_size(A, B):
+    return abs(B[0]-A[0]), abs(B[1]-A[1])
+
+def area(A, B):
+    rs = rect_size(A,B)
+    return rs[0]*rs[1]
+
+def inside(p, A, B):
+    x, y = p
+    r = pygame.Rect(A[0], A[1], abs(B[0]-A[0]), abs(B[1]-A[1]))
+    return r.collidepoint(x, y)
