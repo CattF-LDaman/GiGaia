@@ -4,13 +4,15 @@
     - 0.0.3 Inventory -
         + Player persistence (DONE)
         + Grouping update entity position packets (DONE)
+        + Structures (DONE)
+        + Item sprites (DONE)
         + Flesh out inventory system/UI
         + Hotbar or equivalent system
-        + Item sprites
         + System for action panels (eg. workbench/crafting/smelting/... UI)
         + Item usage system
         + Particles
         + Tool for capturing frame times and graphing them (pygal)
+        + Widget animations
 
     - 0.0.4 Craft -
         + Crafting
@@ -36,3 +38,8 @@
         ? Vegetation system or just use objects ?
         + Parallax backgrounds
         + Cow
+
+Future:
+    - Space (zero gravity)
+        - Sattelites
+        - Rockets
