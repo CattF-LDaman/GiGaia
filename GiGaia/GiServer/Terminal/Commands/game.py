@@ -1,7 +1,7 @@
 import inspect
 import random
 
-from GiGaia.GiCore.Game.World.coords import sum_coords
+from GiGaia.GiCore.Game.World.coords import sum_coords, coord_range
 
 def players(server, args, player=None):
     """Show all players."""
@@ -313,3 +313,21 @@ def timescale(server, args, player=None):
     
     server.game.config.time_scale = scale
     return f"Changed time_scale to {scale}"
+
+def createstruc(server, args, player=None):
+    """Create a structure at current or given coordinates"""
+    if not args:
+        return "usage: createstruc <STRUC> <X> <Y>"
+    
+    struc = str(args[0])
+    if struc not in server.assets.structures:
+        return f"Structure '{struc}' does not exist"
+
+    pos = player.entity.tile_pos if player else None
+    if len(args) >= 3:
+        pos = (int(args[1]), int(args[2]))
+    if not pos:
+        return "Please provide a position."
+
+    server.game.world.create_structure(struc, pos)
+    return f"Created '{struc}' at {pos}."

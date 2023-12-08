@@ -23,7 +23,7 @@ class House(Layer):
 
     def _has_house(self, space):
         
-        return seeded_randint(0, 100, self.houseseed+space+1234) <= self.chance
+        return seeded_randint(0, 100, self.houseseed+hash(space)+1234) <= self.chance
 
     def _house_location(self, space):
         return seeded_randint(space*self.space_width+self.structure.width, space*self.space_width+self.space_width-1-self.structure.width, space*self.houseseed)

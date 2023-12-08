@@ -73,6 +73,9 @@ def privileges(server, args, player=None):
     if player and player.user.privileges <= server.game.users[user].privileges:
         return "Target player has equal or higher privileges than you."
     
+    if user in server.game.players:
+        server.game.players[user].send_msg(f"You are now privilege level {level}.")
+
     server.game.users[user].set_privileges(level)
     return f"User {user} is now privilege level {level}."
 

@@ -75,6 +75,20 @@ class World:
         cp, tref = tile_to_tileref((x,y))
         return self.get_chunk(cp).tiles[z][tref[1]][tref[0]]
 
+    def set_at(self, tile, x, y, z):
+        cp, tref = tile_to_tileref((x,y))
+        return self.get_chunk(cp).set_at(tref[0], tref[1], z, tile)
+
+    def create_structure(self, struc, wcore):
+        strucdata = self.assets.structures[struc]
+        bounds = strucdata.calculate_bounds(wcore)
+        for z in range(2):
+            for x, y in coord_range(*bounds):
+                struc_tile = strucdata.get_at(x, y, z, wcore)
+                if struc_tile == self.assets.TIDS.STRUCFILL:
+                    continue
+                self.set_at(struc_tile, x, y, z)
+
     def is_empty(self, A, B, z=0):
         """Check if tiles from point A to point B are empty"""
         for tp in coord_range(A, B):
