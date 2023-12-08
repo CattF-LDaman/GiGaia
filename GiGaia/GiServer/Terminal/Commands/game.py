@@ -315,7 +315,7 @@ def timescale(server, args, player=None):
     return f"Changed time_scale to {scale}"
 
 def createstruc(server, args, player=None):
-    """Create a structure at current or given coordinates"""
+    """Create a structure at current or given coordinates."""
     if not args:
         return "usage: createstruc <STRUC> <X> <Y>"
     
@@ -330,4 +330,22 @@ def createstruc(server, args, player=None):
         return "Please provide a position."
 
     server.game.world.create_structure(struc, pos)
+    return f"Created '{struc}' at {pos}."
+
+def clonestruc(server, args, player=None):
+    """Clone a structure at current or given coordinates, retains special tiles."""
+    if not args:
+        return "usage: createstruc <STRUC> <X> <Y>"
+    
+    struc = str(args[0])
+    if struc not in server.assets.structures:
+        return f"Structure '{struc}' does not exist"
+
+    pos = player.entity.tile_pos if player else None
+    if len(args) >= 3:
+        pos = (int(args[1]), int(args[2]))
+    if not pos:
+        return "Please provide a position."
+
+    server.game.world.create_structure(struc, pos, True)
     return f"Created '{struc}' at {pos}."

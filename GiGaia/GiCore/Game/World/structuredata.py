@@ -31,7 +31,7 @@ class StructureData(Datafile):
 
         self.tiles = [[], []]
         for l, layer in enumerate(self.tiles):
-            for y in range(start[1], end[1]):
+            for y in range(start[1]-1, end[1]):
                 layer.append(row := [])
                 for x in range(start[0], end[0]+1):
                     row.append(world.get_at(x,y,l))
