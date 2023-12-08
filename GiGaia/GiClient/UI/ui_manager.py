@@ -65,6 +65,9 @@ class UIManager:
                 for w in self.capturing_input:
                     if w.input_newline:
                         w.text_input += "\n"
+            elif event.key == pygame.K_v and pygame.key.get_pressed()[pygame.K_LCTRL]:
+                for w in self.capturing_input:
+                    w.text_input += pygame.scrap.get_text()
 
     def capture_input(self, widget):
         if widget not in self.capturing_input:
