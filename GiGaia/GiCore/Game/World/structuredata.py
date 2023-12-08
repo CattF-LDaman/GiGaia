@@ -23,7 +23,7 @@ class StructureData(Datafile):
 
         super().__init__(location)
     
-    def on_create(self, world, start, end, core=(0,0), author="Anonymous", description="No desription."):
+    def on_create(self, world, start, end, core=(0,0), author="Anonymous", description="No description."):
 
         self.time_created = int(time.time())
         self.author = author
