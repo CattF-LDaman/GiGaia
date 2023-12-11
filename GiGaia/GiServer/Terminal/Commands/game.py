@@ -350,3 +350,6 @@ def clonestruc(server, args, player=None):
 
     server.game.world.create_structure(struc, pos, True)
     return f"Created '{struc}' at {pos}."
+
+def structures(server, args, player=None):
+    return "\n".join(f'{strucn}: {struc.description}' for strucn, struc in server.assets.structures.items())
