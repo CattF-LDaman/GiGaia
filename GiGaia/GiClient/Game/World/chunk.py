@@ -40,8 +40,7 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
                         self.tile_updates.append([x, y, 1-l, tile])
 
     def update_neighbours(self):
-        # for nb in neighbours(self.position):
-        #     self.world.update_chunk((nb[0], nb[1]))
+
         def update_tile_nb(x, y):
             tile_pos = tileref_to_tile((self.position, (x, y)))
             for nb in neighbours(tile_pos):
@@ -125,8 +124,6 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         else:
             self.tile_updates.append([x, y, 1, self.tiles[1][y][x]])
             self.tile_updates.append([x, y, 0, self.tiles[0][y][x]])
-
-        # self.updates.append((x,y))
 
     def get_surface(self):
         
