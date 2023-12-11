@@ -22,6 +22,6 @@ DEFAULT_CONFIG = {
 
     "world": {
         "max_tile_updates_per_tick": 144,
-        "viewport_padding": 20,
+        "viewport_padding": 50,
     }
 }
