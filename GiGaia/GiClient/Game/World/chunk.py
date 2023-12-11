@@ -4,6 +4,7 @@ from GiGaia.GiCore.Game.World import CHUNKSURF_SIZE_PIXELS, CHUNK_SIZE_PIXELS, T
 from GiGaia.GiCore.sprite_util import flat_square
 
 import pygame
+import collections
 
 class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL EMPTY THEN RESET
 
@@ -22,15 +23,21 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         self._surface.set_colorkey((0,0,0))
         self.surf_layers = [self._surface.copy(), self._surface.copy()]
         self.surface = None
-
-        self.updated = True
-        self.updates = []
+        self.tile_updates = collections.deque()
+        self.draw_all()
 
         self.update_neighbours()
 
     @property
     def draw_pos(self):
         return self.world.scene.convert_world_to_screen_coord(self.world_position)
+
+    def draw_all(self):
+        for l, layer in enumerate(self.tiles[::-1]):
+            for y, row in enumerate(layer):
+                for x, tile in enumerate(row):
+                    if tile:
+                        self.tile_updates.append([x, y, 1-l, tile])
 
     def update_neighbours(self):
         # for nb in neighbours(self.position):
@@ -60,16 +67,8 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
     def set_all(self, tiles):
         
         self.tiles = tiles
-        self.updated = True
+        self.draw_all()
         self.update_neighbours()
-
-    def draw_layer(self, l, layer):
-        tile_draws = []
-        for y, row in enumerate(layer):
-            for x, tile in enumerate(row):
-                if tile:
-                    tile_draws.append(self.draw_tile(x, y, l, tile, blit_later=True))
-        self.surf_layers[l].fblits(tile_draws)
 
     def draw_tile(self, x, y, l, tile, blit_later=False):
 
@@ -79,7 +78,9 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
         pygame.draw.rect(self.surf_layers[l], (0,0,0), tr)
 
         if not tile:
-            return
+            ts = pygame.Surface((TILE_SPRITE_SIZE, TILE_SPRITE_SIZE))
+            ts.fill((0,0,0))
+            return (ts, surf_tpos)
 
         try:
             t_asset = self.assets.tiles[tile]
@@ -96,13 +97,18 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
                 return (Chunk.MISSING_TILE, surf_tpos)
             pygame.draw.rect(self.surf_layers[l], (255,50,255), tr) # Missing tile
 
-    def draw(self):
-        self.world.surface_updates += 1
-        self._surface.fill((0,0,0))
-        for rl, layer in enumerate(self.tiles[::-1]):
-            self.surf_layers[1-rl].fill((0,0,0))
-            self.draw_layer(1-rl, layer)
-        self.construct()
+    def draw_amount(self, amount=1):
+        draws = [[],[]]
+        amount = min(amount, len(self.tile_updates))
+        for _ in range(amount):
+            x, y, l, tile = self.tile_updates.popleft()
+            if (draw_tile := self.draw_tile(x, y, l, tile, blit_later=True)) is not None:
+                draws[l].append(draw_tile)
+        for dl in range(2):
+            self.surf_layers[dl].fblits(draws[dl])
+        if not self.tile_updates:
+            self.construct()
+        self.world.tile_updates += amount
 
     def construct(self):
 
@@ -112,27 +118,21 @@ class Chunk:  # FUTURE: TILE UPDATES = LSIT OF ALL TIMES RANDOMLY POPPED UNTIL E
             self._surface.blit(lsurf, (0,0))
         self.surface = pygame.transform.scale(self._surface, (CHUNK_SIZE_PIXELS, CHUNK_SIZE_PIXELS))
 
-    def update_tile(self, x, y):
+    def update_tile(self, x, y, l=None):
 
-        self.updates.append((x,y))
+        if l is not None:
+            self.tile_updates.append([x, y, l, self.tiles[l][y][x]])
+        else:
+            self.tile_updates.append([x, y, 1, self.tiles[1][y][x]])
+            self.tile_updates.append([x, y, 0, self.tiles[0][y][x]])
+
+        # self.updates.append((x,y))
 
     def get_surface(self):
         
-        if self.updated:
+        if self.tile_updates and self.world.tile_updates < self.world.game.config.world.max_tile_updates_per_tick:
             
-            if self.world.surface_updates < self.world.game.config.world.max_chunk_updates_per_tick:
-                self.draw()
-            else:
-                return None
-
-        elif self.updates:
-
-            for x, y in self.updates:
-                self.draw_tile(x, y, 1, self.tiles[1][y][x])
-                self.draw_tile(x, y, 0, self.tiles[0][y][x])
-            self.construct()
-
-        self.updated = False
-        self.updates.clear()
+            amount = self.world.game.config.world.max_tile_updates_per_tick - self.world.tile_updates
+            self.draw_amount(amount)
 
         return self.surface

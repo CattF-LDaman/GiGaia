@@ -68,7 +68,7 @@ class Playing(State):
                     case pygame.K_F10:
                         self.game.log("Reloading chunk surfaces...")
                         for c in self.world.chunks.values():
-                            c.updated = True
+                            c.draw_all()
                     case pygame.K_F5 if self.client.dev:
                         self.torch = not self.torch
                         self.game.log(f"Torch: {self.torch}")

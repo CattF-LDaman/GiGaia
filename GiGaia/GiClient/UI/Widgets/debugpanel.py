@@ -32,6 +32,7 @@ class DebugPanel(Widget):
         self.contents = {
             "version": VERSION_STRING,
             "WARNING": 'This debug panel lowers your performance! Use F3 for FPS counter.',
+            "pygame-ce":pygame.version.ver,
             "state": self.client.state,
             "fps": int(self.client.clock.get_fps()),
             "fps_s": self.fps_s,
@@ -72,7 +73,7 @@ class DebugPanel(Widget):
                     "player_tpos": gamestate.player.tile_pos,
                     "player_cpos": gamestate.player.chunk_pos,
                     "delta_pos": diff_coords(gamestate.scene.camera_pos, gamestate.player.position),
-                    "chunks_upd": f"{gamestate.world.surface_updates}/{self.client.config.world.max_chunk_updates_per_tick}",
+                    "tile_upd": f"{gamestate.world.tile_updates}/{self.client.config.world.max_tile_updates_per_tick}",
                     "chunks_drawn": gamestate.world.viewport_size,
                     "time": gamestate.world.time.value,
                     "day": gamestate.world.time.day,
@@ -112,7 +113,7 @@ class DebugHUD(Widget):
         self.uim.assets.fonts["basic"].render(self.surface, mult_coord(chunk.draw_pos, self.game_scale), str(chunk.position), scale=1)
         self.uim.assets.fonts["basic"].render(self.surface, mult_coord(sum_coords(chunk.draw_pos,(0,10)), self.game_scale) , str(chunk.world_position), scale=1)
         pygame.draw.rect(self.surface, (160,160,255), cr, width=1)
-        if chunk.updated:
+        if chunk.tile_updates:
             pygame.draw.rect(self.surface, (255,160,160), cr, width=4, border_radius=6)
 
     def show_ent(self, ent):

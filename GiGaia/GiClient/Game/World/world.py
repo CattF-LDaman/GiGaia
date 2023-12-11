@@ -20,10 +20,11 @@ class World:
         self.p = state.p
         self.game = state.game
         self.assets = state.game.assets
+        self.config = state.game.config.world
 
         self.chunks = {}
         
-        self.surface_updates = 0
+        self.tile_updates = 0
         self.viewport_size = 0
 
         self._time_reference = [0, 0] # IN-GAME, MONOTONIC
@@ -87,7 +88,7 @@ class World:
 
     def update_chunk(self, chunk_pos):
         if chunk_pos in self.chunks:
-            self.chunks[chunk_pos].updated = True
+            self.chunks[chunk_pos].draw_all()
 
     def handle_packets(self):
 
@@ -105,10 +106,10 @@ class World:
             if ucp.chunk in self.chunks:
                 self.chunks[ucp.chunk].set_all(ucp.tiles)
 
-    def get_viewport_chunks(self):
+    def get_viewport_chunks(self, padding=0):
         
-        topleft = self.scene.convert_screen_to_world_coord((0,0))
-        botright = self.scene.convert_screen_to_world_coord(self.game.screen.get_size())
+        topleft = self.scene.convert_screen_to_world_coord(add_coord((0,0), -padding))
+        botright = self.scene.convert_screen_to_world_coord(add_coord(self.game.screen.get_size(), padding))
 
         #topleft = (self.state.scene.camera_pos[0]-self.game.screen.get_width()/2,self.state.scene.camera_pos[1]-self.game.screen.get_height()/2)
         #botright = (self.state.scene.camera_pos[0]+self.game.screen.get_width()/2,self.state.scene.camera_pos[1]+self.game.screen.get_height()/2)
@@ -136,21 +137,29 @@ class World:
 
         self.game.screen.fill(self.sky_color)
 
-        viewport_chunks = self.get_viewport_chunks()
+        viewport_chunks = self.get_viewport_chunks()  # These are actually drawn to screen
+        padded_viewport_chunks = self.get_viewport_chunks(self.config.viewport_padding)  # Used for chunk updates
 
-        self.surface_updates = 0
+        self.tile_updates = 0
         self.viewport_size = len(viewport_chunks)
 
         viewport_surfs = []
-        for cp in viewport_chunks:
 
-            if cp in self.chunks:
+        if (player_ent := self.state.player): # prioritize player chunk
+            player_chunk_pos = player_ent.chunk_pos
+            player_chunk = self.chunks[player_chunk_pos]
+            if (chunk_surface := player_chunk.get_surface()):
+                viewport_surfs.append((chunk_surface, player_chunk.draw_pos))
+
+        for cp in padded_viewport_chunks:
+
+            if cp in self.chunks and cp != player_chunk_pos:
 
                 c = self.chunks[cp]
 
-                if (chunk_surface := c.get_surface()):
+                if (chunk_surface := c.get_surface()) and cp in viewport_chunks:
                     viewport_surfs.append((chunk_surface, c.draw_pos))
-                    #self.game.screen.blit(chunk_surface, c.draw_pos)
+
         self.game.screen.fblits(viewport_surfs)
 
         self.handle_dev_lights()

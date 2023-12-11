@@ -21,6 +21,7 @@ DEFAULT_CONFIG = {
     },
 
     "world": {
-        "max_chunk_updates_per_tick": 2,
+        "max_tile_updates_per_tick": 144,
+        "viewport_padding": 20,
     }
 }

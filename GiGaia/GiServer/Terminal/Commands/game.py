@@ -74,6 +74,7 @@ def miniplayer(server, args, player=None):
 def addtime(server, args, player=None):
 
     server.game.world.time_start += int(args[0])
+    server.game.world.update_time()
 
 def tp(server, args, player=None):
     """Teleport player"""
