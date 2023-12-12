@@ -1,4 +1,6 @@
 
+Flesh wound system
+
 == 0.1.0 Collect 'n Craft ==
 
     - 0.0.3 Inventory -
