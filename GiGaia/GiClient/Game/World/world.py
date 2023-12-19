@@ -147,9 +147,10 @@ class World:
 
         if (player_ent := self.state.player): # prioritize player chunk
             player_chunk_pos = player_ent.chunk_pos
-            player_chunk = self.chunks[player_chunk_pos]
-            if (chunk_surface := player_chunk.get_surface()):
-                viewport_surfs.append((chunk_surface, player_chunk.draw_pos))
+            if player_chunk_pos in self.chunks:
+                player_chunk = self.chunks[player_chunk_pos]
+                if (chunk_surface := player_chunk.get_surface()):
+                    viewport_surfs.append((chunk_surface, player_chunk.draw_pos))
 
         for cp in padded_viewport_chunks:
 
