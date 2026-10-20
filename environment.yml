@@ -1,0 +1,9 @@
+# Conda environment (matches original dev setup). After create, pip installs pygame-ce.
+name: GiGaia
+channels:
+  - conda-forge
+dependencies:
+  - python>=3.10,<3.13
+  - pip
+  - pip:
+      - -r requirements.txt

@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "gigaia"
+version = "0.0.3"
+description = "A 2D multiplayer survival game built with Pygame CE."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Proprietary" }
+authors = [{ name = "GiGaia contributors" }]
+keywords = ["game", "pygame", "multiplayer", "2d", "survival"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Environment :: Win32 (MS Windows)",
+    "Environment :: X11 Applications",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Games/Entertainment",
+]
+dependencies = [
+    "pygame-ce>=2.4.0",
+    "opensimplex>=0.4.5",
+    "colorama>=0.4.6",
+]
+
+[project.optional-dependencies]
+bundler = ["py7zr>=0.20.0"]
+
+[project.urls]
+Repository = "https://github.com/CattF-LDaman/GiGaia"
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["GiGaia*"]

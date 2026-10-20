@@ -1,6 +1,5 @@
 
 import pygame
-from pygame._sdl2 import messagebox
 
 from GiGaia.GiClient import CLIENT_STATE_INGAME, CLIENT_STATE_MENU
 from GiGaia.GiClient.Game.game import Game
@@ -87,7 +86,11 @@ class Client:
             self.loop()
         except Exception as e:
             self.log(err_msg := f"Fatal error encountered:\n{''.join(traceback.format_exception(e, value=e ,tb=e.__traceback__))}",5)
-            messagebox("Crashed!", err_msg+f'\n{self.log_file_path}', error=True)
+            pygame.display.message_box(
+                "Crashed!",
+                err_msg + f"\n{self.log_file_path}",
+                message_type="error",
+            )
             self.close(1)
 
     def close(self,exit_code=0):
